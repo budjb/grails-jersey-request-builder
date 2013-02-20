@@ -1,0 +1,14 @@
+# ignore file to help keep class files and other binary
+# file out of the repo
+
+*.class
+*.war
+*.bak
+*.old
+*.log
+plugin.xml
+*.zip
+.settings/
+target/
+target-eclipse/
+.gradle/
