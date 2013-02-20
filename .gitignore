@@ -6,6 +6,8 @@
 *.bak
 *.old
 *.log
+plugin.xml
+*.zip
 .settings/
 target/
 target-eclipse/

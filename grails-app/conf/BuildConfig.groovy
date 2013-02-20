@@ -15,6 +15,7 @@ grails.project.dependency.resolution = {
         // When the jaxrs plugin updates, we'll need to update this version
         // so that the core library version matches.
         compile 'com.sun.jersey:jersey-client:1.8'
+        compile 'com.sun.jersey:jersey-core:1.8'
     }
 
     plugins {
