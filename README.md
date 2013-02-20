@@ -1,2 +1,2 @@
-grails-request-builder
-======================
+Jersey Client RequestBuilder Plugin
+===================================
