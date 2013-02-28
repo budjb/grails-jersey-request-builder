@@ -32,6 +32,11 @@ class RequestBuilder {
     Map form = [:]
 
     /**
+     * Content-Type header.
+     */
+    String contentType = null
+
+    /**
      * Accept header.
      */
     String accept = null
@@ -292,6 +297,11 @@ class RequestBuilder {
         // Set the accept type
         if (accept) {
             builder = builder.accept(accept)
+        }
+
+        // Set the content-type.
+        if (contentType) {
+            builder = builder.type(contentType)
         }
 
         // Set any headers
