@@ -4,9 +4,25 @@ import com.sun.jersey.api.client.Client
 import com.sun.jersey.api.client.ClientResponse
 import com.sun.jersey.api.client.WebResource
 import com.sun.jersey.api.client.WebResource.Builder
+import com.sun.jersey.api.client.config.ClientConfig
+import com.sun.jersey.api.client.config.DefaultClientConfig
 import com.sun.jersey.api.representation.Form
+import com.sun.jersey.client.urlconnection.HTTPSProperties
+
 import javax.ws.rs.core.MediaType
+
 import groovy.json.JsonSlurper
+
+import javax.net.ssl.SSLSession
+import javax.net.ssl.SSLSocketFactory
+import javax.net.ssl.X509TrustManager
+import javax.net.ssl.TrustManager
+import javax.net.ssl.SSLContext
+import javax.net.ssl.HttpsURLConnection
+import javax.net.ssl.HostnameVerifier
+
+import java.security.SecureRandom
+import java.security.cert.X509Certificate
 
 class RequestBuilder {
     /**
@@ -62,6 +78,16 @@ class RequestBuilder {
     Object body = null
 
     /**
+     * Whether to ignore SSL cert validation.
+     */
+    boolean ignoreInvalidSSL = false
+
+    /**
+     * Backed up SSL socket factory
+     */
+    private SSLSocketFactory _sslSocketBackup = null
+
+    /**
      * Performs a GET request.
      *
      * @return
@@ -72,6 +98,9 @@ class RequestBuilder {
 
         // Do the request
         ClientResponse response = request.get(ClientResponse)
+
+        // Clean up
+        cleanUp()
 
         // Handle the response
         return handleResponse(response)
@@ -116,6 +145,9 @@ class RequestBuilder {
 
         // Do the request
         ClientResponse response = request.put(ClientResponse, getRequestBody())
+
+        // Clean up
+        cleanUp()
 
         // Handle the response
         return handleResponse(response)
@@ -164,6 +196,9 @@ class RequestBuilder {
         // Do the request
         ClientResponse response = request.post(ClientResponse, getRequestBody())
 
+        // Clean up
+        cleanUp()
+
         // Handle the response
         return handleResponse(response)
     }
@@ -210,6 +245,9 @@ class RequestBuilder {
 
         // Do the request
         ClientResponse response = request.delete(ClientResponse)
+
+        // Clean up
+        cleanUp()
 
         // Handle the response
         return handleResponse(response)
@@ -283,8 +321,11 @@ class RequestBuilder {
      * @return Built request object.
      */
     private WebResource.Builder buildRequest() {
-        // Create the client with the uri
-        WebResource resource = Client.create().resource(uri)
+        // Get the client
+        Client client = getClient()
+
+        // Create the resource with the uri
+        WebResource resource = client.resource(uri)
 
         // Set any query params
         query.each { param, value ->
@@ -310,6 +351,69 @@ class RequestBuilder {
         }
 
         return builder
+    }
+
+    /**
+     * Creates the jersey client instance.
+     *
+     * This method is required to handle ignoring SSL cert validation.
+     * Code to implement this was gathered from:
+     *     * http://stackoverflow.com/questions/6047996/ignore-self-signed-ssl-cert-using-jersey-client
+     *     * http://stackoverflow.com/questions/2145431/https-using-jersey-client
+     *
+     * @return Configured jersey client
+     */
+    private Client getClient() {
+        // Check whether we can just skip this altogether
+        if (!ignoreInvalidSSL) {
+            return Client.create()
+        }
+
+        // Back up the existing trust settings
+        _sslSocketBackup = HttpsURLConnection.getDefaultSSLSocketFactory()
+
+        // Create a trust manager that does not validate certificate chains
+        TrustManager[] certs = [new X509TrustManager() {
+            public X509Certificate[] getAcceptedIssuers() { return null }
+            public void checkClientTrusted(X509Certificate[] certs, String authType) { }
+            public void checkServerTrusted(X509Certificate[] certs, String authType) { }
+        }]
+
+        // SSL context
+        SSLContext ctx = null
+        try {
+            ctx = SSLContext.getInstance("TLS")
+            ctx.init(null, certs, new SecureRandom())
+        }
+        catch (java.security.GeneralSecurityException ex) { }
+
+        // Set the default socket factory
+        HttpsURLConnection.setDefaultSSLSocketFactory(ctx.getSocketFactory())
+
+        // Create the config
+        ClientConfig config = new DefaultClientConfig()
+        try {
+            config.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES, new HTTPSProperties(
+                new HostnameVerifier() {
+                    @Override
+                    public boolean verify(String hostname, SSLSession session) {
+                        return true
+                    }
+                },
+                ctx
+            ))
+        } catch(Exception e) { }
+
+        return Client.create(config)
+    }
+
+    /**
+     * Does any environment cleanup after the request is done.
+     */
+    private void cleanUp() {
+        if (ignoreInvalidSSL) {
+            HttpsURLConnection.setDefaultSSLSocketFactory(_sslSocketBackup)
+        }
     }
 
     /**
