@@ -93,17 +93,19 @@ class RequestBuilder {
      * @return
      */
     private Object doGet() {
-        // Build the request
-        WebResource.Builder request = buildRequest()
+        try {
+            // Build the request
+            WebResource.Builder request = buildRequest()
 
-        // Do the request
-        ClientResponse response = request.get(ClientResponse)
+            // Do the request
+            ClientResponse response = request.get(ClientResponse)
 
-        // Clean up
-        cleanUp()
-
-        // Handle the response
-        return handleResponse(response)
+            // Handle the response
+            return handleResponse(response)
+        }
+        finally {
+            cleanUp()
+        }
     }
 
     /**
@@ -140,17 +142,19 @@ class RequestBuilder {
      * @return
      */
     private Object doPut() {
-        // Build the request
-        WebResource.Builder request = buildRequest()
+        try {
+            // Build the request
+            WebResource.Builder request = buildRequest()
 
-        // Do the request
-        ClientResponse response = request.put(ClientResponse, getRequestBody())
+            // Do the request
+            ClientResponse response = request.put(ClientResponse, getRequestBody())
 
-        // Clean up
-        cleanUp()
-
-        // Handle the response
-        return handleResponse(response)
+            // Handle the response
+            return handleResponse(response)
+        }
+        finally {
+            cleanUp()
+        }
     }
 
     /**
@@ -190,17 +194,19 @@ class RequestBuilder {
      * @return
      */
     private Object doPost() {
-        // Build the request
-        WebResource.Builder request = buildRequest()
+        try {
+            // Build the request
+            WebResource.Builder request = buildRequest()
 
-        // Do the request
-        ClientResponse response = request.post(ClientResponse, getRequestBody())
+            // Do the request
+            ClientResponse response = request.post(ClientResponse, getRequestBody())
 
-        // Clean up
-        cleanUp()
-
-        // Handle the response
-        return handleResponse(response)
+            // Handle the response
+            return handleResponse(response)
+        }
+        finally {
+            cleanUp()
+        }
     }
 
     /**
@@ -240,17 +246,19 @@ class RequestBuilder {
      * @return
      */
     private Object doDelete() {
-        // Build the request
-        WebResource.Builder request = buildRequest()
+        try {
+            // Build the request
+            WebResource.Builder request = buildRequest()
 
-        // Do the request
-        ClientResponse response = request.delete(ClientResponse)
+            // Do the request
+            ClientResponse response = request.delete(ClientResponse)
 
-        // Clean up
-        cleanUp()
-
-        // Handle the response
-        return handleResponse(response)
+            // Handle the response
+            return handleResponse(response)
+        }
+        finally {
+            cleanUp()
+        }
     }
 
     /**
