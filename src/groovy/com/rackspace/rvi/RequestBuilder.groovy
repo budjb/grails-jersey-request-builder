@@ -9,6 +9,7 @@ import com.sun.jersey.api.client.config.DefaultClientConfig
 import com.sun.jersey.api.representation.Form
 import com.sun.jersey.client.urlconnection.HTTPSProperties
 
+import javax.ws.rs.core.Cookie
 import javax.ws.rs.core.MediaType
 
 import groovy.json.JsonSlurper
@@ -58,6 +59,11 @@ class RequestBuilder {
     String accept = null
 
     /**
+     * Cookies to include with the request.
+     */
+    Map cookies = [:]
+
+    /**
      * Whether to attempt to slurp JSON automatically.
      */
     boolean convertJson = true
@@ -71,6 +77,17 @@ class RequestBuilder {
      * automatic content conversion based on mime type.
      */
     boolean binaryResponse = false
+
+    /**
+     * If true, do not check the response status code, and
+     * thus don't throw an exception for codes > 2xx.
+     */
+    boolean skipStatusCheck = false
+
+    /**
+     * If true, do not response handling, and return the raw response object.
+     */
+    boolean rawClientResponse = false
 
     /**
      * Body of the request - only useful on POST or PUT.
@@ -296,17 +313,23 @@ class RequestBuilder {
      * @return The content of the response.
      */
     private Object handleResponse(ClientResponse response) {
+        // Result holder
         def result = null
 
-        // Check if the caller wants the raw output
-        if (binaryResponse) {
+        // Check what kind of return we want
+        if (rawClientResponse) {
+            // Just return the raw ClientResponse object
+            result = response
+        }
+        else if (binaryResponse) {
+            // Return the byte array response
             result = response.getEntity(byte[])
         }
         else {
             // Get the content type
             MediaType contentType = response.getType()
 
-            // Get the response entity
+            // Get the response entity as a string
             result = response.getEntity(String)
 
             // Attempt to auto-convert JSON if enabled
@@ -316,8 +339,8 @@ class RequestBuilder {
         }
 
         // Check the status
-        if (Math.floor(response.status / 100) != 2) {
-            throw new ResponseStatusException(response.status, result)
+        if (!skipStatusCheck && Math.floor(response.status / 100) != 2) {
+            throw ResponseStatusException.build(response.status, result)
         }
 
         return result
@@ -348,9 +371,31 @@ class RequestBuilder {
             builder = builder.accept(accept)
         }
 
-        // Set the content-type.
+        // Set the content-type
         if (contentType) {
             builder = builder.type(contentType)
+        }
+
+        // Set cookies
+        cookies.each { key, value ->
+            // Cookie var
+            Cookie cookie
+
+            // If the value is a cookie, use its values
+            // I'm making the choice to force the name to match
+            if (value instanceof Cookie) {
+                // Cast it
+                value = value as Cookie
+
+                // Create the new cookie
+                cookie = new Cookie(key, value.value, value.path, value.domain, value.version)
+            }
+            else {
+                cookie = new Cookie(key, value)
+            }
+
+            // Add it to the request
+            builder.cookie(cookie)
         }
 
         // Set any headers
@@ -403,7 +448,6 @@ class RequestBuilder {
         try {
             config.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES, new HTTPSProperties(
                 new HostnameVerifier() {
-                    @Override
                     public boolean verify(String hostname, SSLSession session) {
                         return true
                     }
@@ -430,10 +474,9 @@ class RequestBuilder {
      * @param closure
      */
     private void run(Closure closure) {
-        Closure clone = closure.clone()
-        clone.delegate = this
-        clone.resolveStrategy = Closure.DELEGATE_ONLY
-        clone()
+        closure.delegate = this
+        closure.resolveStrategy = Closure.OWNER_FIRST
+        closure.call()
     }
 
     /**
@@ -461,19 +504,4 @@ class RequestBuilder {
         return body
     }
 
-}
-
-/**
- * Exception thrown when a non-200 status is returned from the web service.
- */
-class ResponseStatusException extends Exception {
-    int status
-    Object content
-
-    public ResponseStatusException(int status, Object content) {
-        super(content as String)
-
-        this.status = status
-        this.content = content
-    }
 }
