@@ -3,6 +3,9 @@ Jersey Client RequestBuilder Plugin
 
 Changelog
 ---------
+**1.0.9**
+* Fix another silly bug related to JSON conversion.
+
 **1.0.8**
 * Fix order of operations problem with JSON conversion.
 

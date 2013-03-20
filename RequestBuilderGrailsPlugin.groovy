@@ -1,6 +1,6 @@
 class RequestBuilderGrailsPlugin {
     // the plugin version
-    def version = "1.0.8"
+    def version = "1.0.9"
     // plugin group
     def group = 'com.rackspace.rvi'
     // the version or versions of Grails the plugin is designed for
