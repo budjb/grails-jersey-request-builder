@@ -503,7 +503,11 @@ class RequestBuilder {
 
         // Check if the body is a map
         if (body instanceof Map) {
+            // Convert the map
             body = new JsonBuilder(body).toString()
+            
+            // Set the content type of the request
+            contentType = 'application/json'
         }
 
         // Use the basic provided body, even if it's empty
