@@ -3,6 +3,9 @@ Jersey Client RequestBuilder Plugin
 
 Changelog
 ---------
+**1.0.8**
+* Fix order of operations problem with JSON conversion.
+
 **1.0.7**
 * Also set the content-type for map to JSON conversions.
 
