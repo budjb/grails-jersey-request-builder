@@ -495,7 +495,7 @@ class RequestBuilder {
      */
     private Object getRequestBody() {
         // If we have items in the form map, make a Form object and return it
-        if (form.size()) {
+        if (form.size() > 0) {
             Form f = new Form()
             form.each { key, value ->
                 f.add(key, value)
@@ -513,17 +513,19 @@ class RequestBuilder {
      */
     private void convertBody() {
         // Don't do anything if the form is present
-        if (form != null) {
+        if (form.size() > 0) {
             return
         }
 
-        // Check if the body is a map
-        if (body instanceof Map) {
-            // Convert the map
+        // Check if the body is a map or list
+        if (body instanceof Map || body instanceof List) {
+            // Convert the map/list
             body = new JsonBuilder(body).toString()
 
             // Set the content type of the request
-            contentType = 'application/json'
+            if (!contentType) {
+                contentType = 'application/json'
+            }
         }
     }
 }
