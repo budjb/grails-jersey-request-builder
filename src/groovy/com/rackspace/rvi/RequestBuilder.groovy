@@ -12,6 +12,7 @@ import com.sun.jersey.client.urlconnection.HTTPSProperties
 import javax.ws.rs.core.Cookie
 import javax.ws.rs.core.MediaType
 
+import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
 
 import javax.net.ssl.SSLSession
@@ -498,6 +499,11 @@ class RequestBuilder {
             }
 
             return f
+        }
+
+        // Check if the body is a map
+        if (body instanceof Map) {
+            body = new JsonBuilder(body).toString()
         }
 
         // Use the basic provided body, even if it's empty
