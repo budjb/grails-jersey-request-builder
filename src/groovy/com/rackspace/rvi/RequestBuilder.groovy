@@ -353,6 +353,9 @@ class RequestBuilder {
      * @return Built request object.
      */
     private WebResource.Builder buildRequest() {
+        // Do any body conversion here, so we can set other parameters as necessary
+        convertBody()
+
         // Get the client
         Client client = getClient()
 
@@ -501,17 +504,26 @@ class RequestBuilder {
             return f
         }
 
-        // Check if the body is a map
-        if (body instanceof Map) {
-            // Convert the map
-            body = new JsonBuilder(body).toString()
-            
-            // Set the content type of the request
-            contentType = 'application/json'
-        }
-
         // Use the basic provided body, even if it's empty
         return body
     }
 
+    /**
+     * Does any conversion necessary on the body of the request.
+     */
+    private void convertBody() {
+        // Don't do anything if the form is present
+        if (form != null) {
+            return
+        }
+
+        // Check if the body is a map
+        if (body instanceof Map) {
+            // Convert the map
+            body = new JsonBuilder(body).toString()
+
+            // Set the content type of the request
+            contentType = 'application/json'
+        }
+    }
 }
