@@ -3,6 +3,9 @@ Jersey Client RequestBuilder Plugin
 
 Changelog
 ---------
+**1.0.6**
+* Did a check for maps in the body of a request, and convert them to JSON if maps are found.
+
 **1.0.5**
 * Added cookie support.
 * Changed closure delegation mode to owner first, should make your code work more intuitively.
