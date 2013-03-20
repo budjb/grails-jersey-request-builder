@@ -517,13 +517,15 @@ class RequestBuilder {
             return
         }
 
-        // Check if the body is a map
-        if (body instanceof Map) {
-            // Convert the map
+        // Check if the body is a map or list
+        if (body instanceof Map || body instanceof List) {
+            // Convert the map/list
             body = new JsonBuilder(body).toString()
 
             // Set the content type of the request
-            contentType = 'application/json'
+            if (!contentType) {
+                contentType = 'application/json'
+            }
         }
     }
 }
