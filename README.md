@@ -3,6 +3,9 @@ Jersey Client RequestBuilder Plugin
 
 Changelog
 ---------
+**1.0.7**
+* Also set the content-type for map to JSON conversions.
+
 **1.0.6**
 * Did a check for maps in the body of a request, and convert them to JSON if maps are found.
 
