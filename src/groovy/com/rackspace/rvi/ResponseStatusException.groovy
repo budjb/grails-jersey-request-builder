@@ -10,11 +10,16 @@ class ResponseStatusException extends Exception {
      * HTTP status code
      */
     int status
-    
+
     /**
      * Content of the response
      */
     Object content
+
+    /**
+     * The text from the <code>LoggingFilter</code>.
+     */
+    String logText
 
     /**
      * List of exception types with their status code number.
@@ -52,31 +57,35 @@ class ResponseStatusException extends Exception {
         504: HttpGatewayTimeoutException,
         505: HttpHttpVersionNotSupportedException
     ]
-    
+
     /**
      * Constructor
-     * 
+     *
      * @param status
      * @param content
+     * @param logText
      */
-    public ResponseStatusException(int status, Object content) {
-        super(content as String)
+    public ResponseStatusException(int status, Object content, String logText) {
+        super("Status ${status} received.")
 
         this.status = status
         this.content = content
+        this.logText = logText
     }
-    
+
     /**
      * Returns the proper exception type for the given HTTP status code.
-     * 
+     *
      * @param status
      * @param content
+     * @param logText
+     *
      * @return
      */
-    public static ResponseStatusException build(int status, Object content) {
+    public static ResponseStatusException build(int status, Object content, String logText) {
         if (!httpStatusCodes.containsKey(status)) {
-            return new ResponseStatusException(status, content)
+            return new ResponseStatusException(status, content, logText)
         }
-        return httpStatusCodes[status].newInstance(status, content)
+        return httpStatusCodes[status].newInstance(status, content, logText)
     }
 }
