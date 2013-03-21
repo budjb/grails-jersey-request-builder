@@ -3,6 +3,9 @@ Jersey Client RequestBuilder Plugin
 
 Changelog
 ---------
+**1.0.10**
+* Added logging using log4j of the request and response. See the "debug" option.
+
 **1.0.9**
 * Fix another silly bug related to JSON conversion.
 * Added lists to the JSON conversion process.

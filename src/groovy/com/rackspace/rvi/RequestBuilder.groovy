@@ -6,6 +6,7 @@ import com.sun.jersey.api.client.WebResource
 import com.sun.jersey.api.client.WebResource.Builder
 import com.sun.jersey.api.client.config.ClientConfig
 import com.sun.jersey.api.client.config.DefaultClientConfig
+import com.sun.jersey.api.client.filter.LoggingFilter
 import com.sun.jersey.api.representation.Form
 import com.sun.jersey.client.urlconnection.HTTPSProperties
 
@@ -23,10 +24,17 @@ import javax.net.ssl.SSLContext
 import javax.net.ssl.HttpsURLConnection
 import javax.net.ssl.HostnameVerifier
 
+import org.apache.log4j.Logger
+
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
 
 class RequestBuilder {
+    /**
+     * Logger
+     */
+    private Logger log = Logger.getLogger(getClass().name)
+
     /**
      * The URI to hit.
      */
@@ -96,6 +104,11 @@ class RequestBuilder {
     Object body = null
 
     /**
+     * Whether to log the request and response.
+     */
+    boolean debug = false
+
+    /**
      * Whether to ignore SSL cert validation.
      */
     boolean ignoreInvalidSSL = false
@@ -104,6 +117,11 @@ class RequestBuilder {
      * Backed up SSL socket factory
      */
     private SSLSocketFactory _sslSocketBackup = null
+
+    /**
+     * Logging output stream
+     */
+    private ByteArrayOutputStream loggingBuffer = null
 
     /**
      * Performs a GET request.
@@ -359,6 +377,15 @@ class RequestBuilder {
         // Get the client
         Client client = getClient()
 
+        // Set up logging if requested
+        if (debug) {
+            // Create the byte array stream
+            loggingBuffer = new ByteArrayOutputStream()
+
+            // Add the logging filter
+            client.addFilter(new LoggingFilter(new PrintStream(loggingBuffer)))
+        }
+
         // Create the resource with the uri
         WebResource resource = client.resource(uri)
 
@@ -464,11 +491,17 @@ class RequestBuilder {
     }
 
     /**
-     * Does any environment cleanup after the request is done.
+     * Does any cleanup after the request is done.
      */
     private void cleanUp() {
+        // Restore the SSL socket factory
         if (ignoreInvalidSSL) {
             HttpsURLConnection.setDefaultSSLSocketFactory(_sslSocketBackup)
+        }
+
+        // Dump debug if requested
+        if (debug) {
+            log.debug(new String(loggingBuffer.toByteArray()))
         }
     }
 
