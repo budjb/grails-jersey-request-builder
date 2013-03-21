@@ -29,6 +29,12 @@ import org.apache.log4j.Logger
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
 
+/**
+ * The <code>RequestBuilder</code> abstracts the underlying code to
+ * build a Jersey Client request into a closure.
+ *
+ * @author Bud Byrd <bud.byrd@rackspace.com>
+ */
 class RequestBuilder {
     /**
      * Logger
@@ -359,7 +365,9 @@ class RequestBuilder {
 
         // Check the status
         if (!skipStatusCheck && Math.floor(response.status / 100) != 2) {
-            throw ResponseStatusException.build(response.status, result)
+            String logString = new String(loggingBuffer.toByteArray())
+            throw ResponseStatusException.build(
+                response.status, result, logString)
         }
 
         return result
@@ -377,14 +385,13 @@ class RequestBuilder {
         // Get the client
         Client client = getClient()
 
-        // Set up logging if requested
-        if (debug) {
-            // Create the byte array stream
-            loggingBuffer = new ByteArrayOutputStream()
+        // Create the byte array stream
+        loggingBuffer = new ByteArrayOutputStream()
 
-            // Add the logging filter
-            client.addFilter(new LoggingFilter(new PrintStream(loggingBuffer)))
-        }
+        // Set up the logging filter.
+        //
+        // If debug is enabled this will log to application logger.
+        client.addFilter(new LoggingFilter(new PrintStream(loggingBuffer)))
 
         // Create the resource with the uri
         WebResource resource = client.resource(uri)
@@ -501,7 +508,9 @@ class RequestBuilder {
 
         // Dump debug if requested
         if (debug) {
-            log.debug(new String(loggingBuffer.toByteArray()))
+            String logString = "HTTP Conversation:\n" +
+                "${formatLoggingOutput(new String(loggingBuffer.toByteArray()))}"
+            log.debug(logString)
         }
     }
 
@@ -560,5 +569,19 @@ class RequestBuilder {
                 contentType = 'application/json'
             }
         }
+    }
+
+    /**
+     * Formats the log output of the <code>LoggingFilter</code>
+     * slightly.
+     *
+     * @param   logText     The log text from the
+     *                      <code>OutputStream</code>
+     *
+     * @return  A formatted string of the original output but with
+     *          more indentation.
+     */
+    private final String formatLoggingOutput(String logText) {
+        logText = logText.readLines().collect { "    ${it}" }.join('\n')
     }
 }
