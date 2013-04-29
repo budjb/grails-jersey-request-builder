@@ -161,7 +161,24 @@ class RequestBuilder {
     }
 
     /**
-     * Performs a GET request
+     * Performs a GET request.
+     *
+     * <p>Use to resend a previously constructed request.</p>
+     *
+     * @throws  IllegalStateException
+     *
+     * Thrown when <code>uri</code> is <code>null</code>.
+     */
+    Object get() throws IllegalStateException {
+        if (uri == null) {
+            throw new IllegalStateException("URI must not be null")
+        }
+
+        return doGet()
+    }
+
+    /**
+     * Performs a GET request.
      *
      * @param uri Request URI
      * @return
@@ -207,6 +224,23 @@ class RequestBuilder {
         finally {
             cleanUp()
         }
+    }
+
+    /**
+     * Performs a PUT request.
+     *
+     * <p>Use to resend a previously constructed request.</p>
+     *
+     * @throws  IllegalStateException
+     *
+     * Thrown when <code>uri</code> is <code>null</code>.
+     */
+    Object put() throws IllegalStateException {
+        if (uri == null) {
+            throw new IllegalStateException("URI must not be null")
+        }
+
+        return doPut()
     }
 
     /**
@@ -264,6 +298,23 @@ class RequestBuilder {
     /**
      * Performs a POST request.
      *
+     * <p>Use to resend a previously constructed request.</p>
+     *
+     * @throws  IllegalStateException
+     *
+     * Thrown when <code>uri</code> is <code>null</code>.
+     */
+    Object post() throws IllegalStateException {
+        if (uri == null) {
+            throw new IllegalStateException("URI must not be null")
+        }
+
+        return doPost()
+    }
+
+    /**
+     * Performs a POST request.
+     *
      * @param uri Request URI
      * @return
      */
@@ -311,6 +362,23 @@ class RequestBuilder {
         finally {
             cleanUp()
         }
+    }
+
+    /**
+     * Performs a DELETE request.
+     *
+     * <p>Use to resend a previously constructed request.</p>
+     *
+     * @throws  IllegalStateException
+     *
+     * Thrown when <code>uri</code> is <code>null</code>.
+     */
+    Object delete() throws IllegalStateException {
+        if (uri == null) {
+            throw new IllegalStateException("URI must not be null")
+        }
+
+        return doDelete()
     }
 
     /**
