@@ -42,6 +42,16 @@ class RequestBuilder {
     private Logger log = Logger.getLogger(getClass().name)
 
     /**
+     * The Connection Timeout for the Client.
+     */
+    Integer connectionTimeout = null
+
+    /**
+     * The Read Timeout for the Client.
+     */
+    Integer readTimeout = null
+
+    /**
      * The URI to hit.
      */
     String uri = null
@@ -457,7 +467,7 @@ class RequestBuilder {
     private Client getClient() {
         // Check whether we can just skip this altogether
         if (!ignoreInvalidSSL) {
-            return Client.create()
+            getModifiedClient()
         }
 
         // Back up the existing trust settings
@@ -494,7 +504,43 @@ class RequestBuilder {
             ))
         } catch(Exception e) { }
 
-        return Client.create(config)
+        return getModifiedClient(config)
+    }
+
+    /**
+     * Retrieve a <code>Client</code> with optional fine-grained
+     * modifications.
+     */
+    private Client getModifiedClient() {
+        getModifiedClient(null)
+    }
+
+    /**
+     * Retrieve a <code>Client</code> with optional fine-grained
+     * modifications.
+     *
+     * @param   config  The <code>ClientConfig</code> to apply to the
+     *                  client.
+     */
+    private Client getModifiedClient(ClientConfig config) {
+        Client client
+
+        if (config) {
+            client = Client.create(config)
+        }
+        else {
+            client = Client.create()
+        }
+
+        if (connectionTimeout) {
+            client.setConnectTimeout(connectionTimeout)
+        }
+
+        if (readTimeout) {
+            client.setReadTimeout(readTimeout)
+        }
+
+        return client
     }
 
     /**
