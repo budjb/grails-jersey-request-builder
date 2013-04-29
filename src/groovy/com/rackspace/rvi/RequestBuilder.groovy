@@ -465,77 +465,58 @@ class RequestBuilder {
      * @return Configured jersey client
      */
     private Client getClient() {
+        // Client object
+        Client client = null
+
         // Check whether we can just skip this altogether
-        if (!ignoreInvalidSSL) {
-            getModifiedClient()
-        }
+        if (ignoreInvalidSSL) {
+            // Back up the existing trust settings
+            _sslSocketBackup = HttpsURLConnection.getDefaultSSLSocketFactory()
 
-        // Back up the existing trust settings
-        _sslSocketBackup = HttpsURLConnection.getDefaultSSLSocketFactory()
+            // Create a trust manager that does not validate certificate chains
+            TrustManager[] certs = [new X509TrustManager() {
+                public X509Certificate[] getAcceptedIssuers() { return null }
+                public void checkClientTrusted(X509Certificate[] certs, String authType) { }
+                public void checkServerTrusted(X509Certificate[] certs, String authType) { }
+            }]
 
-        // Create a trust manager that does not validate certificate chains
-        TrustManager[] certs = [new X509TrustManager() {
-            public X509Certificate[] getAcceptedIssuers() { return null }
-            public void checkClientTrusted(X509Certificate[] certs, String authType) { }
-            public void checkServerTrusted(X509Certificate[] certs, String authType) { }
-        }]
+            // SSL context
+            SSLContext ctx = null
+            try {
+                ctx = SSLContext.getInstance("TLS")
+                ctx.init(null, certs, new SecureRandom())
+            }
+            catch (java.security.GeneralSecurityException ex) { }
 
-        // SSL context
-        SSLContext ctx = null
-        try {
-            ctx = SSLContext.getInstance("TLS")
-            ctx.init(null, certs, new SecureRandom())
-        }
-        catch (java.security.GeneralSecurityException ex) { }
+            // Set the default socket factory
+            HttpsURLConnection.setDefaultSSLSocketFactory(ctx.getSocketFactory())
 
-        // Set the default socket factory
-        HttpsURLConnection.setDefaultSSLSocketFactory(ctx.getSocketFactory())
+            // Create the config
+            ClientConfig config = new DefaultClientConfig()
+            try {
+                config.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES, new HTTPSProperties(
+                    new HostnameVerifier() {
+                        public boolean verify(String hostname, SSLSession session) {
+                            return true
+                        }
+                    },
+                    ctx
+                ))
+            } catch(Exception e) { }
 
-        // Create the config
-        ClientConfig config = new DefaultClientConfig()
-        try {
-            config.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES, new HTTPSProperties(
-                new HostnameVerifier() {
-                    public boolean verify(String hostname, SSLSession session) {
-                        return true
-                    }
-                },
-                ctx
-            ))
-        } catch(Exception e) { }
-
-        return getModifiedClient(config)
-    }
-
-    /**
-     * Retrieve a <code>Client</code> with optional fine-grained
-     * modifications.
-     */
-    private Client getModifiedClient() {
-        getModifiedClient(null)
-    }
-
-    /**
-     * Retrieve a <code>Client</code> with optional fine-grained
-     * modifications.
-     *
-     * @param   config  The <code>ClientConfig</code> to apply to the
-     *                  client.
-     */
-    private Client getModifiedClient(ClientConfig config) {
-        Client client
-
-        if (config) {
+            // Create the client with the config
             client = Client.create(config)
         }
         else {
             client = Client.create()
         }
 
+        // Set connection timeout
         if (connectionTimeout) {
             client.setConnectTimeout(connectionTimeout)
         }
 
+        // Set read timeout
         if (readTimeout) {
             client.setReadTimeout(readTimeout)
         }
