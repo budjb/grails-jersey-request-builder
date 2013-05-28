@@ -3,6 +3,13 @@ Jersey Client RequestBuilder Plugin
 
 Changelog
 ---------
+**1.0.12**
+* Added basic HTTP auth support.
+
+**1.0.11**
+* Made request builder object stateful for reuse.
+* Added connection and read timeouts.
+
 **1.0.10**
 * Added logging using log4j of the request and response. See the "debug" option.
 
