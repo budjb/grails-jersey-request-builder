@@ -9,6 +9,7 @@ import com.sun.jersey.api.client.config.DefaultClientConfig
 import com.sun.jersey.api.client.filter.LoggingFilter
 import com.sun.jersey.api.representation.Form
 import com.sun.jersey.client.urlconnection.HTTPSProperties
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter
 
 import javax.ws.rs.core.Cookie
 import javax.ws.rs.core.MediaType
@@ -138,6 +139,21 @@ class RequestBuilder {
      * Logging output stream
      */
     private ByteArrayOutputStream loggingBuffer = null
+
+    /**
+     * If true uses BasicAuth
+     */
+    boolean useBasicAuth = false
+
+    /**
+     * basic auth user name
+     */
+    String basicAuthUserName = null
+
+    /**
+     * basic auth password
+     */
+    String basicAuthPassword = null
 
     /**
      * Performs a GET request.
@@ -578,12 +594,14 @@ class RequestBuilder {
         else {
             client = Client.create()
         }
-
+        // if basic auth enabled set user name and password
+        if (useBasicAuth) {
+            client.addFilter(new HTTPBasicAuthFilter(basicAuthUserName,basicAuthPassword))
+        }
         // Set connection timeout
         if (connectionTimeout) {
             client.setConnectTimeout(connectionTimeout)
         }
-
         // Set read timeout
         if (readTimeout) {
             client.setReadTimeout(readTimeout)
