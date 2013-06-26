@@ -3,6 +3,12 @@ Jersey Client RequestBuilder Plugin
 
 Changelog
 ---------
+**1.0.13**
+* Added Jersey Server as a dependency of the plugin. It's not actually required for
+  the plugin to work, however, when an application shares a tomcat server that _is_
+  using the server library, issues occur that require server to be added to the
+  project.
+
 **1.0.12**
 * Added basic HTTP auth support.
 
