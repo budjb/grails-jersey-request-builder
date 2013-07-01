@@ -3,6 +3,10 @@ Jersey Client RequestBuilder Plugin
 
 Changelog
 ---------
+**1.0.14**
+* Added UriBuilder and integrated it into the RequestBuilder class. UriBuilder
+  can be used independently from RequestBuilder.
+
 **1.0.13**
 * Added Jersey Server as a dependency of the plugin. It's not actually required for
   the plugin to work, however, when an application shares a tomcat server that _is_
