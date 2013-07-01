@@ -54,8 +54,10 @@ class RequestBuilder {
 
     /**
      * The URI to hit.
+     *
+     * Can either be a String or an URI.
      */
-    String uri = null
+    Object uri = null
 
     /**
      * Query parameters.
@@ -486,6 +488,13 @@ class RequestBuilder {
         //
         // If debug is enabled this will log to application logger.
         client.addFilter(new LoggingFilter(new PrintStream(loggingBuffer)))
+
+        // If the uri is a string, run it through the UriBuilder
+        if (uri instanceof String) {
+            uri = UriBuilder.build {
+                base = uri
+            }
+        }
 
         // Create the resource with the uri
         WebResource resource = client.resource(uri)
