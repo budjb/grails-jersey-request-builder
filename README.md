@@ -3,6 +3,13 @@ Jersey Client RequestBuilder Plugin
 
 Changelog
 ---------
+**1.0.15**
+* Added flag that instructs Jersey whether to automatically follow redirects or not.
+  Note that if a redirect status is encountered and not followed, an exception of
+  the appropriate HTTP status code will be thrown.
+* In the case that a response has a JSON content type but the body is empty,
+  null will be returned as the response when autoconversion of JSON is enabled.
+
 **1.0.14**
 * Added UriBuilder and integrated it into the RequestBuilder class. UriBuilder
   can be used independently from RequestBuilder.
