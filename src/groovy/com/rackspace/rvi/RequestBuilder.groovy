@@ -118,6 +118,11 @@ class RequestBuilder {
     boolean rawClientResponse = false
 
     /**
+     * Whether to automatically follow redirects.
+     */
+    boolean followRedirects = true
+
+    /**
      * Body of the request - only useful on POST or PUT.
      */
     Object body = null
@@ -451,11 +456,16 @@ class RequestBuilder {
             MediaType contentType = response.getType()
 
             // Get the response entity as a string
-            result = response.getEntity(String)
+            result = (String)response.getEntity(String)
 
             // Attempt to auto-convert JSON if enabled
             if (convertJson && MediaType.APPLICATION_JSON_TYPE.isCompatible(contentType)) {
-                result = new JsonSlurper().parseText(result)
+                if (result.size() > 0 ) {
+                    result = new JsonSlurper().parseText(result)
+                }
+                else {
+                    result = null
+                }
             }
         }
 
@@ -615,6 +625,9 @@ class RequestBuilder {
         if (readTimeout) {
             client.setReadTimeout(readTimeout)
         }
+
+        // Whether to follow redirects
+        client.setFollowRedirects(followRedirects)
 
         return client
     }
