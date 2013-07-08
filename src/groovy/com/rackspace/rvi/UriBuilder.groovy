@@ -139,30 +139,21 @@ class UriBuilder {
      * @return
      */
     public URI build() {
+        JsrUriBuilder builder
+
         // If a base URL is set, parse it out
         if (base) {
-            // Parse the URL
-            URI uri = new URI(base)
-
-            // Clean up the paths
-            List pathParts = uri.path.split('/')
-            pathParts.removeAll([''])
-
-            // Replace parts if not set
-            host = host ?: uri.host
-            port = port ?: uri.port
-            scheme = scheme ?: uri.scheme
-            fragment = fragment ?: uri.fragment
-            path = pathParts + path
+            builder = JsrUriBuilder.fromUri(base)
         }
+        else {
+            // The host is absolutely required
+            if (!host) {
+                throw new IllegalArgumentException('host name is required')
+            }
 
-        // The host is absolutely required
-        if (!host) {
-            throw new IllegalArgumentException('host name is required')
+            // Create the builder
+            builder = JsrUriBuilder.newInstance()
         }
-
-        // Create the builder
-        JsrUriBuilder builder = JsrUriBuilder.newInstance()
 
         // Determine the scheme
         scheme = scheme ?: 'http'
@@ -181,10 +172,14 @@ class UriBuilder {
         builder.scheme(scheme)
 
         // Set the host
-        builder.host(host)
+        if (host) {
+            builder.host(host)
+        }
 
         // Set the fragment
-        builder.fragment(fragment)
+        if (fragment) {
+            builder.fragment(fragment)
+        }
 
         // Add path parts
         path.each {

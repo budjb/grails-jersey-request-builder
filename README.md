@@ -3,6 +3,9 @@ Jersey Client RequestBuilder Plugin
 
 Changelog
 ---------
+**1.0.16**
+* Cleaned up UriBuilder a bit to support premade query string in RequestBuilder.
+
 **1.0.15**
 * Added flag that instructs Jersey whether to automatically follow redirects or not.
   Note that if a redirect status is encountered and not followed, an exception of
