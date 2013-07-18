@@ -153,23 +153,25 @@ class UriBuilder {
 
             // Create the builder
             builder = JsrUriBuilder.newInstance()
-        }
 
-        // Determine the scheme
-        scheme = scheme ?: 'http'
+            // Make sure the scheme is set
+            scheme = scheme ?: 'http'
 
-        // Determine the port
-        if (!port) {
-            port = (scheme == 'https') ? 443 : 80
-        }
-
-        // Set the port
-        if ((scheme != 'http' || port != 80) && (scheme != 'https' || port != 443)) {
-            builder.port(port)
+            // Make sure the port is set
+            port = port ?: 80
         }
 
         // Set the scheme
-        builder.scheme(scheme)
+        if (scheme) {
+            builder.scheme(scheme)
+        }
+
+        // Set the port
+        if (port) {
+            if ((scheme != 'http' || port != 80) && (scheme != 'https' || port != 443)) {
+                builder.port(port)
+            }
+        }
 
         // Set the host
         if (host) {
