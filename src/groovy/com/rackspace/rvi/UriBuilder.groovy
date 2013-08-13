@@ -81,6 +81,11 @@ class UriBuilder {
     List path = []
 
     /**
+     * Query parameters
+     */
+    Map query = [:]
+
+    /**
      * Protocol (default "http")
      */
     String scheme = null
@@ -186,6 +191,11 @@ class UriBuilder {
         // Add path parts
         path.each {
             builder.path(it as String)
+        }
+
+        // Add query parts
+        query.each { key, value ->
+            builder.queryParam(key, value as String)
         }
 
         return builder.build()

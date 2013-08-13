@@ -3,6 +3,9 @@ Jersey Client RequestBuilder Plugin
 
 Changelog
 ---------
+**1.0.18**
+* Added query parameter support to UriBuilder.
+
 **1.0.17**
 * Fixed bug in UriBuilder that did not respect existing URL parts when passed via 'base'.
 
