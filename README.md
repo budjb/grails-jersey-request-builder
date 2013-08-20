@@ -3,6 +3,9 @@ Jersey Client RequestBuilder Plugin
 
 Changelog
 ---------
+**1.0.19**
+* Added the raw response object to HTTP exceptions.
+
 **1.0.18**
 * Added query parameter support to UriBuilder.
 

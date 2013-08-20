@@ -1,6 +1,7 @@
 package com.rackspace.rvi
 
 import com.rackspace.rvi.httpexception.*
+import com.sun.jersey.api.client.ClientResponse
 
 /**
  * Exception thrown when a non-200 status is returned from the web service.
@@ -15,6 +16,11 @@ class ResponseStatusException extends Exception {
      * Content of the response
      */
     Object content
+
+    /**
+     * Actual response object
+     */
+    ClientResponse response
 
     /**
      * The text from the <code>LoggingFilter</code>.
@@ -50,6 +56,7 @@ class ResponseStatusException extends Exception {
         415: HttpUnsupportedMediaTypeException,
         416: HttpRequestedRangeNotSatisfiableException,
         417: HttpExpectationFailedException,
+        422: HttpUnprocessableEntityException,
         500: HttpInternalServerErrorException,
         501: HttpNotImplementedException,
         502: HttpBadGatewayException,
@@ -65,11 +72,12 @@ class ResponseStatusException extends Exception {
      * @param content
      * @param logText
      */
-    public ResponseStatusException(int status, Object content, String logText) {
+    public ResponseStatusException(int status, Object content, ClientResponse response, String logText) {
         super("Status ${status} received.")
 
         this.status = status
         this.content = content
+        this.response = response
         this.logText = logText
     }
 
@@ -82,10 +90,10 @@ class ResponseStatusException extends Exception {
      *
      * @return
      */
-    public static ResponseStatusException build(int status, Object content, String logText) {
+    public static ResponseStatusException build(int status, Object content, ClientResponse response, String logText) {
         if (!httpStatusCodes.containsKey(status)) {
-            return new ResponseStatusException(status, content, logText)
+            return new ResponseStatusException(status, content, response, logText)
         }
-        return httpStatusCodes[status].newInstance(status, content, logText)
+        return httpStatusCodes[status].newInstance(status, content, response, logText)
     }
 }

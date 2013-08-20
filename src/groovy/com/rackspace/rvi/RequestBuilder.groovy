@@ -473,7 +473,7 @@ class RequestBuilder {
         if (!skipStatusCheck && Math.floor(response.status / 100) != 2) {
             String logString = new String(loggingBuffer.toByteArray())
             throw ResponseStatusException.build(
-                response.status, result, logString)
+                response.status, result, response, logString)
         }
 
         return result
