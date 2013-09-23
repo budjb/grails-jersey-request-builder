@@ -1,5 +1,52 @@
-Jersey Client RequestBuilder Plugin
+RequestBuilder Plugin
 ===================================
+
+Usage
+-----
+The RequestBuilder plugin basically provides a convenient helper class to build and process
+web requests utilizing the Jersey library.
+
+Basic usage is as follows:
+
+    def response = new RequestBuilder().get {
+        uri = 'http://example.com'
+        query = [
+            'param1': 'value1',
+            'param2': 'value2'
+        ]
+        headers = [
+            'Content-type': 'text/plain'
+        ]
+    }
+
+At a minimum, the uri is required.  The following options are support by the RequestBuilder class:
+
+* connectionTimeout: Timeout for the client to make a connection to the remote host.
+* readTimeout: Timeout for the client to finish the request before giving up.
+* uri: Full URL for destination of the request.
+* query: A simple map of named query parameters.
+* headers: A simple map of named headers.
+* form: A convenience map to build a form request.
+* contentType: The content-type of the request.
+* accept: The content-type the client expects to receive from the response.
+* cookies: A simple map of named cookie parameters to send with the request.
+* convertJson: If true, and the response sends a JSON-compatible response type, automatically attempt to convert
+  the response as the return.
+* binaryResponse: Returns the raw byte array of the response instead of converting it to a string or
+  attempting to convert to JSON.
+* skipStatusCheck: If false (default), does not check the HTTP status code.  If true, a non-200 HTTP status code
+  will throw a correctly named exception for the status code.
+* rawClientResponse: If true (default is false), the RequestBuilder will return the Jersey ClientResponse object without
+  doing any processing work on it.
+* followRedirects: If true (default), automatically follow redirects sent as a response.
+* body: Body of the request to send.  If a list or map is given, it is automatically converted to a JSON string.
+* debug: If true (default is false), the request is logged at the debug level to a log4j logger.
+* ignoreInvalidSSL: If true (default is false), the SSL trust store is not used when making the request.
+  This avoids having to add untrusted certs to the Java certs trust file.
+* useBasicAuth: If true (default is false), send HTTP basic auth with the request.
+* basicAuthUserName: If using basic auth, set this to the username to send.
+* basicAuthPassword: If using basic auth, set this to the password to send.
+
 
 Changelog
 ---------

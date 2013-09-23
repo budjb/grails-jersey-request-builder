@@ -1,8 +1,6 @@
 class RequestBuilderGrailsPlugin {
     // the plugin version
-    def version = "1.0.19"
-    // plugin group
-    def group = 'com.rackspace.rvi'
+    def version = "1.1.0"
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "2.1 > *"
     // the other plugins this plugin depends on
@@ -14,7 +12,7 @@ class RequestBuilderGrailsPlugin {
 
     def title = "Request Builder Plugin" // Headline display name of the plugin
     def author = "Bud Byrd"
-    def authorEmail = "bud.byrd@rackspace.com"
+    def authorEmail = "bud.byrd@gmail.com"
     def description = '''\
 Provides the Jersey client library and a builder to simplify use of the library.
 '''
