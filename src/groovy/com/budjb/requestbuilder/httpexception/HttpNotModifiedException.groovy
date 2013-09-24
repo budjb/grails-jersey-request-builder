@@ -4,7 +4,7 @@ import com.budjb.requestbuilder.ResponseStatusException
 import com.sun.jersey.api.client.ClientResponse
 
 class HttpNotModifiedException extends ResponseStatusException {
-    public HttpNotModifiedException(int status, Object content, ClientResponse response, String logText) {
+    HttpNotModifiedException(int status, content, ClientResponse response, String logText) {
         super(status, content, response, logText)
     }
 }
