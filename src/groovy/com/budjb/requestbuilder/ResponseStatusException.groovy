@@ -52,7 +52,7 @@ class ResponseStatusException extends Exception {
         411: HttpLengthRequiredException,
         412: HttpPreconditionFailedException,
         413: HttpRequestEntityTooLargeException,
-        414: HttpRequistUriTooLongException,
+        414: HttpRequestUriTooLongException,
         415: HttpUnsupportedMediaTypeException,
         416: HttpRequestedRangeNotSatisfiableException,
         417: HttpExpectationFailedException,
