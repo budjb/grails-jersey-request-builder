@@ -72,7 +72,7 @@ class ResponseStatusException extends Exception {
      * @param content
      * @param logText
      */
-    public ResponseStatusException(int status, Object content, ClientResponse response, String logText) {
+    ResponseStatusException(int status, content, ClientResponse response, String logText) {
         super("Status ${status} received.")
 
         this.status = status
@@ -90,7 +90,7 @@ class ResponseStatusException extends Exception {
      *
      * @return
      */
-    public static ResponseStatusException build(int status, Object content, ClientResponse response, String logText) {
+    static ResponseStatusException build(int status, content, ClientResponse response, String logText) {
         if (!httpStatusCodes.containsKey(status)) {
             return new ResponseStatusException(status, content, response, logText)
         }

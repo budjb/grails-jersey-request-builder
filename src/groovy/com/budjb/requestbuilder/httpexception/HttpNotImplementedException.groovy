@@ -4,7 +4,7 @@ import com.budjb.requestbuilder.ResponseStatusException
 import com.sun.jersey.api.client.ClientResponse
 
 class HttpNotImplementedException extends ResponseStatusException {
-    public HttpNotImplementedException(int status, Object content, ClientResponse response, String logText) {
+    HttpNotImplementedException(int status, content, ClientResponse response, String logText) {
         super(status, content, response, logText)
     }
 }

@@ -4,7 +4,7 @@ import com.budjb.requestbuilder.ResponseStatusException
 import com.sun.jersey.api.client.ClientResponse
 
 class HttpConflictException extends ResponseStatusException {
-    public HttpConflictException(int status, Object content, ClientResponse response, String logText) {
+    HttpConflictException(int status, content, ClientResponse response, String logText) {
         super(status, content, response, logText)
     }
 }

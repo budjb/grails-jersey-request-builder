@@ -45,19 +45,19 @@ class RequestBuilder {
     /**
      * The Connection Timeout for the Client.
      */
-    Integer connectionTimeout = null
+    Integer connectionTimeout
 
     /**
      * The Read Timeout for the Client.
      */
-    Integer readTimeout = null
+    Integer readTimeout
 
     /**
      * The URI to hit.
      *
      * Can either be a String or an URI.
      */
-    Object uri = null
+    Object uri
 
     /**
      * Query parameters.
@@ -79,12 +79,12 @@ class RequestBuilder {
     /**
      * Content-Type header.
      */
-    String contentType = null
+    String contentType
 
     /**
      * Accept header.
      */
-    String accept = null
+    String accept
 
     /**
      * Cookies to include with the request.
@@ -125,7 +125,7 @@ class RequestBuilder {
     /**
      * Body of the request - only useful on POST or PUT.
      */
-    Object body = null
+    Object body
 
     /**
      * Whether to log the request and response.
@@ -140,12 +140,12 @@ class RequestBuilder {
     /**
      * Backed up SSL socket factory
      */
-    private SSLSocketFactory _sslSocketBackup = null
+    private SSLSocketFactory _sslSocketBackup
 
     /**
      * Logging output stream
      */
-    private ByteArrayOutputStream loggingBuffer = null
+    private ByteArrayOutputStream loggingBuffer
 
     /**
      * If true uses BasicAuth
@@ -155,19 +155,19 @@ class RequestBuilder {
     /**
      * basic auth user name
      */
-    String basicAuthUserName = null
+    String basicAuthUserName
 
     /**
      * basic auth password
      */
-    String basicAuthPassword = null
+    String basicAuthPassword
 
     /**
      * Performs a GET request.
      *
      * @return
      */
-    private Object doGet() {
+    private doGet() {
         try {
             // Build the request
             WebResource.Builder request = buildRequest()
@@ -233,7 +233,7 @@ class RequestBuilder {
      *
      * @return
      */
-    private Object doPut() {
+    private doPut() {
         try {
             // Build the request
             WebResource.Builder request = buildRequest()
@@ -272,7 +272,7 @@ class RequestBuilder {
      * @param uri Request URI
      * @return
      */
-    Object put(String uri, Object body = null) {
+    Object put(String uri, body = null) {
         // Set the uri
         this.uri = uri
 
@@ -302,7 +302,7 @@ class RequestBuilder {
      *
      * @return
      */
-    private Object doPost() {
+    private doPost() {
         try {
             // Build the request
             WebResource.Builder request = buildRequest()
@@ -341,7 +341,7 @@ class RequestBuilder {
      * @param uri Request URI
      * @return
      */
-    Object post(String uri, Object body = null) {
+    Object post(String uri, body = null) {
         // Set the uri
         this.uri = uri
 
@@ -371,7 +371,7 @@ class RequestBuilder {
      *
      * @return
      */
-    private Object doDelete() {
+    private doDelete() {
         try {
             // Build the request
             WebResource.Builder request = buildRequest()
@@ -438,9 +438,9 @@ class RequestBuilder {
      * @param response Response object to handle.
      * @return The content of the response.
      */
-    private Object handleResponse(ClientResponse response) {
+    private handleResponse(ClientResponse response) {
         // Result holder
-        def result = null
+        def result
 
         // Check what kind of return we want
         if (rawClientResponse) {
@@ -569,7 +569,7 @@ class RequestBuilder {
      */
     private Client getClient() {
         // Client object
-        Client client = null
+        Client client
 
         // Check whether we can just skip this altogether
         if (ignoreInvalidSSL) {
@@ -578,13 +578,13 @@ class RequestBuilder {
 
             // Create a trust manager that does not validate certificate chains
             TrustManager[] certs = [new X509TrustManager() {
-                public X509Certificate[] getAcceptedIssuers() { return null }
-                public void checkClientTrusted(X509Certificate[] certs, String authType) { }
-                public void checkServerTrusted(X509Certificate[] certs, String authType) { }
+                X509Certificate[] getAcceptedIssuers() {}
+                void checkClientTrusted(X509Certificate[] certs, String authType) { }
+                void checkServerTrusted(X509Certificate[] certs, String authType) { }
             }]
 
             // SSL context
-            SSLContext ctx = null
+            SSLContext ctx
             try {
                 ctx = SSLContext.getInstance("TLS")
                 ctx.init(null, certs, new SecureRandom())
@@ -599,7 +599,7 @@ class RequestBuilder {
             try {
                 config.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES, new HTTPSProperties(
                     new HostnameVerifier() {
-                        public boolean verify(String hostname, SSLSession session) {
+                        boolean verify(String hostname, SSLSession session) {
                             return true
                         }
                     },
@@ -672,7 +672,7 @@ class RequestBuilder {
      *
      * @return
      */
-    private Object getRequestBody() {
+    private getRequestBody() {
         // If we have items in the form map, make a Form object and return it
         if (form.size() > 0) {
             Form f = new Form()

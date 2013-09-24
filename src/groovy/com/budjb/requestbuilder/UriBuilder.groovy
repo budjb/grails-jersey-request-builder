@@ -63,17 +63,17 @@ class UriBuilder {
     /**
      * Base URL
      */
-    String base = null
+    String base
 
     /**
      * Host name
      */
-    String host = null
+    String host
 
     /**
      * Port number (default 80)
      */
-    Integer port = null
+    Integer port
 
     /**
      * Path parts
@@ -88,12 +88,12 @@ class UriBuilder {
     /**
      * Protocol (default "http")
      */
-    String scheme = null
+    String scheme
 
     /**
      * URL fragment
      */
-    String fragment = null
+    String fragment
 
     /**
      * Creates a URI via a builder syntax.
@@ -101,7 +101,7 @@ class UriBuilder {
      * @param closure
      * @return
      */
-    public static URI build(Closure closure) {
+    static URI build(Closure closure) {
         // Create the builder
         UriBuilder builder = new UriBuilder()
 
@@ -122,7 +122,7 @@ class UriBuilder {
      * @param pieces
      * @return
      */
-    public static URI build(String template, String... pieces) {
+    static URI build(String template, String... pieces) {
         // Run through as a template
         return JsrUriBuilder.fromPath(template).build(pieces)
     }
@@ -143,7 +143,7 @@ class UriBuilder {
      *
      * @return
      */
-    public URI build() {
+    URI build() {
         JsrUriBuilder builder
 
         // If a base URL is set, parse it out
