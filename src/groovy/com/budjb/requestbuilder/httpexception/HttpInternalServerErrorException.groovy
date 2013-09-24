@@ -4,7 +4,7 @@ import com.budjb.requestbuilder.ResponseStatusException
 import com.sun.jersey.api.client.ClientResponse
 
 class HttpInternalServerErrorException extends ResponseStatusException {
-    public HttpInternalServerErrorException(int status, Object content, ClientResponse response, String logText) {
+    HttpInternalServerErrorException(int status, content, ClientResponse response, String logText) {
         super(status, content, response, logText)
     }
 }
