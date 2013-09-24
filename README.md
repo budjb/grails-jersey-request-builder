@@ -1,9 +1,9 @@
-RequestBuilder Plugin
+Jersey Request Builder Plugin
 ===================================
 
 Usage
 -----
-The RequestBuilder plugin basically provides a convenient helper class to build and process
+The Jersey Request Builder plugin provides a convenient helper class to build and process
 web requests utilizing the Jersey library.
 
 Basic usage is as follows:
@@ -19,7 +19,8 @@ Basic usage is as follows:
         ]
     }
 
-At a minimum, the uri is required.  The following options are support by the RequestBuilder class:
+At a minimum, the uri is required. GET, POST, PUT, and DELETE HTTP methods are provided.
+The following options are support by the RequestBuilder class:
 
 * connectionTimeout: Timeout for the client to make a connection to the remote host.
 * readTimeout: Timeout for the client to finish the request before giving up.
@@ -50,6 +51,12 @@ At a minimum, the uri is required.  The following options are support by the Req
 
 Changelog
 ---------
+**1.1.1**
+* Plugin has been renamed to make it less generic.
+
+**1.1.0**
+* Minor revision bump in preparation for public release.
+
 **1.0.19**
 * Added the raw response object to HTTP exceptions.
 
