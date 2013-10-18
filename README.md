@@ -51,6 +51,11 @@ The following options are support by the RequestBuilder class:
 
 Changelog
 ---------
+**1.1.2**
+* Removed logic to set an all-trusting SSLContext globally when the ignoreInvalidSSL option is used.
+  This prevents a race condition where requests made at the same time an SSL-ignoring request builder
+  is running will also ignore SSL.
+
 **1.1.1**
 * Plugin has been renamed to make it less generic.
 

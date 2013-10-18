@@ -1,5 +1,5 @@
 class JerseyRequestBuilderGrailsPlugin {
-    def version = "1.1.1"
+    def version = "1.1.2"
     def grailsVersion = "2.0 > *"
     def title = "Jersey Request Builder Plugin"
     def author = "Bud Byrd"
