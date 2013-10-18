@@ -138,11 +138,6 @@ class RequestBuilder {
     boolean ignoreInvalidSSL = false
 
     /**
-     * Backed up SSL socket factory
-     */
-    private SSLSocketFactory _sslSocketBackup
-
-    /**
      * Logging output stream
      */
     private ByteArrayOutputStream loggingBuffer
@@ -561,7 +556,7 @@ class RequestBuilder {
      * Creates the jersey client instance.
      *
      * This method is required to handle ignoring SSL cert validation.
-     * Code to implement this was gathered from:
+     * Code to implement this is based on information gathered from:
      *     * http://stackoverflow.com/questions/6047996/ignore-self-signed-ssl-cert-using-jersey-client
      *     * http://stackoverflow.com/questions/2145431/https-using-jersey-client
      *
@@ -573,9 +568,6 @@ class RequestBuilder {
 
         // Check whether we can just skip this altogether
         if (ignoreInvalidSSL) {
-            // Back up the existing trust settings
-            _sslSocketBackup = HttpsURLConnection.getDefaultSSLSocketFactory()
-
             // Create a trust manager that does not validate certificate chains
             TrustManager[] certs = [new X509TrustManager() {
                 X509Certificate[] getAcceptedIssuers() {}
@@ -584,28 +576,19 @@ class RequestBuilder {
             }]
 
             // SSL context
-            SSLContext ctx
-            try {
-                ctx = SSLContext.getInstance("TLS")
-                ctx.init(null, certs, new SecureRandom())
-            }
-            catch (java.security.GeneralSecurityException ex) { }
-
-            // Set the default socket factory
-            HttpsURLConnection.setDefaultSSLSocketFactory(ctx.getSocketFactory())
+            SSLContext ctx = SSLContext.getInstance("TLS")
+            ctx.init(null, certs, new SecureRandom())
 
             // Create the config
             ClientConfig config = new DefaultClientConfig()
-            try {
-                config.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES, new HTTPSProperties(
-                    new HostnameVerifier() {
-                        boolean verify(String hostname, SSLSession session) {
-                            return true
-                        }
-                    },
-                    ctx
-                ))
-            } catch(Exception e) { }
+            config.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES, new HTTPSProperties(
+                new HostnameVerifier() {
+                    boolean verify(String hostname, SSLSession session) {
+                        return true
+                    }
+                },
+                ctx
+            ))
 
             // Create the client with the config
             client = Client.create(config)
@@ -638,11 +621,6 @@ class RequestBuilder {
      * Does any cleanup after the request is done.
      */
     private void cleanUp() {
-        // Restore the SSL socket factory
-        if (ignoreInvalidSSL) {
-            HttpsURLConnection.setDefaultSSLSocketFactory(_sslSocketBackup)
-        }
-
         // Dump debug if requested
         if (debug) {
             String logString = "HTTP Conversation:\n" +
