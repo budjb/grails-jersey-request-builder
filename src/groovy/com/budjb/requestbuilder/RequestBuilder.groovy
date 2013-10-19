@@ -506,7 +506,7 @@ class RequestBuilder {
 
         // Set any query params
         query.each { param, value ->
-            resource = resource.queryParam(param, value)
+            resource = resource.queryParam(param as String, value as String)
         }
 
         // Get the builder
