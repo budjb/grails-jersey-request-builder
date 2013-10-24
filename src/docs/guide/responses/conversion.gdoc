@@ -1,0 +1,5 @@
+When the response to a request is received with a successful HTTP status code, by default, the response body will be converted if possible and returned from the request method.
+
+Ignoring the various response handling options available to the builder, these are the steps followed to determine what to return:
+1. If a @Content-Type@ header that is JSON compatible is received, convert the response to a @List@ or @Map@ and return it.
+2. Convert the response to a string and return it.

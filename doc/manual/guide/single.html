@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+        <title>Jersey Request Builder Plugin 1.1.2</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
+        <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8" />
+    <script type="text/javascript">
+function addJsClass(el) {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+    </head>
+
+    <body class="body" onload="addJsClass();">
+        <div id="navigation">
+            <ul>
+                <li>
+                    <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                        <a href="../guide/index.html" class="button">Table of contents</a>
+                        <div id="nav-summary-childs" style="display:none;">
+                            
+                            <div class="toc-item" style="margin-left:0"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0"><a href="#builder"><strong>2</strong><span>Making Requests</span></a></div>
+                            
+                        </div>
+                    </div>
+                </li>
+                <li class="separator selected">
+                    <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+                </li>
+            </ul>
+        </div>
+        <div id="header">
+            <div class="images clearfix">
+                
+                
+            </div>
+            <p>Provides the Jersey client library and a builder to simplify use of the library.</p>
+        </div>
+
+
+        <table id="colset" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td id="col1">
+                    <div id="main" class="corner-all">
+
+                        <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                        <div class="project">
+                            <h1>Jersey Request Builder Plugin - Reference Documentation</h1>
+                            <p><strong>Authors:</strong> Bud Byrd</p>
+                            <p><strong>Version:</strong> 1.1.2</p>
+                            
+                        </div>
+
+                        
+                        <div id="table-of-content">
+                            <h2>Table of Contents</h2>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="#builder"><strong>2</strong><span>Making Requests</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="#methods"><strong>2.1</strong><span>HTTP Methods</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="#simple"><strong>2.2</strong><span>Simple Usage</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="#closure"><strong>2.3</strong><span>Closure Usage</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="#stateful"><strong>2.4</strong><span>Stateful Usage</span></a></div>
+                            
+                            <div style="clear:both" ></div>
+                        </div>
+                        
+                        
+
+<h1 id="introduction">1 Introduction</h1>
+The Jersey Request Builder plugin provides a <code>RequestBuilder</code> class with a closure-based construction method that allows authors to easily build and send web requests.<p class="paragraph"/>This document will serve to provide a reference of all available request configuration options, as well some examples of its usage.
+
+
+
+<h1 id="builder">2 Making Requests</h1>
+The <code>RequestBuilder</code> can be built and used in several ways, depending on how the author intends to use it.
+
+
+
+<h2 id="methods">2.1 HTTP Methods</h2>
+The HTTP <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html" target="blank">specification</a> defines several request <strong class="bold">methods</strong>.
+Each method has a different intended use, and there are some behavior requirements around them.<p class="paragraph"/>The <code>RequestBuilder</code> supports many of these methods, as outlined below:
+<table class="wiki-table" cellpadding="0" cellspacing="0" border="0"><tr><th><strong class="bold">Method</strong></th><th><strong class="bold">Supported</strong></th><th><strong class="bold"><code>RequestBuilder</code> Method</strong></th></tr><tr class="table-odd"><td>GET</td><td>Supported</td><td><code>get()</code></td></tr><tr class="table-even"><td>POST</td><td>Supported</td><td><code>post()</code></td></tr><tr class="table-odd"><td>PUT</td><td>Supported</td><td><code>put()</code></td></tr><tr class="table-even"><td>DELETE</td><td>Supported</td><td><code>delete()</code></td></tr><tr class="table-odd"><td>HEAD</td><td> <em class="italic">Unsupported</em> </td><td>&#160;</td></tr><tr class="table-even"><td>OPTIONS</td><td> <em class="italic">Unsupported</em> </td><td>&#160;</td></tr></table><p class="paragraph"/><blockquote class="note">
+The unsupported methods listed above will be added in the near future.
+</blockquote>
+
+
+
+<h2 id="simple">2.2 Simple Usage</h2>
+The simplest way to use the <code>RequestBuilder</code> is to use the convenience methods that only require a URL, and optionally the body on methods that support it. They can be used as follows:
+<div class="code"><pre>// GET example
+<span class="java&#45;keyword">new</span> RequestBuilder().get(<span class="java&#45;quote">"http://www.example.com"</span>)<p class="paragraph"/>// POST example
+<span class="java&#45;keyword">new</span> RequestBuilder().post(<span class="java&#45;quote">"http://www.example.com"</span>, <span class="java&#45;quote">"payload"</span>)<p class="paragraph"/>// PUT example
+<span class="java&#45;keyword">new</span> RequestBuilder().put(<span class="java&#45;quote">"http://www.example.com"</span>, <span class="java&#45;quote">"payload"</span>)<p class="paragraph"/>// DELETE example
+<span class="java&#45;keyword">new</span> RequestBuilder().delete(<span class="java&#45;quote">"http://www.example.com"</span>)</pre></div>
+
+
+
+<h2 id="closure">2.3 Closure Usage</h2>
+Using the closure-style functions is the most common use of the <code>RequestBuilder</code>. These methods provide an easy to use, centralized way to build a request with varying parameters.
+This documentation will not go into detail about all of the options available with the <code>RequestBuilder</code>, but all of these options are documented completed in the reference section.<p class="paragraph"/>All of the HTTP methods can use the closure-based methods.<p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">new</span> RequestBuilder().post &#123;
+    uri = <span class="java&#45;quote">"http://www.example.com"</span>
+    body = &#91;<span class="java&#45;quote">"foo"</span>: <span class="java&#45;quote">"bar"</span>&#93;
+    headers = &#91;
+        <span class="java&#45;quote">"X&#45;Auth&#45;Key"</span>: <span class="java&#45;quote">"1321d980&#45;3ceb&#45;11e3&#45;b872&#45;081196ac8a64"</span>
+    &#93;
+&#125;</pre></div>
+
+
+
+<h2 id="stateful">2.4 Stateful Usage</h2>
+The <code>RequestBuilder</code> also allows the author to build a request gradually. All of the properties that can be set inside of the closure-based methods can also be set
+directly on the object itself.<p class="paragraph"/><div class="code"><pre>RequestBuilder builder = <span class="java&#45;keyword">new</span> RequestBuilder()
+builder.uri = <span class="java&#45;quote">"http://www.example.com"</span>
+builder.accept = <span class="java&#45;quote">"text/html"</span>
+def result = builder.get()</pre></div>
+
+
+                    </div>
+                </td>
+                <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">Items</h1><div class="menu-sub">
+                        
+                        
+                        <div class="menu-item"><a href="../ref/Items/reference.html">reference</a>
+                        </div>
+                        
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </td>
+            </tr>
+        </table>
+
+        <div id="footer">
+            
+            
+        </div>
+
+
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+    </body>
+</html>
