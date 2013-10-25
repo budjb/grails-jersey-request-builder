@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>5 Changelog 1.1.2</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs" style="display:none;">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/builder.html"><strong>2</strong><span>Making Requests</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/responses.html"><strong>3</strong><span>Handling Responses</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/uribuilder.html"><strong>4</strong><span>UriBuilder</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/changelog.html"><strong>5</strong><span>Changelog</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>Provides the Jersey client library and a builder to simplify use of the library.</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../guide/uribuilder.html">&lt;&lt; <strong>4</strong><span>UriBuilder</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+
+
+                <div class="project">
+                    <h1>5 Changelog - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Bud Byrd</p>
+
+                    <p><strong>Version:</strong> 1.1.2</p>
+
+                    
+                </div>
+
+                
+
+                
+
+<h1 id="changelog">5 Changelog</h1>
+<h3>Version 1.1.2</h3>
+<ul class="star">
+<li>Removed logic to set an all-trusting SSLContext globally when the ignoreInvalidSSL option is used. This prevents a race condition where requests made at the same time an SSL-ignoring request builder is running will also ignore SSL.</li>
+</ul><p class="paragraph"/><h3>Version 1.1.1</h3>
+<ul class="star">
+<li>Plugin has been renamed to make it less generic.</li>
+</ul><p class="paragraph"/><h3>Version 1.1.0</h3>
+<ul class="star">
+<li>Minor revision bump in preparation for public release.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.19</h3>
+<ul class="star">
+<li>Added the raw response object to HTTP exceptions.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.18</h3>
+<ul class="star">
+<li>Added query parameter support to UriBuilder.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.17</h3>
+<ul class="star">
+<li>Fixed bug in UriBuilder that did not respect existing URL parts when passed via 'base'.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.16</h3>
+<ul class="star">
+<li>Cleaned up UriBuilder a bit to support premade query string in RequestBuilder.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.15</h3>
+<ul class="star">
+<li>Added flag that instructs Jersey whether to automatically follow redirects or not. Note that if a redirect status is encountered and not followed, an exception of the appropriate HTTP status code will be thrown.</li>
+<li>In the case that a response has a JSON content type but the body is empty, null will be returned as the response when autoconversion of JSON is enabled.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.14</h3>
+<ul class="star">
+<li>Added UriBuilder and integrated it into the RequestBuilder class. UriBuilder can be used independently from RequestBuilder.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.13</h3>
+<ul class="star">
+<li>Added Jersey Server as a dependency of the plugin. It's not actually required for the plugin to work, however, when an application shares a tomcat server that  <em class="italic">is</em>  using the server library, issues occur that require server to be added to the project.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.12</h3>
+<ul class="star">
+<li>Added basic HTTP auth support.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.11</h3>
+<ul class="star">
+<li>Made request builder object stateful for reuse.</li>
+<li>Added connection and read timeouts.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.10</h3>
+<ul class="star">
+<li>Added logging using log4j of the request and response. See the "debug" option.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.9</h3>
+<ul class="star">
+<li>Fix another silly bug related to JSON conversion.</li>
+<li>Added lists to the JSON conversion process.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.8</h3>
+<ul class="star">
+<li>Fix order of operations problem with JSON conversion.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.7</h3>
+<ul class="star">
+<li>Also set the content-type for map to JSON conversions.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.6</h3>
+<ul class="star">
+<li>Did a check for maps in the body of a request, and convert them to JSON if maps are found.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.5</h3>
+<ul class="star">
+<li>Added cookie support.</li>
+<li>Changed closure delegation mode to owner first, should make your code work more intuitively.</li>
+<li>Added sub-type exceptions for http status codes.  All inherit from ResponseStatusException.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.4</h3>
+<ul class="star">
+<li>Added SSL cleanup code, fixes a bug where SSL certs are always ignored.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.3</h3>
+<ul class="star">
+<li>Added ability to ignore invalid certs.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.2</h3>
+<ul class="star">
+<li>Added content-type.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.1</h3>
+<ul class="star">
+<li>Initial release.</li>
+</ul><p class="paragraph"/>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../guide/uribuilder.html">&lt;&lt; <strong>4</strong><span>UriBuilder</span></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">Items</h1><div class="menu-sub">
+                        
+                            
+                            <div class="menu-item"><a href="../ref/Items/reference.html">reference</a>
+                            </div>
+                            
+                            </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

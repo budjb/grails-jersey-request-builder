@@ -27,6 +27,12 @@ function addJsClass(el) {
                             
                             <div class="toc-item" style="margin-left:0"><a href="#builder"><strong>2</strong><span>Making Requests</span></a></div>
                             
+                            <div class="toc-item" style="margin-left:0"><a href="#responses"><strong>3</strong><span>Handling Responses</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0"><a href="#uribuilder"><strong>4</strong><span>UriBuilder</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0"><a href="#changelog"><strong>5</strong><span>Changelog</span></a></div>
+                            
                         </div>
                     </div>
                 </li>
@@ -73,6 +79,20 @@ function addJsClass(el) {
                             <div class="toc-item" style="margin-left:10px"><a href="#closure"><strong>2.3</strong><span>Closure Usage</span></a></div>
                             
                             <div class="toc-item" style="margin-left:10px"><a href="#stateful"><strong>2.4</strong><span>Stateful Usage</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="#responses"><strong>3</strong><span>Handling Responses</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="#conversion"><strong>3.1</strong><span>Automatic Conversion</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="#exceptions"><strong>3.2</strong><span>HTTP Status Exceptions</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="#uribuilder"><strong>4</strong><span>UriBuilder</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="#properties"><strong>4.1</strong><span>Properties</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="#uribuilderexamples"><strong>4.2</strong><span>Examples</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="#changelog"><strong>5</strong><span>Changelog</span></a></div>
                             
                             <div style="clear:both" ></div>
                         </div>
@@ -127,6 +147,146 @@ builder.uri = <span class="java&#45;quote">"http://www.example.com"</span>
 builder.accept = <span class="java&#45;quote">"text/html"</span>
 def result = builder.get()</pre></div>
 
+
+
+<h1 id="responses">3 Handling Responses</h1>
+The <code>RequestBuilder</code> attempts to provide as much convenience around HTTP responses it can, while providing options that provide direct access to the underlying objects returned from Jersey-Client.
+
+
+
+<h2 id="conversion">3.1 Automatic Conversion</h2>
+When the response to a request is received with a successful HTTP status code, by default, the response body will be converted if possible and returned from the request method.<p class="paragraph"/>These are the steps followed to determine what to return:
+<ol>
+<li>If <code>rawClientResponse</code> is <code>true</code>, return the Jersey-Client <a href="../ref/Httpsjerseyjavanetnonavapidocs18jerseycomsunjerseyapiclient Client Responsehtml/<code>ClientResponse</code>.html" class="https://jersey.java.net/nonav/apidocs/1.8/jersey/com/sun/jersey/api/client/ClientResponse.html"><code>ClientResponse</code></a> object.</li>
+<li>If <code>binaryResponse</code> is <code>true</code>, return the response as a <code>byte</code> array.</li>
+<li>If a <code>Content-Type</code> header that is JSON compatible is received, or <code>convertJson</code> is <code>true</code>, convert the response to a <code>List</code> or <code>Map</code> (or <code>null</code> if the response was empty) and return it.</li>
+<li>Convert the response to a <code>String</code> and return it.</li>
+</ol><p class="paragraph"/>The default values for the configuration properties that affect the response conversion are:
+<table class="wiki-table" cellpadding="0" cellspacing="0" border="0"><tr><th><strong class="bold">Property</strong></th><th><strong class="bold">Default</strong></th></tr><tr class="table-odd"><td><code>binaryResponse</code></td><td><code>false</code></td></tr><tr class="table-even"><td><code>rawClientResponse</code></td><td><code>false</code></td></tr><tr class="table-odd"><td><code>convertJson</code></td><td><code>true</code></td></tr></table>
+
+
+
+<h2 id="exceptions">3.2 HTTP Status Exceptions</h2>
+The builder, by default, will do automation conversion of the message and return it if the HTTP status returned with the request is considered <strong class="bold">successful</strong>. For the purposes of the builder,
+<strong class="bold">successful</strong> is defined as an HTTP status code in the 2xx range of codes (for example, 200 and 201).<p class="paragraph"/>If a non-successful HTTP status code is encountered, an exception is thrown.  Most well-known HTTP status codes are represented by an appropriately named exception, and they all
+extend a common base exception <code>ResponseStatusException</code>. If a code is received that the builder does not have a named exception for, a <code>ResponseStatusException</code> is thrown.<p class="paragraph"/><blockquote class="note">
+The behavior to throw an exception for a non-successful HTTP status can be disabled by setting the <code>RequestBuilder</code> property <code>skipStatusCheck</code> to <code>true</code>.
+</blockquote><p class="paragraph"/>The <code>ResponseStatusException</code> contains the following:
+<table class="wiki-table" cellpadding="0" cellspacing="0" border="0"><tr><th><strong class="bold">Property</strong></th><th><strong class="bold">Description</strong></th><th><strong class="bold">Type</strong></th></tr><tr class="table-odd"><td><code>content</code></td><td>The <strong class="bold">converted</strong> response message.</td><td> <em class="italic">mixed</em> </td></tr><tr class="table-even"><td><code>logText</code></td><td>Debug log (if enabled)</td><td><code>String</code></td></tr><tr class="table-odd"><td><code>response</code></td><td>The <a href="../ref/Httpsjerseyjavanetnonavapidocs18jerseycomsunjerseyapiclient Client Responsehtml/<code>ClientResponse</code>.html" class="https://jersey.java.net/nonav/apidocs/1.8/jersey/com/sun/jersey/api/client/ClientResponse.html"><code>ClientResponse</code></a> returned from the Jersey-Client library.</td><td><code>ClientResponse</code></td></tr><tr class="table-even"><td><code>status</code></td><td>HTTP status code.</td><td><code>Integer</code></td></tr></table><p class="paragraph"/>The following named HTTP status exceptions defined by the plugin are:
+<table class="wiki-table" cellpadding="0" cellspacing="0" border="0"><tr><th><strong class="bold">HTTP Status Code</strong></th><th><strong class="bold">Exception</strong></th></tr><tr class="table-odd"><td><code>300</code></td><td><code>HttpMultipleChoicesException</code></td></tr><tr class="table-even"><td><code>301</code></td><td><code>HttpMovedPermanentlyException</code></td></tr><tr class="table-odd"><td><code>302</code></td><td><code>HttpFoundException</code></td></tr><tr class="table-even"><td><code>303</code></td><td><code>HttpSeeOtherException</code></td></tr><tr class="table-odd"><td><code>304</code></td><td><code>HttpNotModifiedException</code></td></tr><tr class="table-even"><td><code>305</code></td><td><code>HttpUseProxyException</code></td></tr><tr class="table-odd"><td><code>307</code></td><td><code>HttpTemporaryRedirectException</code></td></tr><tr class="table-even"><td><code>400</code></td><td><code>HttpBadRequestException</code></td></tr><tr class="table-odd"><td><code>401</code></td><td><code>HttpUnauthorizedException</code></td></tr><tr class="table-even"><td><code>402</code></td><td><code>HttpPaymentRequiredException</code></td></tr><tr class="table-odd"><td><code>403</code></td><td><code>HttpForbiddenException</code></td></tr><tr class="table-even"><td><code>404</code></td><td><code>HttpNotFoundException</code></td></tr><tr class="table-odd"><td><code>405</code></td><td><code>HttpMethodNotAllowedException</code></td></tr><tr class="table-even"><td><code>406</code></td><td><code>HttpNotAcceptableException</code></td></tr><tr class="table-odd"><td><code>407</code></td><td><code>HttpProxyAuthenticationRequiredException</code></td></tr><tr class="table-even"><td><code>408</code></td><td><code>HttpRequestTimeoutException</code></td></tr><tr class="table-odd"><td><code>409</code></td><td><code>HttpConflictException</code></td></tr><tr class="table-even"><td><code>410</code></td><td><code>HttpGoneException</code></td></tr><tr class="table-odd"><td><code>411</code></td><td><code>HttpLengthRequiredException</code></td></tr><tr class="table-even"><td><code>412</code></td><td><code>HttpPreconditionFailedException</code></td></tr><tr class="table-odd"><td><code>413</code></td><td><code>HttpRequestEntityTooLargeException</code></td></tr><tr class="table-even"><td><code>414</code></td><td><code>HttpRequestUriTooLongException</code></td></tr><tr class="table-odd"><td><code>415</code></td><td><code>HttpUnsupportedMediaTypeException</code></td></tr><tr class="table-even"><td><code>416</code></td><td><code>HttpRequestedRangeNotSatisfiableException</code></td></tr><tr class="table-odd"><td><code>417</code></td><td><code>HttpExpectationFailedException</code></td></tr><tr class="table-even"><td><code>422</code></td><td><code>HttpUnprocessableEntityException</code></td></tr><tr class="table-odd"><td><code>500</code></td><td><code>HttpInternalServerErrorException</code></td></tr><tr class="table-even"><td><code>501</code></td><td><code>HttpNotImplementedException</code></td></tr><tr class="table-odd"><td><code>502</code></td><td><code>HttpBadGatewayException</code></td></tr><tr class="table-even"><td><code>503</code></td><td><code>HttpServiceUnavailableException</code></td></tr><tr class="table-odd"><td><code>504</code></td><td><code>HttpGatewayTimeoutException</code></td></tr><tr class="table-even"><td><code>505</code></td><td><code>HttpHttpVersionNotSupportedException</code></td></tr></table>
+
+
+
+<h1 id="uribuilder">4 UriBuilder</h1>
+The plugin also provides a <code>UriBuilder</code> class to make building URLs with correct escaping simpler. This builder follows the same building conventions as the <code>RequestBuilder</code>.<p class="paragraph"/>
+
+
+<h2 id="properties">4.1 Properties</h2>
+<table class="wiki-table" cellpadding="0" cellspacing="0" border="0"><tr><th><strong class="bold">Property</strong></th><th><strong class="bold">Description</strong></th><th><strong class="bold">Type</strong></th></tr><tr class="table-odd"><td><code>base</code></td><td>Base URL to start from.</td><td><code>String</code></td></tr><tr class="table-even"><td><code>host</code></td><td>Host name part of the URL.</td><td><code>String</code></td></tr><tr class="table-odd"><td><code>port</code></td><td>Remote host port number.</td><td><code>Integer</code></td></tr><tr class="table-even"><td><code>path</code></td><td>A list of path parts to add to the URL.</td><td><code>List</code></td></tr><tr class="table-odd"><td><code>query</code></td><td>A key/value pair map of query parameters to add to the URL.</td><td><code>Map</code></td></tr><tr class="table-even"><td><code>scheme</code></td><td>The protocol scheme to use (http, https, etc).</td><td><code>String</code></td></tr><tr class="table-odd"><td><code>fragment</code></td><td>Fragment part of the URL (index.html<strong class="bold">#fragment</strong>).</td><td><code>String</code></td></tr></table><p class="paragraph"/><blockquote class="note">
+Note that if the <code>base</code> property is used, any of its URI parts will be overridden by any of the individual properties, if set. The exception is the <code>path</code> property, which will append
+the path parts to the path of the <code>base</code> URL that was specified.
+</blockquote>
+<blockquote class="note">
+The UriBuilder returns a <code>URI</code> object, which can be assigned to the <code>uri</code> property of the <code>RequestBuilder</code>.
+</blockquote>
+
+
+
+<h2 id="uribuilderexamples">4.2 Examples</h2>
+Building a URI with the closure-based syntax:
+<div class="code"><pre>// Produces <span class="java&#45;quote">"http://grails.org/doc/2.1.1/guide/introduction.html&#35;coreFeatures"</span>
+UriBuilder.build &#123;
+    base = 'http://grails.org'
+    path = &#91;'doc', '2.1.1', 'guide', 'introduction.html'&#93;
+    fragment = 'coreFeatures'
+&#125;</pre></div><p class="paragraph"/>Similarly, the URI can be built gradually:
+<div class="code"><pre>// Produces <span class="java&#45;quote">"http://grails.org/doc/2.1.1/guide/introduction.html&#35;coreFeatures"</span>
+UriBuilder uriBuilder = <span class="java&#45;keyword">new</span> UriBuilder()
+uriBuilder.base = 'http://grails.org'
+uriBuilder.path = &#91;'doc', '2.1.1', 'guide', 'introduction.html'&#93;
+uriBuilder.fragment = 'coreFeatures'
+uriBuilder.build()</pre></div><p class="paragraph"/><blockquote class="note">
+<code>UriBuilder</code> is typically used with static <code>build</code> methods, but if the gradual method is used (as in the example above), <code>UriBuilder</code> will need to be instantiated.
+</blockquote><p class="paragraph"/>The URI builder supports path substitution as a convenience feature. You can not  <em class="italic">build</em>  a URI this way, but this allows authors to use a predefined URL "pattern" to replace
+path pieces with values determined at runtime. For example:
+<div class="code"><pre>// Produces <span class="java&#45;quote">"http://example.com/webapp/resource/item/id/5497"</span>
+UriBuilder.build(<span class="java&#45;quote">"http://example.com/webapp/resource/&#123;resource&#125;/id/&#123;id&#125;"</span>, <span class="java&#45;quote">"item"</span>, <span class="java&#45;quote">"5497"</span>)</pre></div>
+
+
+
+<h1 id="changelog">5 Changelog</h1>
+<h3>Version 1.1.2</h3>
+<ul class="star">
+<li>Removed logic to set an all-trusting SSLContext globally when the ignoreInvalidSSL option is used. This prevents a race condition where requests made at the same time an SSL-ignoring request builder is running will also ignore SSL.</li>
+</ul><p class="paragraph"/><h3>Version 1.1.1</h3>
+<ul class="star">
+<li>Plugin has been renamed to make it less generic.</li>
+</ul><p class="paragraph"/><h3>Version 1.1.0</h3>
+<ul class="star">
+<li>Minor revision bump in preparation for public release.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.19</h3>
+<ul class="star">
+<li>Added the raw response object to HTTP exceptions.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.18</h3>
+<ul class="star">
+<li>Added query parameter support to UriBuilder.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.17</h3>
+<ul class="star">
+<li>Fixed bug in UriBuilder that did not respect existing URL parts when passed via 'base'.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.16</h3>
+<ul class="star">
+<li>Cleaned up UriBuilder a bit to support premade query string in RequestBuilder.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.15</h3>
+<ul class="star">
+<li>Added flag that instructs Jersey whether to automatically follow redirects or not. Note that if a redirect status is encountered and not followed, an exception of the appropriate HTTP status code will be thrown.</li>
+<li>In the case that a response has a JSON content type but the body is empty, null will be returned as the response when autoconversion of JSON is enabled.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.14</h3>
+<ul class="star">
+<li>Added UriBuilder and integrated it into the RequestBuilder class. UriBuilder can be used independently from RequestBuilder.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.13</h3>
+<ul class="star">
+<li>Added Jersey Server as a dependency of the plugin. It's not actually required for the plugin to work, however, when an application shares a tomcat server that  <em class="italic">is</em>  using the server library, issues occur that require server to be added to the project.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.12</h3>
+<ul class="star">
+<li>Added basic HTTP auth support.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.11</h3>
+<ul class="star">
+<li>Made request builder object stateful for reuse.</li>
+<li>Added connection and read timeouts.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.10</h3>
+<ul class="star">
+<li>Added logging using log4j of the request and response. See the "debug" option.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.9</h3>
+<ul class="star">
+<li>Fix another silly bug related to JSON conversion.</li>
+<li>Added lists to the JSON conversion process.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.8</h3>
+<ul class="star">
+<li>Fix order of operations problem with JSON conversion.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.7</h3>
+<ul class="star">
+<li>Also set the content-type for map to JSON conversions.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.6</h3>
+<ul class="star">
+<li>Did a check for maps in the body of a request, and convert them to JSON if maps are found.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.5</h3>
+<ul class="star">
+<li>Added cookie support.</li>
+<li>Changed closure delegation mode to owner first, should make your code work more intuitively.</li>
+<li>Added sub-type exceptions for http status codes.  All inherit from ResponseStatusException.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.4</h3>
+<ul class="star">
+<li>Added SSL cleanup code, fixes a bug where SSL certs are always ignored.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.3</h3>
+<ul class="star">
+<li>Added ability to ignore invalid certs.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.2</h3>
+<ul class="star">
+<li>Added content-type.</li>
+</ul><p class="paragraph"/><h3>Version 1.0.1</h3>
+<ul class="star">
+<li>Initial release.</li>
+</ul><p class="paragraph"/>
 
                     </div>
                 </td>

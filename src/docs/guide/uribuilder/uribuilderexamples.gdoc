@@ -1,0 +1,30 @@
+Building a URI with the closure-based syntax:
+{code}
+// Produces "http://grails.org/doc/2.1.1/guide/introduction.html#coreFeatures"
+UriBuilder.build {
+    base = 'http://grails.org'
+    path = ['doc', '2.1.1', 'guide', 'introduction.html']
+    fragment = 'coreFeatures'
+}
+{code}
+
+Similarly, the URI can be built gradually:
+{code}
+// Produces "http://grails.org/doc/2.1.1/guide/introduction.html#coreFeatures"
+UriBuilder uriBuilder = new UriBuilder()
+uriBuilder.base = 'http://grails.org'
+uriBuilder.path = ['doc', '2.1.1', 'guide', 'introduction.html']
+uriBuilder.fragment = 'coreFeatures'
+uriBuilder.build()
+{code}
+
+{note}
+@UriBuilder@ is typically used with static @build@ methods, but if the gradual method is used (as in the example above), @UriBuilder@ will need to be instantiated.
+{note}
+
+The URI builder supports path substitution as a convenience feature. You can not _build_ a URI this way, but this allows authors to use a predefined URL "pattern" to replace
+path pieces with values determined at runtime. For example:
+{code}
+// Produces "http://example.com/webapp/resource/item/id/5497"
+UriBuilder.build("http://example.com/webapp/resource/{resource}/id/{id}", "item", "5497")
+{code}

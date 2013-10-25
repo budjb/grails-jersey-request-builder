@@ -8,4 +8,9 @@ builder:
 responses:
     title: Handling Responses
     conversion: Automatic Conversion
-    
+    exceptions: HTTP Status Exceptions
+uribuilder:
+    title: UriBuilder
+    properties: Properties
+    uribuilderexamples: Examples
+changelog: Changelog

@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>2.3 Closure Usage 1.1.2</title>
+    <title>4.2 Examples 1.1.2</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -62,18 +62,18 @@ function addJsClass() {
             <div id="main" class="corner-all">
 
                 
-                    <div class="toc-item prev-left"><a href="../../guide/introduction.html">&lt;&lt; <strong>1</strong><span>Introduction</span></a></div>
+                    <div class="toc-item prev-left"><a href="../../guide/responses.html">&lt;&lt; <strong>3</strong><span>Handling Responses</span></a></div>
                 
 
                 <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
 
                 
-                    <div class="toc-item next-right"><a href="../../guide/responses.html"><strong>3</strong><span>Handling Responses</span> >></a></div>
+                    <div class="toc-item next-right"><a href="../../guide/changelog.html"><strong>5</strong><span>Changelog</span> >></a></div>
                 
 
 
                 <div class="project">
-                    <h1>2.3 Closure Usage - Reference Documentation</h1>
+                    <h1>4.2 Examples - Reference Documentation</h1>
 
                     <p><strong>Authors:</strong> Bud Byrd</p>
 
@@ -86,23 +86,33 @@ function addJsClass() {
 
                 
 
-<h2 id="closure">2.3 Closure Usage</h2>
-Using the closure-style functions is the most common use of the <code>RequestBuilder</code>. These methods provide an easy to use, centralized way to build a request with varying parameters.
-This documentation will not go into detail about all of the options available with the <code>RequestBuilder</code>, but all of these options are documented completed in the reference section.<p class="paragraph"/>All of the HTTP methods can use the closure-based methods.<p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">new</span> RequestBuilder().post &#123;
-    uri = <span class="java&#45;quote">"http://www.example.com"</span>
-    body = &#91;<span class="java&#45;quote">"foo"</span>: <span class="java&#45;quote">"bar"</span>&#93;
-    headers = &#91;
-        <span class="java&#45;quote">"X&#45;Auth&#45;Key"</span>: <span class="java&#45;quote">"1321d980&#45;3ceb&#45;11e3&#45;b872&#45;081196ac8a64"</span>
-    &#93;
-&#125;</pre></div>
+<h2 id="uribuilderexamples">4.2 Examples</h2>
+Building a URI with the closure-based syntax:
+<div class="code"><pre>// Produces <span class="java&#45;quote">"http://grails.org/doc/2.1.1/guide/introduction.html&#35;coreFeatures"</span>
+UriBuilder.build &#123;
+    base = 'http://grails.org'
+    path = &#91;'doc', '2.1.1', 'guide', 'introduction.html'&#93;
+    fragment = 'coreFeatures'
+&#125;</pre></div><p class="paragraph"/>Similarly, the URI can be built gradually:
+<div class="code"><pre>// Produces <span class="java&#45;quote">"http://grails.org/doc/2.1.1/guide/introduction.html&#35;coreFeatures"</span>
+UriBuilder uriBuilder = <span class="java&#45;keyword">new</span> UriBuilder()
+uriBuilder.base = 'http://grails.org'
+uriBuilder.path = &#91;'doc', '2.1.1', 'guide', 'introduction.html'&#93;
+uriBuilder.fragment = 'coreFeatures'
+uriBuilder.build()</pre></div><p class="paragraph"/><blockquote class="note">
+<code>UriBuilder</code> is typically used with static <code>build</code> methods, but if the gradual method is used (as in the example above), <code>UriBuilder</code> will need to be instantiated.
+</blockquote><p class="paragraph"/>The URI builder supports path substitution as a convenience feature. You can not  <em class="italic">build</em>  a URI this way, but this allows authors to use a predefined URL "pattern" to replace
+path pieces with values determined at runtime. For example:
+<div class="code"><pre>// Produces <span class="java&#45;quote">"http://example.com/webapp/resource/item/id/5497"</span>
+UriBuilder.build(<span class="java&#45;quote">"http://example.com/webapp/resource/&#123;resource&#125;/id/&#123;id&#125;"</span>, <span class="java&#45;quote">"item"</span>, <span class="java&#45;quote">"5497"</span>)</pre></div>
 
 
 
                 <div style="clear:both;margin-top:15px;"></div>
                 
-                    <div class="toc-item prev-left"><a href="../../guide/introduction.html">&lt;&lt; <strong>1</strong><span>Introduction</span></a></div>
+                    <div class="toc-item prev-left"><a href="../../guide/responses.html">&lt;&lt; <strong>3</strong><span>Handling Responses</span></a></div>
                 
-                    <div class="toc-item next-right"><a href="../../guide/responses.html"><strong>3</strong><span>Handling Responses</span> >></a></div>
+                    <div class="toc-item next-right"><a href="../../guide/changelog.html"><strong>5</strong><span>Changelog</span> >></a></div>
                 
                 <div style="clear:both"></div>
             </div>

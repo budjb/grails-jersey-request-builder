@@ -1,0 +1,18 @@
+{table}
+*Property* | *Description* | *Type*
+@base@ | Base URL to start from. | @String@
+@host@ | Host name part of the URL. | @String@
+@port@ | Remote host port number. | @Integer@
+@path@ | A list of path parts to add to the URL. | @List@
+@query@ | A key/value pair map of query parameters to add to the URL. | @Map@
+@scheme@ | The protocol scheme to use (http, https, etc). | @String@
+@fragment@ | Fragment part of the URL (index.html*#fragment*). | @String@
+{table}
+
+{note}
+Note that if the @base@ property is used, any of its URI parts will be overridden by any of the individual properties, if set. The exception is the @path@ property, which will append
+the path parts to the path of the @base@ URL that was specified.
+{note}
+{note}
+The UriBuilder returns a @URI@ object, which can be assigned to the @uri@ property of the @RequestBuilder@.
+{note}
