@@ -1,0 +1,20 @@
+h1. basicAuthUserName
+
+h2. Purpose
+
+Sets the username when using HTTP Basic authentication.
+
+h2. Examples
+
+{code}
+new RequestBuilder().get {
+    uri = "example.com/protected"
+    useBasicAuth = true
+    basicAuthUserName = "foo"
+    basicAuthPassword = "bar"
+}
+{code}
+
+h2. Description
+
+The username is required when making HTTP Basic authentication requests. This property is used in conjunction with [useBasicAuth|Request Builder] and [basicAuthPassword|Request Builder].

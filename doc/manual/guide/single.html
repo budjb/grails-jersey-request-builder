@@ -159,7 +159,7 @@ When the response to a request is received with a successful HTTP status code, b
 <ol>
 <li>If <code>rawClientResponse</code> is <code>true</code>, return the Jersey-Client <a href="../ref/Httpsjerseyjavanetnonavapidocs18jerseycomsunjerseyapiclient Client Responsehtml/<code>ClientResponse</code>.html" class="https://jersey.java.net/nonav/apidocs/1.8/jersey/com/sun/jersey/api/client/ClientResponse.html"><code>ClientResponse</code></a> object.</li>
 <li>If <code>binaryResponse</code> is <code>true</code>, return the response as a <code>byte</code> array.</li>
-<li>If a <code>Content-Type</code> header that is JSON compatible is received, or <code>convertJson</code> is <code>true</code>, convert the response to a <code>List</code> or <code>Map</code> (or <code>null</code> if the response was empty) and return it.</li>
+<li>If a <code>Content-Type</code> header that is JSON compatible is received and <code>convertJson</code> is <code>true</code>, convert the response to a <code>List</code> or <code>Map</code> (or <code>null</code> if the response was empty) and return it.</li>
 <li>Convert the response to a <code>String</code> and return it.</li>
 </ol><p class="paragraph"/>The default values for the configuration properties that affect the response conversion are:
 <table class="wiki-table" cellpadding="0" cellspacing="0" border="0"><tr><th><strong class="bold">Property</strong></th><th><strong class="bold">Default</strong></th></tr><tr class="table-odd"><td><code>binaryResponse</code></td><td><code>false</code></td></tr><tr class="table-even"><td><code>rawClientResponse</code></td><td><code>false</code></td></tr><tr class="table-odd"><td><code>convertJson</code></td><td><code>true</code></td></tr></table>
@@ -298,10 +298,94 @@ UriBuilder.build(<span class="java&#45;quote">"http://example.com/webapp/resourc
                 </div>
                 <div class="menu">
                     
-                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">Items</h1><div class="menu-sub">
+                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">Request Builder</h1><div class="menu-sub">
                         
                         
-                        <div class="menu-item"><a href="../ref/Items/reference.html">reference</a>
+                        <div class="menu-item"><a href="../ref/Request%20Builder/accept.html">accept</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Request%20Builder/basicAuthPassword.html">basicAuthPassword</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Request%20Builder/basicAuthUserName.html">basicAuthUserName</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Request%20Builder/binaryResponse.html">binaryResponse</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Request%20Builder/body.html">body</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Request%20Builder/connectionTimeout.html">connectionTimeout</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Request%20Builder/contentType.html">contentType</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Request%20Builder/convertJson.html">convertJson</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Request%20Builder/cookies.html">cookies</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Request%20Builder/debug.html">debug</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Request%20Builder/followRedirects.html">followRedirects</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Request%20Builder/form.html">form</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Request%20Builder/headers.html">headers</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Request%20Builder/ignoreInvalidSSL.html">ignoreInvalidSSL</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Request%20Builder/query.html">query</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Request%20Builder/rawClientResponse.html">rawClientResponse</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Request%20Builder/readTimeout.html">readTimeout</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Request%20Builder/skipStatusCheck.html">skipStatusCheck</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Request%20Builder/uri.html">uri</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Request%20Builder/useBasicAuth.html">useBasicAuth</a>
+                        </div>
+                        
+                        </div>
+                    </div>
+                    
+                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">URI Builder</h1><div class="menu-sub">
+                        
+                        
+                        <div class="menu-item"><a href="../ref/URI%20Builder/base.html">base</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/URI%20Builder/fragment.html">fragment</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/URI%20Builder/host.html">host</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/URI%20Builder/path.html">path</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/URI%20Builder/port.html">port</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/URI%20Builder/query.html">query</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/URI%20Builder/scheme.html">scheme</a>
                         </div>
                         
                         </div>

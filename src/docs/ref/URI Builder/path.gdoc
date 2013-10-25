@@ -1,0 +1,21 @@
+h1. path
+
+h2. Purpose
+
+Sets additional path parts of the URL.
+
+h2. Examples
+
+{code}
+UriBuilder.build {
+    base = "http://example.com"
+    paths = [
+        "foo",
+        "bar"
+    ]
+}
+{code}
+
+h2. Description
+
+Sets additional path parts of the URL. Additional paths will add to the existing paths if the base url is used.

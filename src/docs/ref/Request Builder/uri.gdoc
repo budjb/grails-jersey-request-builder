@@ -1,0 +1,21 @@
+h1. uri
+
+h2. Purpose
+
+URI of the request.
+
+h2. Examples
+
+{code}
+new RequestBuilder().get {
+    uri = "example.com"
+}
+{code}
+
+h2. Description
+
+The value for this property can either be a @String@ or a @URI@ instance.
+
+{note}
+Using the @UriBuilder@ to generate a @URI@ instance, and assigning that to the @uri@ property of @RequestBuilder@ is a powerful combintation to build dynamic paths.
+{note}

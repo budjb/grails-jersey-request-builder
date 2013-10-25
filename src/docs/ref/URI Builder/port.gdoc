@@ -1,0 +1,18 @@
+h1. port
+
+h2. Purpose
+
+Sets the port number part of the URL.
+
+h2. Examples
+
+{code}
+UriBuilder.build {
+    base = "http://example.com"
+    port = 80
+}
+{code}
+
+h2. Description
+
+Sets the port number part of the URL.

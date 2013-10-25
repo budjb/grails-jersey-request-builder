@@ -1,0 +1,20 @@
+h1. headers
+
+h2. Purpose
+
+Headers to send with the request.
+
+h2. Examples
+
+{code}
+new RequestBuilder().post {
+    uri = "example.com"
+    headers = [
+        "X-Auth-ApiKey": "a8205db2-3da5-11e3-a1f6-d4bed904d91e"
+    ]
+}
+{code}
+
+h2. Description
+
+Sets the key/value pairs to use as HTTP headers.

@@ -1,0 +1,24 @@
+h1. form
+
+h2. Purpose
+
+Values to send with the request as an encoded HTML form.
+
+h2. Examples
+
+{code}
+new RequestBuilder().post {
+    uri = "example.com"
+    form = [
+        "foo": "bar"
+    ]
+}
+{code}
+
+h2. Description
+
+Sets the key/value pairs to use as an HTML form request. The body of the request will be formatted correctly for a server to process an HTML form post.
+
+{warning}
+If this property is set, the [body|Request Builder] property will be ignored.
+{warning}

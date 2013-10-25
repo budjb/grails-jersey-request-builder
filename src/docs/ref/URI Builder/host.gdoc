@@ -1,0 +1,18 @@
+h1. host
+
+h2. Purpose
+
+Sets the host part of the URL.
+
+h2. Examples
+
+{code}
+UriBuilder.build {
+    base = "http://example.com"
+    host = "foobar"
+}
+{code}
+
+h2. Description
+
+Sets the host part of the URL.

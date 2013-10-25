@@ -1,0 +1,23 @@
+h1. followRedirects
+
+h2. Purpose
+
+Whether to automatically redirect redirect HTTP status codes.
+
+h2. Examples
+
+{code}
+new RequestBuilder().post {
+    uri = "example.com"
+    followRedirects = true
+}
+{code}
+
+h2. Description
+
+If @true@ (default), allow Jersey Client to automatically follow through HTTP redirects. The response will be received from the final redirected endpoint.
+
+{note}
+If this property is set to @false@, redirect HTTP status codes will throw an exception as all non-successful HTTP status codes do. See [skipStatusCheck|Request Builder] for more
+information on this behavior.
+{note}

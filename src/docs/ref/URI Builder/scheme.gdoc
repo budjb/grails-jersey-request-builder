@@ -1,0 +1,18 @@
+h1. scheme
+
+h2. Purpose
+
+Sets the scheme part of the URL.
+
+h2. Examples
+
+{code}
+UriBuilder.build {
+    base = "http://example.com"
+    scheme = "https"
+}
+{code}
+
+h2. Description
+
+Sets the scheme part of the URL. Typical values are "http" and "https".
