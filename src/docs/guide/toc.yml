@@ -1,0 +1,16 @@
+introduction: Introduction
+builder:
+    title: Making Requests
+    methods: HTTP Methods
+    simple: Simple Usage
+    closure: Closure Usage
+    stateful: Stateful Usage
+responses:
+    title: Handling Responses
+    conversion: Automatic Conversion
+    exceptions: HTTP Status Exceptions
+uribuilder:
+    title: UriBuilder
+    properties: Properties
+    uribuilderexamples: Examples
+changelog: Changelog

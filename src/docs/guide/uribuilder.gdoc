@@ -1,0 +1,2 @@
+The plugin also provides a @UriBuilder@ class to make building URLs with correct escaping simpler. This builder follows the same building conventions as the @RequestBuilder@.
+

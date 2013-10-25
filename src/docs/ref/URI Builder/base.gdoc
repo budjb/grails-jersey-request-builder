@@ -1,0 +1,18 @@
+h1. base
+
+h2. Purpose
+
+Sets a base URL that the other properties can override.
+
+h2. Examples
+
+{code}
+UriBuilder.build {
+    base = "http://example.com"
+}
+{code}
+
+h2. Description
+
+Sets a base URL that the other properties can override. Any other properties set in the @UriBuilder@ will override the appropriate parts of the base URL. The only exception to this is the @path@ property,
+which will add to the URL path.

@@ -1,0 +1,18 @@
+h1. fragment
+
+h2. Purpose
+
+Sets the fragment part of the URL.
+
+h2. Examples
+
+{code}
+UriBuilder.build {
+    base = "http://example.com"
+    fragment = "configuration"
+}
+{code}
+
+h2. Description
+
+Sets the fragment, which is used to automatically scroll down to the anchor with the same name automatically.

@@ -1,0 +1,20 @@
+h1. query
+
+h2. Purpose
+
+Sets additional query parts of the URL.
+
+h2. Examples
+
+{code}
+UriBuilder.build {
+    base = "http://example.com"
+    query = [
+        "foo": "bar"
+    ]
+}
+{code}
+
+h2. Description
+
+The query map consists of key/value pairs to set as the query part of the URL. Additional query parameters will add to the existing query parameters if the base url is used.

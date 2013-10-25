@@ -1,0 +1,55 @@
+The builder, by default, will do automation conversion of the message and return it if the HTTP status returned with the request is considered *successful*. For the purposes of the builder,
+*successful* is defined as an HTTP status code in the 2xx range of codes (for example, 200 and 201).
+
+If a non-successful HTTP status code is encountered, an exception is thrown.  Most well-known HTTP status codes are represented by an appropriately named exception, and they all
+extend a common base exception @ResponseStatusException@. If a code is received that the builder does not have a named exception for, a @ResponseStatusException@ is thrown.
+
+{note}
+The behavior to throw an exception for a non-successful HTTP status can be disabled by setting the @RequestBuilder@ property @skipStatusCheck@ to @true@.
+{note}
+
+The @ResponseStatusException@ contains the following:
+{table}
+*Property* | *Description* | *Type*
+@content@ | The *converted* response message. | _mixed_
+@logText@ | Debug log (if enabled) | @String@
+@response@ | The [@ClientResponse@|https://jersey.java.net/nonav/apidocs/1.8/jersey/com/sun/jersey/api/client/ClientResponse.html] returned from the Jersey-Client library. | @ClientResponse@
+@status@ | HTTP status code. | @Integer@
+{table}
+
+The following named HTTP status exceptions defined by the plugin are:
+{table}
+*HTTP Status Code* | *Exception*
+@300@ | @HttpMultipleChoicesException@
+@301@ | @HttpMovedPermanentlyException@
+@302@ | @HttpFoundException@
+@303@ | @HttpSeeOtherException@
+@304@ | @HttpNotModifiedException@
+@305@ | @HttpUseProxyException@
+@307@ | @HttpTemporaryRedirectException@
+@400@ | @HttpBadRequestException@
+@401@ | @HttpUnauthorizedException@
+@402@ | @HttpPaymentRequiredException@
+@403@ | @HttpForbiddenException@
+@404@ | @HttpNotFoundException@
+@405@ | @HttpMethodNotAllowedException@
+@406@ | @HttpNotAcceptableException@
+@407@ | @HttpProxyAuthenticationRequiredException@
+@408@ | @HttpRequestTimeoutException@
+@409@ | @HttpConflictException@
+@410@ | @HttpGoneException@
+@411@ | @HttpLengthRequiredException@
+@412@ | @HttpPreconditionFailedException@
+@413@ | @HttpRequestEntityTooLargeException@
+@414@ | @HttpRequestUriTooLongException@
+@415@ | @HttpUnsupportedMediaTypeException@
+@416@ | @HttpRequestedRangeNotSatisfiableException@
+@417@ | @HttpExpectationFailedException@
+@422@ | @HttpUnprocessableEntityException@
+@500@ | @HttpInternalServerErrorException@
+@501@ | @HttpNotImplementedException@
+@502@ | @HttpBadGatewayException@
+@503@ | @HttpServiceUnavailableException@
+@504@ | @HttpGatewayTimeoutException@
+@505@ | @HttpHttpVersionNotSupportedException@
+{table}
