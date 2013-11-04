@@ -13,7 +13,7 @@ The @ResponseStatusException@ contains the following:
 *Property* | *Description* | *Type*
 @content@ | The *converted* response message. | _mixed_
 @logText@ | Debug log (if enabled) | @String@
-@response@ | The [@ClientResponse@|https://jersey.java.net/nonav/apidocs/1.8/jersey/com/sun/jersey/api/client/ClientResponse.html] returned from the Jersey-Client library. | @ClientResponse@
+@response@ | The "@ClientResponse@":https://jersey.java.net/nonav/apidocs/1.8/jersey/com/sun/jersey/api/client/ClientResponse.html returned from the Jersey-Client library. | @ClientResponse@
 @status@ | HTTP status code. | @Integer@
 {table}
 

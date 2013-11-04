@@ -2,7 +2,7 @@ h1. rawClientResponse
 
 h2. Purpose
 
-Instructs the @RequestBuilder@ to return the unmodified [@ClientResponse@|https://jersey.java.net/nonav/apidocs/1.8/jersey/com/sun/jersey/api/client/ClientResponse.html] object.
+Instructs the @RequestBuilder@ to return the unmodified "@ClientResponse@":https://jersey.java.net/nonav/apidocs/1.8/jersey/com/sun/jersey/api/client/ClientResponse.html object.
 
 h2. Examples
 
