@@ -1,0 +1,19 @@
+h1. chunkSize
+
+h2. Purpose
+
+Enables chunking on the request.
+
+h2. Examples
+
+{code}
+new RequestBuilder().post {
+    uri = "example.com"
+    chunkSize = 1024 // 1k chunk size
+    body = "Example message"
+}
+{code}
+
+h2. Description
+
+If not @null@, enables chunking on the request. If the value of this property is @<= 0@, the Jersey's default value will be used. Otherwise, the chunk size (in number of bytes) is used.

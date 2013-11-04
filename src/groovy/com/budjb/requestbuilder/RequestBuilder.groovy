@@ -158,6 +158,11 @@ class RequestBuilder {
     String basicAuthPassword
 
     /**
+     * Size (in bytes) to chunk the request.
+     */
+    Integer chunkSize = null
+
+    /**
      * Performs a GET request.
      *
      * @return
@@ -606,6 +611,7 @@ class RequestBuilder {
         if (connectionTimeout) {
             client.setConnectTimeout(connectionTimeout)
         }
+
         // Set read timeout
         if (readTimeout) {
             client.setReadTimeout(readTimeout)
@@ -613,6 +619,12 @@ class RequestBuilder {
 
         // Whether to follow redirects
         client.setFollowRedirects(followRedirects)
+
+        // Set the chunk size (and header)
+        if (chunkSize != null) {
+            headers['Transfer-Encoding'] = 'chunked'
+            client.setChunkedEncodingSize(chunkSize)
+        }
 
         return client
     }
