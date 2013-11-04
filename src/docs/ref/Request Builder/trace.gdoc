@@ -1,0 +1,35 @@
+h1. trace
+
+h2. Purpose
+
+Invokes the @TRACE@ method.
+
+h2. Examples
+
+*DSL Usage*
+{code}
+def response = new RequestBuilder().trace {
+    uri = "http://example.com"
+}
+{code}
+
+*Quick Usage*
+{code}
+def response = new RequestBuilder().trace("http://example.com")
+{code}
+
+*Builder Usage*
+{code}
+RequestBuilder builder = new RequestBuilder()
+builder.uri = "http://example.com"
+def response = builder.trace()
+{code}
+
+h2. Description
+
+Invokes the @TRACE@ method against the requested URI. The return from this method depends on the options set on the @RequestBuilder@ instance.
+This method typically returns text data.
+
+{note}
+@TRACE@ requests do not contain an entity, so the @form@ and @body@ properties are ignored.
+{note}

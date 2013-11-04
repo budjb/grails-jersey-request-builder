@@ -8,7 +8,7 @@ h2. Examples
 
 {code}
 new RequestBuilder().get {
-    uri = "example.com"
+    uri = "http://example.com"
     skipStatusCheck = true
 }
 {code}
