@@ -6,6 +6,7 @@ import com.sun.jersey.api.client.WebResource
 import com.sun.jersey.api.client.WebResource.Builder
 import com.sun.jersey.api.client.config.ClientConfig
 import com.sun.jersey.api.client.config.DefaultClientConfig
+import com.sun.jersey.api.client.filter.GZIPContentEncodingFilter
 import com.sun.jersey.api.client.filter.LoggingFilter
 import com.sun.jersey.api.representation.Form
 import com.sun.jersey.client.urlconnection.HTTPSProperties
@@ -156,6 +157,11 @@ class RequestBuilder {
      * basic auth password
      */
     String basicAuthPassword
+
+    /**
+     * Encode the request with gzip compression.
+     */
+    boolean encodeGzip = false
 
     /**
      * Performs a GET request.
@@ -613,6 +619,12 @@ class RequestBuilder {
 
         // Whether to follow redirects
         client.setFollowRedirects(followRedirects)
+
+        // Set up the gzip filter (and header)
+        if (encodeGzip) {
+            headers['Content-Encoding'] = 'gzip'
+            client.addFilter(new GZIPContentEncodingFilter())
+        }
 
         return client
     }
