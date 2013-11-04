@@ -1,0 +1,19 @@
+h1. encodeGzip
+
+h2. Purpose
+
+Enables GZIP encoding on the request.
+
+h2. Examples
+
+{code}
+new RequestBuilder().post {
+    uri = "example.com"
+    encodeGzip = true
+    body = "test message"
+}
+{code}
+
+h2. Description
+
+If @true@, the outbound request will be compresses using GZIP. The @Content-Encoding@ header will be set to @gzip@ as well.
