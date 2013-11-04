@@ -303,7 +303,7 @@ class RequestBuilder {
      * @throws IllegalArgumentException
      * @return
      */
-    ClientResponse trace() throws IllegalArgumentException {
+    Object trace() throws IllegalArgumentException {
         return doTrace()
     }
 
@@ -314,7 +314,7 @@ class RequestBuilder {
      * @throws IllegalArgumentException
      * @return
      */
-    ClientResponse trace(String uri) throws IllegalArgumentException {
+    Object trace(String uri) throws IllegalArgumentException {
         // Set the uri
         this.uri = uri
 
@@ -329,7 +329,7 @@ class RequestBuilder {
      * @throws IllegalArgumentException
      * @return
      */
-    ClientResponse trace(Closure closure) throws IllegalArgumentException {
+    Object trace(Closure closure) throws IllegalArgumentException {
         // Run the provided closure
         run closure
 
@@ -343,7 +343,7 @@ class RequestBuilder {
      * @throws IllegalArgumentException
      * @return
      */
-    private ClientResponse doTrace() throws IllegalArgumentException {
+    private doTrace() throws IllegalArgumentException {
         if (uri == null) {
             throw new IllegalArgumentException('uri is required')
         }
@@ -353,7 +353,10 @@ class RequestBuilder {
             WebResource.Builder request = buildRequest()
 
             // Do the request
-            return request.method('TRACE', ClientResponse)
+            ClientResponse response = request.method('TRACE', ClientResponse)
+
+            // Handle the response
+            return handleResponse(response)
         }
         finally {
             cleanUp()
