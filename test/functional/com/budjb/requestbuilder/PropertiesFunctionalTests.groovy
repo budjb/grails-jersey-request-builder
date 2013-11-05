@@ -10,7 +10,7 @@ class PropertiesFunctionalTests extends RequestBuilderTest {
      */
     void testAcceptSuccess() {
         def response = new RequestBuilder().get {
-            uri = "${getBaseUrl()}/test/testAccept"
+            uri = getUri('test/testAccept')
             accept = 'text/plain'
         }
         assert response == 'I am plain text.'
@@ -22,8 +22,8 @@ class PropertiesFunctionalTests extends RequestBuilderTest {
     void testAcceptFail() {
         shouldFail(HttpNotAcceptableException) {
             new RequestBuilder().get {
+                uri = getUri('/test/testAccept')
                 accept = 'foo/bar'
-                uri = "${getBaseUrl()}/test/testAccept"
             }
         }
     }

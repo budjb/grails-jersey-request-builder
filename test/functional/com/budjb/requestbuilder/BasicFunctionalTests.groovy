@@ -8,7 +8,7 @@ class BasicFunctionalTests extends RequestBuilderTest {
      * Test simple usage of the GET method.
      */
     void testGetSimple() {
-        def result = new RequestBuilder().get("${getBaseUrl()}/test/testBasicGet")
+        def result = new RequestBuilder().get(getUri('/test/testBasicGet'))
         assert result == 'The quick brown fox jumps over the lazy dog.'
     }
 
@@ -17,7 +17,7 @@ class BasicFunctionalTests extends RequestBuilderTest {
      */
     void testGetBuilder() {
         RequestBuilder builder = new RequestBuilder()
-        builder.uri = "${getBaseUrl()}/test/testBasicGet"
+        builder.uri = getUri('/test/testBasicGet')
         def result = builder.get()
         assert result == 'The quick brown fox jumps over the lazy dog.'
     }
@@ -27,7 +27,7 @@ class BasicFunctionalTests extends RequestBuilderTest {
      */
     void testGetDSL() {
         def result = new RequestBuilder().get {
-            uri = "${getBaseUrl()}/test/testBasicGet"
+            uri = getUri('/test/testBasicGet')
         }
         assert result == 'The quick brown fox jumps over the lazy dog.'
     }
@@ -36,7 +36,7 @@ class BasicFunctionalTests extends RequestBuilderTest {
      * Test simple usage of the DELETE method.
      */
     void testDeleteSimple() {
-        def result = new RequestBuilder().delete("${getBaseUrl()}/test/testBasicDelete")
+        def result = new RequestBuilder().delete(getUri('/test/testBasicDelete'))
         assert result == "Please don't hurt me!"
     }
 
@@ -45,7 +45,7 @@ class BasicFunctionalTests extends RequestBuilderTest {
      */
     void testDeleteBuilder() {
         RequestBuilder builder = new RequestBuilder()
-        builder.uri = "${getBaseUrl()}/test/testBasicDelete"
+        builder.uri = getUri('/test/testBasicDelete')
         def result = builder.delete()
         assert result == "Please don't hurt me!"
     }
@@ -55,7 +55,7 @@ class BasicFunctionalTests extends RequestBuilderTest {
      */
     void testDeleteDSL() {
         def result = new RequestBuilder().delete {
-            uri = "${getBaseUrl()}/test/testBasicDelete"
+            uri = getUri('/test/testBasicDelete')
         }
         assert result == "Please don't hurt me!"
     }
@@ -64,7 +64,7 @@ class BasicFunctionalTests extends RequestBuilderTest {
      * Test simple usage of the POST method.
      */
     void testPostSimple() {
-        def result = new RequestBuilder().post("${getBaseUrl()}/test/testBasicPost", "Please don't play the repeating game!")
+        def result = new RequestBuilder().post(getUri('/test/testBasicPost'), "Please don't play the repeating game!")
         assert result == "Please don't play the repeating game!"
     }
 
@@ -73,7 +73,7 @@ class BasicFunctionalTests extends RequestBuilderTest {
      */
     void testPostBuilder() {
         RequestBuilder builder = new RequestBuilder()
-        builder.uri = "${getBaseUrl()}/test/testBasicPost"
+        builder.uri = getUri('/test/testBasicPost')
         builder.body = "Please don't play the repeating game!"
         def result = builder.post()
         assert result == "Please don't play the repeating game!"
@@ -84,7 +84,7 @@ class BasicFunctionalTests extends RequestBuilderTest {
      */
     void testPostDSL() {
         def result = new RequestBuilder().post {
-            uri = "${getBaseUrl()}/test/testBasicPost"
+            uri = getUri('/test/testBasicPost')
             body = "Please don't play the repeating game!"
         }
         assert result == "Please don't play the repeating game!"
@@ -94,7 +94,7 @@ class BasicFunctionalTests extends RequestBuilderTest {
      * Test simple usage of the PUT method.
      */
     void testPutSimple() {
-        def result = new RequestBuilder().put("${getBaseUrl()}/test/testBasicPut", "Please don't play the repeating game!")
+        def result = new RequestBuilder().put(getUri('/test/testBasicPut'), "Please don't play the repeating game!")
         assert result == "Please don't play the repeating game!"
     }
 
@@ -103,7 +103,7 @@ class BasicFunctionalTests extends RequestBuilderTest {
      */
     void testPutBuilder() {
         RequestBuilder builder = new RequestBuilder()
-        builder.uri = "${getBaseUrl()}/test/testBasicPut"
+        builder.uri = getUri('/test/testBasicPut')
         builder.body = "Please don't play the repeating game!"
         def result = builder.put()
         assert result == "Please don't play the repeating game!"
@@ -114,7 +114,7 @@ class BasicFunctionalTests extends RequestBuilderTest {
      */
     void testPutDSL() {
         def result = new RequestBuilder().put {
-            uri = "${getBaseUrl()}/test/testBasicPut"
+            uri = getUri('/test/testBasicPut')
             body = "Please don't play the repeating game!"
         }
         assert result == "Please don't play the repeating game!"

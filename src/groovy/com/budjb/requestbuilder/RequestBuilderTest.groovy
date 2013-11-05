@@ -17,4 +17,20 @@ abstract class RequestBuilderTest extends GroovyTestCase {
 
         return baseUrl
     }
+
+    /**
+     * Convenience method to return the constructed URL to hit on the internal server.
+     *
+     * @param path
+     * @return
+     */
+    protected String getUri(String path) {
+        if (!path) {
+            return getBaseUrl()
+        }
+        if (path[0] == '/') {
+            path = path[1..-1]
+        }
+        return "${getBaseUrl()}/${path}"
+    }
 }
