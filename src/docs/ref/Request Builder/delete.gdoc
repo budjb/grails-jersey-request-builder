@@ -1,0 +1,35 @@
+h1. delete
+
+h2. Purpose
+
+Invokes the @DELETE@ method.
+
+h2. Examples
+
+*DSL Usage*
+{code}
+def response = new RequestBuilder().delete {
+    uri = "http://example.com/resource"
+}
+{code}
+
+*Quick Usage*
+{code}
+def response = new RequestBuilder().delete("http://example.com/resource")
+{code}
+
+*Builder Usage*
+{code}
+RequestBuilder builder = new RequestBuilder()
+builder.uri = "http://example.com/delete"
+def response = builder.delete()
+{code}
+
+h2. Description
+
+Invokes the @DELETE@ method against the requested URI. The return from this method depends on the options set on the @RequestBuilder@ instance
+and the response from the server.
+
+{note}
+@DELETE@ requests do not contain an entity, so the @form@ and @body@ properties are ignored.
+{note}

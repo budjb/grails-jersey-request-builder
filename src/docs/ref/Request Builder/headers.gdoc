@@ -8,7 +8,7 @@ h2. Examples
 
 {code}
 new RequestBuilder().post {
-    uri = "example.com"
+    uri = "http://example.com"
     headers = [
         "X-Auth-ApiKey": "a8205db2-3da5-11e3-a1f6-d4bed904d91e"
     ]

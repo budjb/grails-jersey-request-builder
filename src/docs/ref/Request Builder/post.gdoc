@@ -1,0 +1,35 @@
+h1. post
+
+h2. Purpose
+
+Invokes the @POST@ method.
+
+h2. Examples
+
+*DSL Usage*
+{code}
+def response = new RequestBuilder().post {
+    uri = "http://example.com/resource"
+    body = "payload"
+}
+{code}
+
+*Quick Usage*
+{code}
+def response = new RequestBuilder().post("http://example.com/resource", "payload")
+{code}
+
+*Builder Usage*
+{code}
+RequestBuilder builder = new RequestBuilder()
+builder.uri = "http://example.com/resource"
+builder.body = "payload"
+def response = builder.post()
+{code}
+
+h2. Description
+
+Invokes the @POST@ method against the requested URI. The return from this method depends on the options set on the @RequestBuilder@ instance
+and the response from the server.
+
+The @POST@ method can send, but does not require, a body. The @body@ and @form@ properties are used in this method.

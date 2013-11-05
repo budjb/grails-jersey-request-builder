@@ -8,7 +8,7 @@ h2. Examples
 
 {code}
 def response = new RequestBuilder().get {
-    uri = "example.com"
+    uri = "http://example.com"
     binaryResponse = true
 }
 assert(response instanceof byte[])

@@ -1,7 +1,7 @@
-Using the closure-style functions is the most common use of the @RequestBuilder@. These methods provide an easy to use, centralized way to build a request with varying parameters.
+Using the DSL-style functions is the most common use of the @RequestBuilder@. These methods provide an easy to use, centralized way to build a request with varying parameters.
 This documentation will not go into detail about all of the options available with the @RequestBuilder@, but all of these options are documented completed in the reference section.
 
-All of the HTTP methods can use the closure-based methods.
+All of the HTTP methods can use the DSL-based methods.
 
 {code}
 new RequestBuilder().post {

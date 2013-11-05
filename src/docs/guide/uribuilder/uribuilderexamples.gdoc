@@ -1,4 +1,4 @@
-Building a URI with the closure-based syntax:
+Building a URI with the DSL-based syntax:
 {code}
 // Produces "http://grails.org/doc/2.1.1/guide/introduction.html#coreFeatures"
 UriBuilder.build {
