@@ -9,7 +9,7 @@ class GetFunctionalTests extends RequestBuilderTest {
      * Test simple usage of the GET method.
      */
     void testSimple() {
-        def result = new RequestBuilder().get("${getBaseUrl()}/test/testGet")
+        def result = new RequestBuilder().get("${getBaseUrl()}/test/testBasicGet")
         assert result == 'The quick brown fox jumps over the lazy dog.'
     }
 
@@ -18,7 +18,7 @@ class GetFunctionalTests extends RequestBuilderTest {
      */
     void testBuilder() {
         RequestBuilder builder = new RequestBuilder()
-        builder.uri = "${getBaseUrl()}/test/testGet"
+        builder.uri = "${getBaseUrl()}/test/testBasicGet"
         def result = builder.get()
         assert result == 'The quick brown fox jumps over the lazy dog.'
     }
@@ -28,7 +28,7 @@ class GetFunctionalTests extends RequestBuilderTest {
      */
     void testDSL() {
         def result = new RequestBuilder().get {
-            uri = "${getBaseUrl()}/test/testGet"
+            uri = "${getBaseUrl()}/test/testBasicGet"
         }
         assert result == 'The quick brown fox jumps over the lazy dog.'
     }
