@@ -12,4 +12,3 @@ plugin.xml
 target/
 target-eclipse/
 .gradle/
-web-app/WEB-INF
