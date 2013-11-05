@@ -1,6 +1,6 @@
 package com.budjb.requestbuilder
 
-abstract class RequestBuilderTest {
+abstract class RequestBuilderTest extends GroovyTestCase {
     /**
      * Returns the base URL of the running server.
      *
