@@ -24,5 +24,8 @@ grails.project.dependency.resolution = {
         build ':release:2.2.1', {
             export = false
         }
+        test ":functional-test:2.0.RC1", ":tomcat:$grailsVersion", {
+            export = false
+        }
     }
 }
