@@ -41,4 +41,13 @@ class TestController {
                 render text: "I can't handle ${accept}", contentType: 'text/plain', status: 406
         }
     }
+
+    def testReadTimeout = {
+        sleep(5000)
+        render "Hello, world!"
+    }
+
+    def testRedirect = {
+        redirect action: 'testBasicGet', permanent: true
+    }
 }
