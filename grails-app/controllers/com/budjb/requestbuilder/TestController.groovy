@@ -1,5 +1,7 @@
 package com.budjb.requestbuilder
 
+import groovy.json.JsonBuilder
+
 class TestController {
     static allowedMethods = [
         testBasicGet:    'GET',
@@ -49,5 +51,28 @@ class TestController {
 
     def testRedirect = {
         redirect action: 'testBasicGet', permanent: true
+    }
+
+    def testParams = {
+        params.remove('action')
+        params.remove('controller')
+        render text: new JsonBuilder(params).toString(), contentType: 'application/json'
+    }
+
+    def testHeaders = {
+        render text: new JsonBuilder(['foo': request.getHeader('foo'), 'key': request.getHeader('key')]), contentType: 'application/json'
+    }
+
+    def test500 = {
+        render text: 'something bad happened', status: 500
+    }
+
+    def testAuth = {
+        if (!request.getHeader('Authorization')) {
+            render text: 'authentication required', status: 401
+        }
+        else {
+            render 'welcome'
+        }
     }
 }

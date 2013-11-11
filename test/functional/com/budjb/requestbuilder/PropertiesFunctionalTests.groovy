@@ -73,4 +73,69 @@ class PropertiesFunctionalTests extends RequestBuilderTest {
             }
         }
     }
+
+    /**
+     * Tests the form parameter of the request builder.
+     */
+    void testForm() {
+        def response = new RequestBuilder().post {
+            uri = getUri('/test/testParams')
+            form = ['foo': 'bar', 'key': 'value']
+        }
+        assert response == ['foo': 'bar', 'key': 'value']
+    }
+
+    /**
+     * Test the headers parameter.
+     */
+    void testHeaders() {
+        def response = new RequestBuilder().get {
+            uri = getUri('/test/testHeaders')
+            headers = ['foo': 'bar', 'key': 'value']
+        }
+        assert response == ['foo': 'bar', 'key': 'value']
+    }
+
+    /**
+     * Test the query parameter.
+     */
+    void testQuery() {
+        def response = new RequestBuilder().get {
+            uri = getUri('/test/testParams')
+            query = ['foo': 'bar', 'key': 'value']
+        }
+        assert response == ['foo': 'bar', 'key': 'value']
+    }
+
+    /**
+     * Test the skipStatusCheck parameter.
+     */
+    void testSkipStatusCheck() {
+        shouldFail(HttpInternalServerErrorException) {
+            new RequestBuilder().get {
+                uri = getUri('/test/test500')
+            }
+        }
+        new RequestBuilder().get {
+            uri = getUri('/test/test500')
+            skipStatusCheck = true
+        }
+    }
+
+    /**
+     * Test basic auth functionality.
+     */
+    void testBasicAuth() {
+        shouldFail(HttpUnauthorizedException) {
+            new RequestBuilder().get {
+                uri = getUri('/test/testAuth')
+            }
+        }
+        new RequestBuilder().get {
+            uri = getUri('/test/testAuth')
+            useBasicAuth = true
+            basicAuthUserName = 'foo'
+            basicAuthPassword = 'bar'
+        }
+    }
 }
