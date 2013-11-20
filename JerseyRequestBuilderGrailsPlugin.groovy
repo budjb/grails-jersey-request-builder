@@ -9,4 +9,9 @@ class JerseyRequestBuilderGrailsPlugin {
     def license = "APACHE"
     def issueManagement = [system: 'GITHUB', url: 'https://github.com/budjb/grails-jersey-request-builder/issues']
     def scm = [url: 'https://github.com/budjb/grails-jersey-request-builder']
+    def pluginExcludes = [
+        'grails-app/controllers/**',
+        'src/groovy/com/budjb/requestbuilder/RequestBuilderTest.groovy',
+        'src/docs/**'
+    ]
 }

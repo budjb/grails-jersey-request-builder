@@ -1,6 +1,7 @@
 package com.budjb.requestbuilder
 
 import com.sun.jersey.api.client.Client
+import com.sun.jersey.api.client.ClientHandlerException
 import com.sun.jersey.api.client.ClientResponse
 import com.sun.jersey.api.client.WebResource
 import com.sun.jersey.api.client.WebResource.Builder
@@ -188,6 +189,14 @@ class RequestBuilder {
 
             // Handle the response
             return handleResponse(response)
+        }
+        catch (ClientHandlerException e) {
+            if (e.cause) {
+                throw e.cause
+            }
+            else {
+                throw e
+            }
         }
         finally {
             cleanUp()
