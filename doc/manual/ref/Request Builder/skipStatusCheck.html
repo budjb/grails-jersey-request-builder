@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>Jersey Request Builder Plugin 1.1.3</title>
+    <title>Jersey Request Builder Plugin 1.1.4</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -65,7 +65,7 @@ function addJsClass(el) {
                 <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
 
                 <h1>skipStatusCheck</h1><p class="paragraph"/><h2>Purpose</h2><p class="paragraph"/>Whether to prevent exceptions for non-successful HTTP status codes.<p class="paragraph"/><h2>Examples</h2><p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">new</span> RequestBuilder().get &#123;
-    uri = <span class="java&#45;quote">"example.com"</span>
+    uri = <span class="java&#45;quote">"http://example.com"</span>
     skipStatusCheck = <span class="java&#45;keyword">true</span>
 &#125;</pre></div><p class="paragraph"/><h2>Description</h2><p class="paragraph"/>If <code>true</code>, prevent the <code>RequestBuilder</code> from throwing an exception if a non-successful HTTP status code is encountered.
 
@@ -99,6 +99,9 @@ function addJsClass(el) {
                             <div class="menu-item"><a href="../../ref/Request%20Builder/body.html">body</a>
                             </div>
                             
+                            <div class="menu-item"><a href="../../ref/Request%20Builder/chunkSize.html">chunkSize</a>
+                            </div>
+                            
                             <div class="menu-item"><a href="../../ref/Request%20Builder/connectionTimeout.html">connectionTimeout</a>
                             </div>
                             
@@ -114,16 +117,37 @@ function addJsClass(el) {
                             <div class="menu-item"><a href="../../ref/Request%20Builder/debug.html">debug</a>
                             </div>
                             
+                            <div class="menu-item"><a href="../../ref/Request%20Builder/delete.html">delete</a>
+                            </div>
+                            
                             <div class="menu-item"><a href="../../ref/Request%20Builder/followRedirects.html">followRedirects</a>
                             </div>
                             
                             <div class="menu-item"><a href="../../ref/Request%20Builder/form.html">form</a>
                             </div>
                             
+                            <div class="menu-item"><a href="../../ref/Request%20Builder/get.html">get</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Request%20Builder/gzip.html">gzip</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Request%20Builder/head.html">head</a>
+                            </div>
+                            
                             <div class="menu-item"><a href="../../ref/Request%20Builder/headers.html">headers</a>
                             </div>
                             
                             <div class="menu-item"><a href="../../ref/Request%20Builder/ignoreInvalidSSL.html">ignoreInvalidSSL</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Request%20Builder/options.html">options</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Request%20Builder/post.html">post</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Request%20Builder/put.html">put</a>
                             </div>
                             
                             <div class="menu-item"><a href="../../ref/Request%20Builder/query.html">query</a>
@@ -136,6 +160,9 @@ function addJsClass(el) {
                             </div>
                             
                             <div class="menu-item"><a href="../../ref/Request%20Builder/skipStatusCheck.html">skipStatusCheck</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Request%20Builder/trace.html">trace</a>
                             </div>
                             
                             <div class="menu-item"><a href="../../ref/Request%20Builder/uri.html">uri</a>

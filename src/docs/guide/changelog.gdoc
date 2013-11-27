@@ -1,3 +1,9 @@
+h3. Version 1.1.4
+* Added support for HEAD, OPTIONS, and TRACE HTTP methods.
+* Added functional tests.
+* Added GZIP support.
+* Added chunking support.
+
 h3. Version 1.1.3
 * Created proper documentation for the project.
 * Force query parameters in RequestBuilder to Strings.

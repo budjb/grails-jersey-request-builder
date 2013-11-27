@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>3.2 HTTP Status Exceptions 1.1.3</title>
+    <title>3.2 HTTP Status Exceptions 1.1.4</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -77,7 +77,7 @@ function addJsClass() {
 
                     <p><strong>Authors:</strong> Bud Byrd</p>
 
-                    <p><strong>Version:</strong> 1.1.3</p>
+                    <p><strong>Version:</strong> 1.1.4</p>
 
                     
                 </div>
@@ -92,7 +92,7 @@ The builder, by default, will do automation conversion of the message and return
 extend a common base exception <code>ResponseStatusException</code>. If a code is received that the builder does not have a named exception for, a <code>ResponseStatusException</code> is thrown.<p class="paragraph"/><blockquote class="note">
 The behavior to throw an exception for a non-successful HTTP status can be disabled by setting the <code>RequestBuilder</code> property <code>skipStatusCheck</code> to <code>true</code>.
 </blockquote><p class="paragraph"/>The <code>ResponseStatusException</code> contains the following:
-<table class="wiki-table" cellpadding="0" cellspacing="0" border="0"><tr><th><strong class="bold">Property</strong></th><th><strong class="bold">Description</strong></th><th><strong class="bold">Type</strong></th></tr><tr class="table-odd"><td><code>content</code></td><td>The <strong class="bold">converted</strong> response message.</td><td> <em class="italic">mixed</em> </td></tr><tr class="table-even"><td><code>logText</code></td><td>Debug log (if enabled)</td><td><code>String</code></td></tr><tr class="table-odd"><td><code>response</code></td><td>The <a href="../ref/Httpsjerseyjavanetnonavapidocs18jerseycomsunjerseyapiclient Client Responsehtml/<code>ClientResponse</code>.html" class="https://jersey.java.net/nonav/apidocs/1.8/jersey/com/sun/jersey/api/client/ClientResponse.html"><code>ClientResponse</code></a> returned from the Jersey-Client library.</td><td><code>ClientResponse</code></td></tr><tr class="table-even"><td><code>status</code></td><td>HTTP status code.</td><td><code>Integer</code></td></tr></table><p class="paragraph"/>The following named HTTP status exceptions defined by the plugin are:
+<table class="wiki-table" cellpadding="0" cellspacing="0" border="0"><tr><th><strong class="bold">Property</strong></th><th><strong class="bold">Description</strong></th><th><strong class="bold">Type</strong></th></tr><tr class="table-odd"><td><code>content</code></td><td>The <strong class="bold">converted</strong> response message.</td><td> <em class="italic">mixed</em> </td></tr><tr class="table-even"><td><code>logText</code></td><td>Debug log (if enabled)</td><td><code>String</code></td></tr><tr class="table-odd"><td><code>response</code></td><td>The <a href="https://jersey.java.net/nonav/apidocs/1.8/jersey/com/sun/jersey/api/client/ClientResponse.html" target="blank"><code>ClientResponse</code></a> returned from the Jersey-Client library.</td><td><code>ClientResponse</code></td></tr><tr class="table-even"><td><code>status</code></td><td>HTTP status code.</td><td><code>Integer</code></td></tr></table><p class="paragraph"/>The following named HTTP status exceptions defined by the plugin are:
 <table class="wiki-table" cellpadding="0" cellspacing="0" border="0"><tr><th><strong class="bold">HTTP Status Code</strong></th><th><strong class="bold">Exception</strong></th></tr><tr class="table-odd"><td><code>300</code></td><td><code>HttpMultipleChoicesException</code></td></tr><tr class="table-even"><td><code>301</code></td><td><code>HttpMovedPermanentlyException</code></td></tr><tr class="table-odd"><td><code>302</code></td><td><code>HttpFoundException</code></td></tr><tr class="table-even"><td><code>303</code></td><td><code>HttpSeeOtherException</code></td></tr><tr class="table-odd"><td><code>304</code></td><td><code>HttpNotModifiedException</code></td></tr><tr class="table-even"><td><code>305</code></td><td><code>HttpUseProxyException</code></td></tr><tr class="table-odd"><td><code>307</code></td><td><code>HttpTemporaryRedirectException</code></td></tr><tr class="table-even"><td><code>400</code></td><td><code>HttpBadRequestException</code></td></tr><tr class="table-odd"><td><code>401</code></td><td><code>HttpUnauthorizedException</code></td></tr><tr class="table-even"><td><code>402</code></td><td><code>HttpPaymentRequiredException</code></td></tr><tr class="table-odd"><td><code>403</code></td><td><code>HttpForbiddenException</code></td></tr><tr class="table-even"><td><code>404</code></td><td><code>HttpNotFoundException</code></td></tr><tr class="table-odd"><td><code>405</code></td><td><code>HttpMethodNotAllowedException</code></td></tr><tr class="table-even"><td><code>406</code></td><td><code>HttpNotAcceptableException</code></td></tr><tr class="table-odd"><td><code>407</code></td><td><code>HttpProxyAuthenticationRequiredException</code></td></tr><tr class="table-even"><td><code>408</code></td><td><code>HttpRequestTimeoutException</code></td></tr><tr class="table-odd"><td><code>409</code></td><td><code>HttpConflictException</code></td></tr><tr class="table-even"><td><code>410</code></td><td><code>HttpGoneException</code></td></tr><tr class="table-odd"><td><code>411</code></td><td><code>HttpLengthRequiredException</code></td></tr><tr class="table-even"><td><code>412</code></td><td><code>HttpPreconditionFailedException</code></td></tr><tr class="table-odd"><td><code>413</code></td><td><code>HttpRequestEntityTooLargeException</code></td></tr><tr class="table-even"><td><code>414</code></td><td><code>HttpRequestUriTooLongException</code></td></tr><tr class="table-odd"><td><code>415</code></td><td><code>HttpUnsupportedMediaTypeException</code></td></tr><tr class="table-even"><td><code>416</code></td><td><code>HttpRequestedRangeNotSatisfiableException</code></td></tr><tr class="table-odd"><td><code>417</code></td><td><code>HttpExpectationFailedException</code></td></tr><tr class="table-even"><td><code>422</code></td><td><code>HttpUnprocessableEntityException</code></td></tr><tr class="table-odd"><td><code>500</code></td><td><code>HttpInternalServerErrorException</code></td></tr><tr class="table-even"><td><code>501</code></td><td><code>HttpNotImplementedException</code></td></tr><tr class="table-odd"><td><code>502</code></td><td><code>HttpBadGatewayException</code></td></tr><tr class="table-even"><td><code>503</code></td><td><code>HttpServiceUnavailableException</code></td></tr><tr class="table-odd"><td><code>504</code></td><td><code>HttpGatewayTimeoutException</code></td></tr><tr class="table-even"><td><code>505</code></td><td><code>HttpHttpVersionNotSupportedException</code></td></tr></table>
 
 
@@ -132,6 +132,9 @@ The behavior to throw an exception for a non-successful HTTP status can be disab
                             <div class="menu-item"><a href="../../ref/Request%20Builder/body.html">body</a>
                             </div>
                             
+                            <div class="menu-item"><a href="../../ref/Request%20Builder/chunkSize.html">chunkSize</a>
+                            </div>
+                            
                             <div class="menu-item"><a href="../../ref/Request%20Builder/connectionTimeout.html">connectionTimeout</a>
                             </div>
                             
@@ -147,16 +150,37 @@ The behavior to throw an exception for a non-successful HTTP status can be disab
                             <div class="menu-item"><a href="../../ref/Request%20Builder/debug.html">debug</a>
                             </div>
                             
+                            <div class="menu-item"><a href="../../ref/Request%20Builder/delete.html">delete</a>
+                            </div>
+                            
                             <div class="menu-item"><a href="../../ref/Request%20Builder/followRedirects.html">followRedirects</a>
                             </div>
                             
                             <div class="menu-item"><a href="../../ref/Request%20Builder/form.html">form</a>
                             </div>
                             
+                            <div class="menu-item"><a href="../../ref/Request%20Builder/get.html">get</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Request%20Builder/gzip.html">gzip</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Request%20Builder/head.html">head</a>
+                            </div>
+                            
                             <div class="menu-item"><a href="../../ref/Request%20Builder/headers.html">headers</a>
                             </div>
                             
                             <div class="menu-item"><a href="../../ref/Request%20Builder/ignoreInvalidSSL.html">ignoreInvalidSSL</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Request%20Builder/options.html">options</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Request%20Builder/post.html">post</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Request%20Builder/put.html">put</a>
                             </div>
                             
                             <div class="menu-item"><a href="../../ref/Request%20Builder/query.html">query</a>
@@ -169,6 +193,9 @@ The behavior to throw an exception for a non-successful HTTP status can be disab
                             </div>
                             
                             <div class="menu-item"><a href="../../ref/Request%20Builder/skipStatusCheck.html">skipStatusCheck</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Request%20Builder/trace.html">trace</a>
                             </div>
                             
                             <div class="menu-item"><a href="../../ref/Request%20Builder/uri.html">uri</a>

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 class JerseyRequestBuilderGrailsPlugin {
-    def version = "1.1.3"
+    def version = "1.1.4"
     def grailsVersion = "2.0 > *"
     def title = "Jersey Request Builder Plugin"
     def author = "Bud Byrd"
