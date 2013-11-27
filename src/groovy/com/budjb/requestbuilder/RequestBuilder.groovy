@@ -1,11 +1,28 @@
+/*
+ * Copyright 2013 Bud Byrd
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.budjb.requestbuilder
 
 import com.sun.jersey.api.client.Client
+import com.sun.jersey.api.client.ClientHandlerException
 import com.sun.jersey.api.client.ClientResponse
 import com.sun.jersey.api.client.WebResource
 import com.sun.jersey.api.client.WebResource.Builder
 import com.sun.jersey.api.client.config.ClientConfig
 import com.sun.jersey.api.client.config.DefaultClientConfig
+import com.sun.jersey.api.client.filter.GZIPContentEncodingFilter
 import com.sun.jersey.api.client.filter.LoggingFilter
 import com.sun.jersey.api.representation.Form
 import com.sun.jersey.client.urlconnection.HTTPSProperties
@@ -158,11 +175,26 @@ class RequestBuilder {
     String basicAuthPassword
 
     /**
+     * Size (in bytes) to chunk the request.
+     */
+    Integer chunkSize = null
+
+    /**
+     * Encode the request with gzip compression.
+     */
+    boolean encodeGzip = false
+
+    /**
      * Performs a GET request.
      *
+     * @throws IllegalArgumentException
      * @return
      */
-    private doGet() {
+    private doGet() throws IllegalArgumentException {
+        if (uri == null) {
+            throw new IllegalArgumentException('uri is required')
+        }
+
         try {
             // Build the request
             WebResource.Builder request = buildRequest()
@@ -173,6 +205,14 @@ class RequestBuilder {
             // Handle the response
             return handleResponse(response)
         }
+        catch (ClientHandlerException e) {
+            if (e.cause) {
+                throw e.cause
+            }
+            else {
+                throw e
+            }
+        }
         finally {
             cleanUp()
         }
@@ -181,17 +221,10 @@ class RequestBuilder {
     /**
      * Performs a GET request.
      *
-     * <p>Use to resend a previously constructed request.</p>
-     *
-     * @throws  IllegalStateException
-     *
-     * Thrown when <code>uri</code> is <code>null</code>.
+     * @throws IllegalArgumentException
+     * @return
      */
-    Object get() throws IllegalStateException {
-        if (uri == null) {
-            throw new IllegalStateException("URI must not be null")
-        }
-
+    Object get() throws IllegalArgumentException {
         return doGet()
     }
 
@@ -199,9 +232,10 @@ class RequestBuilder {
      * Performs a GET request.
      *
      * @param uri Request URI
+     * @throws IllegalArgumentException
      * @return
      */
-    Object get(String uri) {
+    Object get(String uri) throws IllegalArgumentException {
         // Set the uri
         this.uri = uri
 
@@ -213,9 +247,10 @@ class RequestBuilder {
      * Performs a GET request.
      *
      * @param closure
+     * @throws IllegalArgumentException
      * @return
      */
-    Object get(Closure closure) {
+    Object get(Closure closure) throws IllegalArgumentException {
         // Run the provided closure
         run closure
 
@@ -224,11 +259,208 @@ class RequestBuilder {
     }
 
     /**
-     * Performs a PUT request.
+     * Performs an OPTIONS request.
      *
+     * @throws IllegalArgumentException
      * @return
      */
-    private doPut() {
+    ClientResponse options() throws IllegalArgumentException {
+        return doOptions()
+    }
+
+    /**
+     * Performs an OPTIONS request.
+     *
+     * @param uri Request URI
+     * @throws IllegalArgumentException
+     * @return
+     */
+    ClientResponse options(String uri) throws IllegalArgumentException {
+        // Set the uri
+        this.uri = uri
+
+        // Run the command
+        return doOptions()
+    }
+
+    /**
+     * Performs an OPTIONS request.
+     *
+     * @param closure
+     * @throws IllegalArgumentException
+     * @return
+     */
+    ClientResponse options(Closure closure) throws IllegalArgumentException {
+        // Run the provided closure
+        run closure
+
+        // Run the command
+        return doOptions()
+    }
+
+    /**
+     * Performs an OPTIONS request.
+     *
+     * @throws IllegalArgumentException
+     * @return
+     */
+    private ClientResponse doOptions() throws IllegalArgumentException {
+        if (uri == null) {
+            throw new IllegalArgumentException('uri is required')
+        }
+
+        try {
+            // Build the request
+            WebResource.Builder request = buildRequest()
+
+            // Do the request
+            return request.options(ClientResponse)
+        }
+        finally {
+            cleanUp()
+        }
+    }
+
+    /**
+     * Performs a TRACE request.
+     *
+     * @throws IllegalArgumentException
+     * @return
+     */
+    Object trace() throws IllegalArgumentException {
+        return doTrace()
+    }
+
+    /**
+     * Performs a TRACE request.
+     *
+     * @param uri Request URI
+     * @throws IllegalArgumentException
+     * @return
+     */
+    Object trace(String uri) throws IllegalArgumentException {
+        // Set the uri
+        this.uri = uri
+
+        // Run the command
+        return doTrace()
+    }
+
+    /**
+     * Performs a TRACE request.
+     *
+     * @param closure
+     * @throws IllegalArgumentException
+     * @return
+     */
+    Object trace(Closure closure) throws IllegalArgumentException {
+        // Run the provided closure
+        run closure
+
+        // Run the command
+        return doTrace()
+    }
+
+    /**
+     * Performs a TRACE request.
+     *
+     * @throws IllegalArgumentException
+     * @return
+     */
+    private doTrace() throws IllegalArgumentException {
+        if (uri == null) {
+            throw new IllegalArgumentException('uri is required')
+        }
+
+        try {
+            // Build the request
+            WebResource.Builder request = buildRequest()
+
+            // Do the request
+            ClientResponse response = request.method('TRACE', ClientResponse)
+
+            // Handle the response
+            return handleResponse(response)
+        }
+        finally {
+            cleanUp()
+        }
+    }
+
+    /**
+     * Performs a HEAD request.
+     *
+     * @throws IllegalArgumentException
+     * @return
+     */
+    ClientResponse head() throws IllegalArgumentException {
+        return doHead()
+    }
+
+    /**
+     * Performs a HEAD request.
+     *
+     * @param uri Request URI
+     * @throws IllegalArgumentException
+     * @return
+     */
+    ClientResponse head(String uri) throws IllegalArgumentException {
+        // Set the uri
+        this.uri = uri
+
+        // Run the command
+        return doHead()
+    }
+
+    /**
+     * Performs a HEAD request.
+     *
+     * @param closure
+     * @throws IllegalArgumentException
+     * @return
+     */
+    ClientResponse head(Closure closure) throws IllegalArgumentException {
+        // Run the provided closure
+        run closure
+
+        // Run the command
+        return doHead()
+    }
+
+    /**
+     * Performs a HEAD request.
+     *
+     * @throws IllegalArgumentException
+     * @return
+     */
+    private ClientResponse doHead() throws IllegalArgumentException {
+        if (uri == null) {
+            throw new IllegalArgumentException('uri is required')
+        }
+
+        try {
+            // Build the request
+            WebResource.Builder request = buildRequest()
+
+            // Do the request
+            return request.head()
+        }
+        finally {
+            cleanUp()
+        }
+    }
+
+    /**
+     * Performs a PUT request.
+     *
+     * @throws IllegalArgumentException
+     * @return
+     */
+    private doPut() throws IllegalArgumentException {
+        if (uri == null) {
+            throw new IllegalArgumentException('uri is required')
+        }
+
         try {
             // Build the request
             WebResource.Builder request = buildRequest()
@@ -247,17 +479,10 @@ class RequestBuilder {
     /**
      * Performs a PUT request.
      *
-     * <p>Use to resend a previously constructed request.</p>
-     *
-     * @throws  IllegalStateException
-     *
-     * Thrown when <code>uri</code> is <code>null</code>.
+     * @throws IllegalArgumentException
+     * @return
      */
-    Object put() throws IllegalStateException {
-        if (uri == null) {
-            throw new IllegalStateException("URI must not be null")
-        }
-
+    Object put() throws IllegalArgumentException {
         return doPut()
     }
 
@@ -265,9 +490,10 @@ class RequestBuilder {
      * Performs a PUT request.
      *
      * @param uri Request URI
+     * @throws IllegalArgumentException
      * @return
      */
-    Object put(String uri, body = null) {
+    Object put(String uri, body = null) throws IllegalArgumentException {
         // Set the uri
         this.uri = uri
 
@@ -282,9 +508,10 @@ class RequestBuilder {
      * Performs a PUT request.
      *
      * @param closure
+     * @throws IllegalArgumentException
      * @return
      */
-    Object put(Closure closure) {
+    Object put(Closure closure) throws IllegalArgumentException {
         // Run the provided closure
         run closure
 
@@ -295,9 +522,14 @@ class RequestBuilder {
     /**
      * Performs a POST request.
      *
+     * @throws IllegalArgumentException
      * @return
      */
-    private doPost() {
+    private doPost() throws IllegalArgumentException {
+        if (uri == null) {
+            throw new IllegalArgumentException('uri is required')
+        }
+
         try {
             // Build the request
             WebResource.Builder request = buildRequest()
@@ -316,17 +548,10 @@ class RequestBuilder {
     /**
      * Performs a POST request.
      *
-     * <p>Use to resend a previously constructed request.</p>
-     *
-     * @throws  IllegalStateException
-     *
-     * Thrown when <code>uri</code> is <code>null</code>.
+     * @throws IllegalArgumentException
+     * @return
      */
-    Object post() throws IllegalStateException {
-        if (uri == null) {
-            throw new IllegalStateException("URI must not be null")
-        }
-
+    Object post() throws IllegalArgumentException {
         return doPost()
     }
 
@@ -334,9 +559,10 @@ class RequestBuilder {
      * Performs a POST request.
      *
      * @param uri Request URI
+     * @throws IllegalArgumentException
      * @return
      */
-    Object post(String uri, body = null) {
+    Object post(String uri, body = null) throws IllegalArgumentException {
         // Set the uri
         this.uri = uri
 
@@ -351,9 +577,10 @@ class RequestBuilder {
      * Performs a POST request.
      *
      * @param closure
+     * @throws IllegalArgumentException
      * @return
      */
-    Object post(Closure closure) {
+    Object post(Closure closure) throws IllegalArgumentException {
         // Run the provided closure
         run closure
 
@@ -364,9 +591,14 @@ class RequestBuilder {
     /**
      * Performs a DELETE request.
      *
+     * @throws IllegalArgumentException
      * @return
      */
-    private doDelete() {
+    private doDelete() throws IllegalArgumentException {
+        if (uri == null) {
+            throw new IllegalArgumentException('uri is required')
+        }
+
         try {
             // Build the request
             WebResource.Builder request = buildRequest()
@@ -385,13 +617,10 @@ class RequestBuilder {
     /**
      * Performs a DELETE request.
      *
-     * <p>Use to resend a previously constructed request.</p>
-     *
-     * @throws  IllegalStateException
-     *
-     * Thrown when <code>uri</code> is <code>null</code>.
+     * @throws IllegalArgumentException
+     * @return
      */
-    Object delete() throws IllegalStateException {
+    Object delete() throws IllegalArgumentException {
         if (uri == null) {
             throw new IllegalStateException("URI must not be null")
         }
@@ -403,9 +632,10 @@ class RequestBuilder {
      * Performs a DELETE request.
      *
      * @param uri Request URI
+     * @throws IllegalArgumentException
      * @return
      */
-    Object delete(String uri) {
+    Object delete(String uri) throws IllegalArgumentException {
         // Set the uri
         this.uri = uri
 
@@ -417,9 +647,10 @@ class RequestBuilder {
      * Performs a DELETE request.
      *
      * @param closure
+     * @throws IllegalArgumentException
      * @return
      */
-    Object delete(Closure closure) {
+    Object delete(Closure closure) throws IllegalArgumentException {
         // Run the provided closure
         run closure
 
@@ -433,7 +664,7 @@ class RequestBuilder {
      * @param response Response object to handle.
      * @return The content of the response.
      */
-    private handleResponse(ClientResponse response) {
+    private handleResponse(ClientResponse response) throws IllegalArgumentException {
         // Result holder
         def result
 
@@ -606,6 +837,7 @@ class RequestBuilder {
         if (connectionTimeout) {
             client.setConnectTimeout(connectionTimeout)
         }
+
         // Set read timeout
         if (readTimeout) {
             client.setReadTimeout(readTimeout)
@@ -613,6 +845,18 @@ class RequestBuilder {
 
         // Whether to follow redirects
         client.setFollowRedirects(followRedirects)
+
+        // Set the chunk size (and header)
+        if (chunkSize != null) {
+            headers['Transfer-Encoding'] = 'chunked'
+            client.setChunkedEncodingSize(chunkSize)
+        }
+
+        // Set up the gzip filter (and header)
+        if (encodeGzip) {
+            headers['Content-Encoding'] = 'gzip'
+            client.addFilter(new GZIPContentEncodingFilter())
+        }
 
         return client
     }

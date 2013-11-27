@@ -3,15 +3,12 @@ Each method has a different intended use, and there are some behavior requiremen
 
 The @RequestBuilder@ supports many of these methods, as outlined below:
 {table}
-*Method* | *Supported* | *@RequestBuilder@ Method*
-GET | Supported | @get()@
-POST | Supported | @post()@
-PUT | Supported | @put()@
-DELETE | Supported | @delete()@
-HEAD | _Unsupported_ |
-OPTIONS | _Unsupported_ |
+*Method* | *@RequestBuilder@ Method*
+GET | @get()@
+POST | @post()@
+PUT | @put()@
+DELETE | @delete()@
+HEAD | @head()@
+OPTIONS | @options()@
+TRACE | @trace()@
 {table}
-
-{note}
-The unsupported methods listed above will be added in the near future.
-{note}

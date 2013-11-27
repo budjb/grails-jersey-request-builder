@@ -8,7 +8,7 @@ h2. Examples
 
 {code}
 new RequestBuilder().post {
-    uri = "example.com"
+    uri = "http://example.com"
     cookies = [
         "foo": "bar"
     }

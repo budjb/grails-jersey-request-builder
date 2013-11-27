@@ -1,0 +1,14 @@
+Using the DSL-style functions is the most common use of the @RequestBuilder@. These methods provide an easy to use, centralized way to build a request with varying parameters.
+This documentation will not go into detail about all of the options available with the @RequestBuilder@, but all of these options are documented completed in the reference section.
+
+All of the HTTP methods can use the DSL-based methods.
+
+{code}
+new RequestBuilder().post {
+    uri = "http://www.example.com"
+    body = ["foo": "bar"]
+    headers = [
+        "X-Auth-Key": "1321d980-3ceb-11e3-b872-081196ac8a64"
+    ]
+}
+{code}

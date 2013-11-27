@@ -3,8 +3,8 @@ builder:
     title: Making Requests
     methods: HTTP Methods
     simple: Simple Usage
-    closure: Closure Usage
-    stateful: Stateful Usage
+    dsl: DSL Usage
+    build: Builder Usage
 responses:
     title: Handling Responses
     conversion: Automatic Conversion

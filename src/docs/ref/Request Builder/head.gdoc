@@ -1,0 +1,35 @@
+h1. head
+
+h2. Purpose
+
+Invokes the @HEAD@ method.
+
+h2. Examples
+
+*DSL Usage*
+{code}
+ClientResponse response = new RequestBuilder().head {
+    uri = "http://example.com"
+}
+{code}
+
+*Quick Usage*
+{code}
+ClientResponse response = new RequestBuilder().head("http://example.com")
+{code}
+
+*Builder Usage*
+{code}
+RequestBuilder builder = new RequestBuilder()
+builder.uri = "http://example.com"
+ClientResponse response = builder.head()
+{code}
+
+h2. Description
+
+Invokes the @HEAD@ method against the requested URI. The return from this method is always a ClientResponse, since the important
+part of the response exists in the response headers.
+
+{note}
+@HEAD@ requests do not contain an entity, so the @form@ and @body@ properties are ignored.
+{note}
