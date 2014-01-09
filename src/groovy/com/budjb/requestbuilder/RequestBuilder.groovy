@@ -114,6 +114,12 @@ class RequestBuilder {
     boolean convertJson = true
 
     /**
+     * Attempt to use xmlslurpler to parse xml
+     * You should set convertJson = false when using this
+     */
+    boolean convertXML = false
+
+    /**
      * Whether the caller expects a binary return.
      *
      * If true, the returned object will be a byte array.
@@ -680,7 +686,6 @@ class RequestBuilder {
         else {
             // Get the content type
             MediaType contentType = response.getType()
-
             // Get the response entity as a string
             result = (String)response.getEntity(String)
 
@@ -691,6 +696,19 @@ class RequestBuilder {
                 }
                 else {
                     result = null
+                }
+            }
+
+            if (convertXML) {
+                if (MediaType.APPLICATION_XML_TYPE.isCompatible(contentType) ||
+                    MediaType.TEXT_XML_TYPE.isCompatible(contentType)) {
+                    if (result.size() > 0 ) {
+                        result = new XmlSlurper().parseText(result)
+                    }
+
+                    else {
+                        result = null
+                    }
                 }
             }
         }
