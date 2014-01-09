@@ -698,7 +698,7 @@ class RequestBuilder {
                     result = null
                 }
             }
-
+            // Attempt tp auto-convert XML if enabled
             if (convertXML) {
                 if (MediaType.APPLICATION_XML_TYPE.isCompatible(contentType) ||
                     MediaType.TEXT_XML_TYPE.isCompatible(contentType)) {
