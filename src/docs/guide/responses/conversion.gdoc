@@ -4,6 +4,7 @@ These are the steps followed to determine what to return:
 # If @rawClientResponse@ is @true@, return the Jersey-Client "@ClientResponse@":https://jersey.java.net/nonav/apidocs/1.8/jersey/com/sun/jersey/api/client/ClientResponse.html object.
 # If @binaryResponse@ is @true@, return the response as a @byte@ array.
 # If a @Content-Type@ header that is JSON compatible is received and @convertJson@ is @true@, convert the response to a @List@ or @Map@ (or @null@ if the response was empty) and return it.
+# If a @Content-Type@ header that is XML compatible is received and @convertXML@ is @true@, convert the response using @XmlSlurper@ and return it.
 # Convert the response to a @String@ and return it.
 
 The default values for the configuration properties that affect the response conversion are:
@@ -12,6 +13,7 @@ The default values for the configuration properties that affect the response con
 @binaryResponse@ | @false@
 @rawClientResponse@ | @false@
 @convertJson@ | @true@
+@convertXML@ | @true@
 {table}
 
 {note}

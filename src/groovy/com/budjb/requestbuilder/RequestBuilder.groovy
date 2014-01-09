@@ -114,10 +114,9 @@ class RequestBuilder {
     boolean convertJson = true
 
     /**
-     * Attempt to use xmlslurpler to parse xml
-     * You should set convertJson = false when using this
+     * Attempt to use xmlslurpler to parse xml.
      */
-    boolean convertXML = false
+    boolean convertXML = true
 
     /**
      * Whether the caller expects a binary return.
@@ -686,10 +685,11 @@ class RequestBuilder {
         else {
             // Get the content type
             MediaType contentType = response.getType()
+
             // Get the response entity as a string
             result = (String)response.getEntity(String)
 
-            // Attempt to auto-convert JSON if enabled
+            // Attempt to auto-conversions
             if (convertJson && MediaType.APPLICATION_JSON_TYPE.isCompatible(contentType)) {
                 if (result.size() > 0 ) {
                     result = new JsonSlurper().parseText(result)
@@ -698,17 +698,12 @@ class RequestBuilder {
                     result = null
                 }
             }
-            // Attempt tp auto-convert XML if enabled
-            if (convertXML) {
-                if (MediaType.APPLICATION_XML_TYPE.isCompatible(contentType) ||
-                    MediaType.TEXT_XML_TYPE.isCompatible(contentType)) {
-                    if (result.size() > 0 ) {
-                        result = new XmlSlurper().parseText(result)
-                    }
-
-                    else {
-                        result = null
-                    }
+            if (convertXML && (MediaType.APPLICATION_XML_TYPE.isCompatible(contentType) || MediaType.TEXT_XML_TYPE.isCompatible(contentType)) {
+                if (result.size() > 0 ) {
+                    result = new XmlSlurper().parseText(result)
+                }
+                else {
+                    result = null
                 }
             }
         }
