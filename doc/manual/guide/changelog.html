@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>5 Changelog 1.1.4</title>
+    <title>5 Changelog 1.2.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -75,7 +75,7 @@ function addJsClass() {
 
                     <p><strong>Authors:</strong> Bud Byrd</p>
 
-                    <p><strong>Version:</strong> 1.1.4</p>
+                    <p><strong>Version:</strong> 1.2.0</p>
 
                     
                 </div>
@@ -85,7 +85,10 @@ function addJsClass() {
                 
 
 <h1 id="changelog">5 Changelog</h1>
-<h3>Version 1.1.4</h3>
+<h3>Version 1.2.0</h3>
+<ul class="star">
+<li>Added support for automatic XML conversion (Michael Rice). This change may break code since XML was returned as a string before, and the conversion is enabled by default.</li>
+</ul><p class="paragraph"/><h3>Version 1.1.4</h3>
 <ul class="star">
 <li>Added support for HEAD, OPTIONS, and TRACE HTTP methods.</li>
 <li>Added functional tests.</li>
@@ -212,6 +215,9 @@ function addJsClass() {
                             </div>
                             
                             <div class="menu-item"><a href="../ref/Request%20Builder/convertJson.html">convertJson</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Request%20Builder/convertXML.html">convertXML</a>
                             </div>
                             
                             <div class="menu-item"><a href="../ref/Request%20Builder/cookies.html">cookies</a>
