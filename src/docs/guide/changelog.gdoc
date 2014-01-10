@@ -1,3 +1,6 @@
+h3. Version 1.2.0
+* Added support for automatic XML conversion (Michael Rice). This change may break code since XML was returned as a string before, and the conversion is enabled by default.
+
 h3. Version 1.1.4
 * Added support for HEAD, OPTIONS, and TRACE HTTP methods.
 * Added functional tests.

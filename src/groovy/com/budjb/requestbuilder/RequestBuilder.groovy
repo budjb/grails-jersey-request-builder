@@ -698,7 +698,7 @@ class RequestBuilder {
                     result = null
                 }
             }
-            if (convertXML && (MediaType.APPLICATION_XML_TYPE.isCompatible(contentType) || MediaType.TEXT_XML_TYPE.isCompatible(contentType)) {
+            if (convertXML && (MediaType.APPLICATION_XML_TYPE.isCompatible(contentType) || MediaType.TEXT_XML_TYPE.isCompatible(contentType))) {
                 if (result.size() > 0 ) {
                     result = new XmlSlurper().parseText(result)
                 }

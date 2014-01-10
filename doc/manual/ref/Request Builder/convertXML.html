@@ -64,13 +64,10 @@ function addJsClass(el) {
 
                 <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
 
-                <h1>ignoreInvalidSSL</h1><p class="paragraph"/><h2>Purpose</h2><p class="paragraph"/>Sets whether the request should ignore SSL certificates.<p class="paragraph"/><h2>Examples</h2><p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">new</span> RequestBuilder().post &#123;
-    uri = <span class="java&#45;quote">"https://example.com"</span>
-    ignoreInvalidSSL = <span class="java&#45;keyword">true</span>
-&#125;</pre></div><p class="paragraph"/><h2>Description</h2><p class="paragraph"/>If <code>true</code>, install an all-trusting trust manager that does not validate against trusted SSL authorites and does not validate hostnames. This setting does not affect other SSL connections
-being used concurrently.<p class="paragraph"/><blockquote class="warning">
-It's important to understand that a degree of security is given up by using this option.
-</blockquote>
+                <h1>convertXML</h1><p class="paragraph"/><h2>Purpose</h2><p class="paragraph"/>Enables conversion of the response to XML<p class="paragraph"/><h2>Examples</h2><p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">new</span> RequestBuilder().post &#123;
+    uri = <span class="java&#45;quote">"http://example.com"</span>
+    convertXML = <span class="java&#45;keyword">true</span>
+&#125;</pre></div><p class="paragraph"/><h2>Description</h2><p class="paragraph"/>If <code>true</code> (default), and the response has a header that indicates XML, convert the response using <code>XmlSlurper</code>.
 
             </div>
         </td>
