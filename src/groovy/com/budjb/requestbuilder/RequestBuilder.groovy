@@ -47,6 +47,8 @@ import org.apache.log4j.Logger
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
 
+import grails.util.Holders
+
 /**
  * The <code>RequestBuilder</code> abstracts the underlying code to
  * build a Jersey Client request into a closure.
@@ -62,12 +64,12 @@ class RequestBuilder {
     /**
      * The Connection Timeout for the Client.
      */
-    Integer connectionTimeout
+    Integer connectionTimeout = Holders.config.requestbuilder.connectionTimeout ?: null
 
     /**
      * The Read Timeout for the Client.
      */
-    Integer readTimeout
+    Integer readTimeout = Holders.config.requestbuilder.readTimeout ?: null
 
     /**
      * The URI to hit.
@@ -96,12 +98,12 @@ class RequestBuilder {
     /**
      * Content-Type header.
      */
-    String contentType
+    String contentType = Holders.config.requestbuilder.contentType ?: null
 
     /**
      * Accept header.
      */
-    String accept
+    String accept = Holders.config.requestbuilder.accet ?: null
 
     /**
      * Cookies to include with the request.
@@ -152,12 +154,12 @@ class RequestBuilder {
     /**
      * Whether to log the request and response.
      */
-    boolean debug = false
+    boolean debug = Holders.config.requestbuilder.debug ?: false
 
     /**
      * Whether to ignore SSL cert validation.
      */
-    boolean ignoreInvalidSSL = false
+    boolean ignoreInvalidSSL = Holders.config.requestbuilder.ignoreInvalidSSL ?: false
 
     /**
      * Logging output stream
@@ -182,12 +184,12 @@ class RequestBuilder {
     /**
      * Size (in bytes) to chunk the request.
      */
-    Integer chunkSize = null
+    Integer chunkSize = Holders.config.requestbuilder.chunkSize ?: null
 
     /**
      * Encode the request with gzip compression.
      */
-    boolean encodeGzip = false
+    boolean encodeGzip = Holders.config.requestbuilder.encodeGzip ?: false
 
     /**
      * Performs a GET request.
