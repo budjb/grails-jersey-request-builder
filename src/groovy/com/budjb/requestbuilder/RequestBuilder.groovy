@@ -47,6 +47,10 @@ import org.apache.log4j.Logger
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
 
+import grails.util.Holders
+
+import groovy.util.ConfigObject
+
 /**
  * The <code>RequestBuilder</code> abstracts the underlying code to
  * build a Jersey Client request into a closure.
@@ -62,12 +66,12 @@ class RequestBuilder {
     /**
      * The Connection Timeout for the Client.
      */
-    Integer connectionTimeout
+    Integer connectionTimeout = config.connectionTimeout
 
     /**
      * The Read Timeout for the Client.
      */
-    Integer readTimeout
+    Integer readTimeout = config.readTimeout
 
     /**
      * The URI to hit.
@@ -96,12 +100,12 @@ class RequestBuilder {
     /**
      * Content-Type header.
      */
-    String contentType
+    String contentType = config.contentType
 
     /**
      * Accept header.
      */
-    String accept
+    String accept = config.accept
 
     /**
      * Cookies to include with the request.
@@ -111,12 +115,12 @@ class RequestBuilder {
     /**
      * Whether to attempt to slurp JSON automatically.
      */
-    boolean convertJson = true
+    boolean convertJson = config.convertJson
 
     /**
      * Attempt to use xmlslurpler to parse xml.
      */
-    boolean convertXML = true
+    boolean convertXML = config.convertXML
 
     /**
      * Whether the caller expects a binary return.
@@ -126,23 +130,23 @@ class RequestBuilder {
      * Note that this is a workaround to jersey not providing
      * automatic content conversion based on mime type.
      */
-    boolean binaryResponse = false
+    boolean binaryResponse = config.binaryResponse
 
     /**
      * If true, do not check the response status code, and
      * thus don't throw an exception for codes > 2xx.
      */
-    boolean skipStatusCheck = false
+    boolean skipStatusCheck = config.skipStatusCheck
 
     /**
      * If true, do not response handling, and return the raw response object.
      */
-    boolean rawClientResponse = false
+    boolean rawClientResponse = config.rawClientResponse
 
     /**
      * Whether to automatically follow redirects.
      */
-    boolean followRedirects = true
+    boolean followRedirects = config.followRedirects
 
     /**
      * Body of the request - only useful on POST or PUT.
@@ -152,12 +156,12 @@ class RequestBuilder {
     /**
      * Whether to log the request and response.
      */
-    boolean debug = false
+    boolean debug = config.debug
 
     /**
      * Whether to ignore SSL cert validation.
      */
-    boolean ignoreInvalidSSL = false
+    boolean ignoreInvalidSSL = config.ignoreInvalidSSL
 
     /**
      * Logging output stream
@@ -167,27 +171,34 @@ class RequestBuilder {
     /**
      * If true uses BasicAuth
      */
-    boolean useBasicAuth = false
+    boolean useBasicAuth = config.useBasicAuth
 
     /**
      * basic auth user name
      */
-    String basicAuthUserName
+    String basicAuthUserName = config.basicAuthUserName
 
     /**
      * basic auth password
      */
-    String basicAuthPassword
+    String basicAuthPassword = config.basicAuthPassword
 
     /**
      * Size (in bytes) to chunk the request.
      */
-    Integer chunkSize = null
+    Integer chunkSize = config.chunkSize
 
     /**
      * Encode the request with gzip compression.
      */
-    boolean encodeGzip = false
+    boolean encodeGzip = encodeGzip
+
+    /**
+     * Retrieve Jersey RequestBuilder portion of the Configuration.
+     */
+    private ConfigObject getConfig() {
+        return Holders.config.jerseyRequestBuilder
+    }
 
     /**
      * Performs a GET request.

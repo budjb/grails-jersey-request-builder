@@ -1,3 +1,10 @@
+import groovy.util.ConfigObject
+import groovy.util.ConfigSlurper
+
+import grails.util.Environment
+
+import org.codehaus.groovy.grails.commons.GrailsApplication
+
 /*
  * Copyright 2013 Bud Byrd
  *
@@ -29,4 +36,25 @@ class JerseyRequestBuilderGrailsPlugin {
         'src/groovy/com/budjb/requestbuilder/RequestBuilderTest.groovy',
         'src/docs/**'
     ]
+
+    def doWithSpring = {
+        loadDefaultConfig(application)
+    }
+
+    def onConfigChange = {
+        loadDefaultConfig(application)
+    }
+
+    /**
+     * Merges plugin config with host app config, but allowing customization
+     * @param app
+     */
+    private void loadDefaultConfig(GrailsApplication app) {
+        GroovyClassLoader classLoader = new GroovyClassLoader(getClass().classLoader)
+
+        ConfigObject defaultConfig = new ConfigSlurper(Environment.current.name).parse(classLoader.loadClass('DefaultJerseyRequestBuilderConfig'))
+
+        defaultConfig.merge(app.config)
+        app.config.merge(defaultConfig)
+    }
 }
