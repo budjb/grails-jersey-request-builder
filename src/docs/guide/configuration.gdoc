@@ -1,0 +1,113 @@
+The *Jersey Request Builder* can be configured to apply default values, or set
+a specific behavior, to each @new RequestBuilder()@. These configurations can
+be placed in the @grails-app/conf/Config.groovy@ file.
+
+These values can be overidden within specific @RequestBuilder@ instances.
+
+{warning}
+There are four configurations that declare the behavior of how the 
+*RequestBuilder* returns responses, and some override the others:
+
+* @convertJson@ will automatically convert response payloads using \
+@JsonSlurper@ if the response's *content-type* is JSON-compatible.
+
+* @convertXML@ will automatically convert response payloads using \
+@XmlSlurper@ if the response's *content-type* is XML-compatible.
+
+* @binaryResponse@ will return the response payload as a @byte\[\]@. This \
+*overrides* all above behavior.
+
+* @rawClientResponse@ will return the *ClientResponse* Object. This \
+*overrides* all above behavior.
+{warning}
+
+{warning}
+If @useBasicAuth@ is set, then the @basicAuthUserName@ and @basicAuthPassword@
+must be set for every request, either through configuration, or 
+per-*RequestBuilder*.
+
+To override this behavior for a specific *RequestBuilder* instance, set
+@useBasicAuth@ to @false@ for that instance (it will not include the BasicAuth
+information).
+{warning}
+
+The configuration values are as follows:
+
+{table}
+*Config Value* | *Datatype* | *Description*
+*connectionTimeout* | @Integer@ | The default connection timeout \
+(in milliseconds).
+
+*readTimeout* | @Integer@ | The default read timeout (in milliseconds).
+
+*contentType* | @String@, @MediaType@ | The default value of the \
+*content-type* header.
+
+*accept* | @String@, @MediaType@ | The default value of the *accept* header.
+
+*convertJson* | @Boolean@ | Automatically converts JSON when the \
+*content-type* in the Response header is a JSON-compatible type.
+
+*convertXML* | @Boolean@ | Automatically converts XML when the \
+*content-type* in the Response header is an XML-compatible type.
+
+*binaryResponse* | @Boolean@ | Response payloads will be returned as \
+@byte\[\]@.
+
+*rawClientResponse* | @Boolean@ | The *RequestBuilder* will return \
+@ClientResponse@.\
+
+*skipStatusCheck* | @Boolean@ | If set to @true@, then the *RequestBuilder* \
+will _not_ throw @ResponseStatusException@ on an HTTP/1.1 error code.
+
+*followRedirects* | @Boolean@ | If set to @true@, then the *RequestBuilder* \
+will automatically follow redirects in 3xx responses.
+
+*debug* | @Boolean@ | If set to @true@, then the HTTP conversation will be \
+printed to *log4j* (*debug* level).
+
+*ignoreInvalidSSL* | @Boolean@ | If set to @true@, then the *RequestBuilder* \
+will ignore invalid SSL identities.
+
+*useBasicAuth* | @Boolean@ | If set to @true@, then the *RequestBuilder* will \
+automatically include Basic Auth in the request, provided the \
+@basicAuthUserName@ and @basicAuthPassword@ are set.
+
+*basicAuthUserName* | @String@ | The BasicAuth Username.
+
+*basicAuthPassword* | @String@ | The BasicAuth Password.
+
+*chunkSize* | @Integer@ | Automatically set Chunked Encoding on the request.
+
+*encodeGzip* | @Boolean@ | Automatically set GZIP Encoding on the request.
+{table}
+
+h2. Default Configuration
+
+{code}
+jerseyRequestBuilder {
+    connectionTimeout = null
+    readTimeout = null
+
+    contentType = null
+    accept = null
+
+    convertJson = true
+    convertXML = true
+    binaryResponse = false
+    rawClientResponse = false
+
+    skipStatusCheck = false
+
+    followRedirects = true
+    debug = false
+    ignoreInvalidSSL = false
+
+    useBasicAuth = false
+    basicAuthUserName = null
+    basicAuthPassword = null
+
+    chunkSize = null
+    encodeGzip = false
+}
+{code}
