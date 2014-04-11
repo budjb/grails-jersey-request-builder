@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>4 UriBuilder 1.2.0</title>
+    <title>5 UriBuilder 1.2.1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -27,16 +27,19 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:0"><a href="../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0"><a href="../guide/builder.html"><strong>2</strong><span>Making Requests</span></a>
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/configuration.html"><strong>2</strong><span>Configuration</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0"><a href="../guide/responses.html"><strong>3</strong><span>Handling Responses</span></a>
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/builder.html"><strong>3</strong><span>Making Requests</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0"><a href="../guide/uribuilder.html"><strong>4</strong><span>UriBuilder</span></a>
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/responses.html"><strong>4</strong><span>Handling Responses</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0"><a href="../guide/changelog.html"><strong>5</strong><span>Changelog</span></a>
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/uribuilder.html"><strong>5</strong><span>UriBuilder</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/changelog.html"><strong>6</strong><span>Changelog</span></a>
                     </div>
                     
                 </div>
@@ -62,22 +65,22 @@ function addJsClass() {
             <div id="main" class="corner-all">
 
                 
-                    <div class="toc-item prev-left"><a href="../guide/responses.html">&lt;&lt; <strong>3</strong><span>Handling Responses</span></a></div>
+                    <div class="toc-item prev-left"><a href="../guide/responses.html">&lt;&lt; <strong>4</strong><span>Handling Responses</span></a></div>
                 
 
                 <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
 
                 
-                    <div class="toc-item next-right"><a href="../guide/changelog.html"><strong>5</strong><span>Changelog</span> >></a></div>
+                    <div class="toc-item next-right"><a href="../guide/changelog.html"><strong>6</strong><span>Changelog</span> >></a></div>
                 
 
 
                 <div class="project">
-                    <h1>4 UriBuilder - Reference Documentation</h1>
+                    <h1>5 UriBuilder - Reference Documentation</h1>
 
                     <p><strong>Authors:</strong> Bud Byrd</p>
 
-                    <p><strong>Version:</strong> 1.2.0</p>
+                    <p><strong>Version:</strong> 1.2.1</p>
 
                     
                 </div>
@@ -86,10 +89,10 @@ function addJsClass() {
                 <div id="table-of-content">
                     <h2>Table of Contents</h2>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#properties"><strong>4.1</strong><span>Properties</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#properties"><strong>5.1</strong><span>Properties</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#uribuilderexamples"><strong>4.2</strong><span>Examples</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#uribuilderexamples"><strong>5.2</strong><span>Examples</span></a>
                     </div>
                     
                 </div>
@@ -97,11 +100,11 @@ function addJsClass() {
 
                 
 
-<h1 id="uribuilder">4 UriBuilder</h1>
+<h1 id="uribuilder">5 UriBuilder</h1>
 The plugin also provides a <code>UriBuilder</code> class to make building URLs with correct escaping simpler. This builder follows the same building conventions as the <code>RequestBuilder</code>.<p class="paragraph"/>
 
 
-<h2 id="properties">4.1 Properties</h2>
+<h2 id="properties">5.1 Properties</h2>
 <table class="wiki-table" cellpadding="0" cellspacing="0" border="0"><tr><th><strong class="bold">Property</strong></th><th><strong class="bold">Description</strong></th><th><strong class="bold">Type</strong></th></tr><tr class="table-odd"><td><code>base</code></td><td>Base URL to start from.</td><td><code>String</code></td></tr><tr class="table-even"><td><code>host</code></td><td>Host name part of the URL.</td><td><code>String</code></td></tr><tr class="table-odd"><td><code>port</code></td><td>Remote host port number.</td><td><code>Integer</code></td></tr><tr class="table-even"><td><code>path</code></td><td>A list of path parts to add to the URL.</td><td><code>List</code></td></tr><tr class="table-odd"><td><code>query</code></td><td>A key/value pair map of query parameters to add to the URL.</td><td><code>Map</code></td></tr><tr class="table-even"><td><code>scheme</code></td><td>The protocol scheme to use (http, https, etc).</td><td><code>String</code></td></tr><tr class="table-odd"><td><code>fragment</code></td><td>Fragment part of the URL (index.html<strong class="bold">#fragment</strong>).</td><td><code>String</code></td></tr></table><p class="paragraph"/><blockquote class="note">
 Note that if the <code>base</code> property is used, any of its URI parts will be overridden by any of the individual properties, if set. The exception is the <code>path</code> property, which will append
 the path parts to the path of the <code>base</code> URL that was specified.
@@ -112,7 +115,7 @@ The UriBuilder returns a <code>URI</code> object, which can be assigned to the <
 
 
 
-<h2 id="uribuilderexamples">4.2 Examples</h2>
+<h2 id="uribuilderexamples">5.2 Examples</h2>
 Building a URI with the DSL-based syntax:
 <div class="code"><pre>// Produces <span class="java&#45;quote">"http://grails.org/doc/2.1.1/guide/introduction.html&#35;coreFeatures"</span>
 UriBuilder.build &#123;
@@ -136,9 +139,9 @@ UriBuilder.build(<span class="java&#45;quote">"http://example.com/webapp/resourc
 
                 <div style="clear:both;margin-top:15px;"></div>
                 
-                    <div class="toc-item prev-left"><a href="../guide/responses.html">&lt;&lt; <strong>3</strong><span>Handling Responses</span></a></div>
+                    <div class="toc-item prev-left"><a href="../guide/responses.html">&lt;&lt; <strong>4</strong><span>Handling Responses</span></a></div>
                 
-                    <div class="toc-item next-right"><a href="../guide/changelog.html"><strong>5</strong><span>Changelog</span> >></a></div>
+                    <div class="toc-item next-right"><a href="../guide/changelog.html"><strong>6</strong><span>Changelog</span> >></a></div>
                 
                 <div style="clear:both"></div>
             </div>

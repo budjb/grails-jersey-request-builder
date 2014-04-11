@@ -21,7 +21,7 @@ import org.codehaus.groovy.grails.commons.GrailsApplication
  * limitations under the License.
  */
 class JerseyRequestBuilderGrailsPlugin {
-    def version = "1.2.0"
+    def version = "1.2.1"
     def grailsVersion = "2.0 > *"
     def title = "Jersey Request Builder Plugin"
     def author = "Bud Byrd"

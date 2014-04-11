@@ -1,3 +1,6 @@
+h3. Version 1.2.1
+* Added application-wide default configuration (Aaron Brown).
+
 h3. Version 1.2.0
 * Added support for automatic XML conversion (Michael Rice). This change may break code since XML was returned as a string before, and the conversion is enabled by default.
 

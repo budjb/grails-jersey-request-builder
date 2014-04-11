@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>3 Handling Responses 1.2.0</title>
+    <title>4 Handling Responses 1.2.1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -27,16 +27,19 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:0"><a href="../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0"><a href="../guide/builder.html"><strong>2</strong><span>Making Requests</span></a>
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/configuration.html"><strong>2</strong><span>Configuration</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0"><a href="../guide/responses.html"><strong>3</strong><span>Handling Responses</span></a>
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/builder.html"><strong>3</strong><span>Making Requests</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0"><a href="../guide/uribuilder.html"><strong>4</strong><span>UriBuilder</span></a>
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/responses.html"><strong>4</strong><span>Handling Responses</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0"><a href="../guide/changelog.html"><strong>5</strong><span>Changelog</span></a>
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/uribuilder.html"><strong>5</strong><span>UriBuilder</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/changelog.html"><strong>6</strong><span>Changelog</span></a>
                     </div>
                     
                 </div>
@@ -62,22 +65,22 @@ function addJsClass() {
             <div id="main" class="corner-all">
 
                 
-                    <div class="toc-item prev-left"><a href="../guide/builder.html">&lt;&lt; <strong>2</strong><span>Making Requests</span></a></div>
+                    <div class="toc-item prev-left"><a href="../guide/builder.html">&lt;&lt; <strong>3</strong><span>Making Requests</span></a></div>
                 
 
                 <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
 
                 
-                    <div class="toc-item next-right"><a href="../guide/uribuilder.html"><strong>4</strong><span>UriBuilder</span> >></a></div>
+                    <div class="toc-item next-right"><a href="../guide/uribuilder.html"><strong>5</strong><span>UriBuilder</span> >></a></div>
                 
 
 
                 <div class="project">
-                    <h1>3 Handling Responses - Reference Documentation</h1>
+                    <h1>4 Handling Responses - Reference Documentation</h1>
 
                     <p><strong>Authors:</strong> Bud Byrd</p>
 
-                    <p><strong>Version:</strong> 1.2.0</p>
+                    <p><strong>Version:</strong> 1.2.1</p>
 
                     
                 </div>
@@ -86,10 +89,10 @@ function addJsClass() {
                 <div id="table-of-content">
                     <h2>Table of Contents</h2>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#conversion"><strong>3.1</strong><span>Automatic Conversion</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#conversion"><strong>4.1</strong><span>Automatic Conversion</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#exceptions"><strong>3.2</strong><span>HTTP Status Exceptions</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#exceptions"><strong>4.2</strong><span>HTTP Status Exceptions</span></a>
                     </div>
                     
                 </div>
@@ -97,12 +100,12 @@ function addJsClass() {
 
                 
 
-<h1 id="responses">3 Handling Responses</h1>
+<h1 id="responses">4 Handling Responses</h1>
 The <code>RequestBuilder</code> attempts to provide as much convenience around HTTP responses it can, while providing options that provide direct access to the underlying objects returned from Jersey-Client.
 
 
 
-<h2 id="conversion">3.1 Automatic Conversion</h2>
+<h2 id="conversion">4.1 Automatic Conversion</h2>
 When the response to a request is received with a successful HTTP status code, by default, the response body will be converted if possible and returned from the request method.<p class="paragraph"/>These are the steps followed to determine what to return:
 <ol>
 <li>If <code>rawClientResponse</code> is <code>true</code>, return the Jersey-Client <a href="https://jersey.java.net/nonav/apidocs/1.8/jersey/com/sun/jersey/api/client/ClientResponse.html" target="blank"><code>ClientResponse</code></a> object.</li>
@@ -117,7 +120,7 @@ The <code>OPTIONS</code> and <code>HEAD</code> methods only return a <a href="ht
 
 
 
-<h2 id="exceptions">3.2 HTTP Status Exceptions</h2>
+<h2 id="exceptions">4.2 HTTP Status Exceptions</h2>
 The builder, by default, will do automation conversion of the message and return it if the HTTP status returned with the request is considered <strong class="bold">successful</strong>. For the purposes of the builder,
 <strong class="bold">successful</strong> is defined as an HTTP status code in the 2xx range of codes (for example, 200 and 201).<p class="paragraph"/>If a non-successful HTTP status code is encountered, an exception is thrown.  Most well-known HTTP status codes are represented by an appropriately named exception, and they all
 extend a common base exception <code>ResponseStatusException</code>. If a code is received that the builder does not have a named exception for, a <code>ResponseStatusException</code> is thrown.<p class="paragraph"/><blockquote class="note">
@@ -130,9 +133,9 @@ The behavior to throw an exception for a non-successful HTTP status can be disab
 
                 <div style="clear:both;margin-top:15px;"></div>
                 
-                    <div class="toc-item prev-left"><a href="../guide/builder.html">&lt;&lt; <strong>2</strong><span>Making Requests</span></a></div>
+                    <div class="toc-item prev-left"><a href="../guide/builder.html">&lt;&lt; <strong>3</strong><span>Making Requests</span></a></div>
                 
-                    <div class="toc-item next-right"><a href="../guide/uribuilder.html"><strong>4</strong><span>UriBuilder</span> >></a></div>
+                    <div class="toc-item next-right"><a href="../guide/uribuilder.html"><strong>5</strong><span>UriBuilder</span> >></a></div>
                 
                 <div style="clear:both"></div>
             </div>
