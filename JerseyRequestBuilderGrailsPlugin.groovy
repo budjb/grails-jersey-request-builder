@@ -29,6 +29,12 @@ class JerseyRequestBuilderGrailsPlugin {
     def description = 'Provides the Jersey client library and a builder to simplify use of the library.'
     def documentation = "http://budjb.github.io/grails-jersey-request-builder/doc/manual/index.html"
     def license = "APACHE"
+    def developers = [
+        [
+            name: "Aaron Brown",
+            email: "brown.aaron.lloyd@gmail.com"
+        ],
+    ]
     def issueManagement = [system: 'GITHUB', url: 'https://github.com/budjb/grails-jersey-request-builder/issues']
     def scm = [url: 'https://github.com/budjb/grails-jersey-request-builder']
     def pluginExcludes = [
