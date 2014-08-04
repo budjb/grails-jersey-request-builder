@@ -1,3 +1,6 @@
+h3. Version 1.2.2
+* Fix problem with global defaults configuration that caused cast exceptions (thanks Aaron Brown).
+
 h3. Version 1.2.1
 * Added application-wide default configuration (Aaron Brown).
 
