@@ -12,3 +12,5 @@ plugin.xml
 target/
 target-eclipse/
 .gradle/
+.project
+.classpath
