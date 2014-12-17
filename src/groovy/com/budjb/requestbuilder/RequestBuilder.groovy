@@ -689,6 +689,9 @@ class RequestBuilder {
             // Just return the raw ClientResponse object
             result = response
         }
+        else if (!response.hasEntity()) {
+            result = null
+        }
         else if (binaryResponse) {
             // Return the byte array response
             result = response.getEntity(byte[])
