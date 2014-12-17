@@ -1,5 +1,6 @@
 h3. Version 1.2.3
 * Fix issue #24: responses that contain no entity were causing an exception.
+* Add travis-ci to README.
 
 h3. Version 1.2.2
 * Fix problem with global defaults configuration that caused cast exceptions (thanks Aaron Brown).
