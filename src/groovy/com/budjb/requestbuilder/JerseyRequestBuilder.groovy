@@ -5,14 +5,14 @@ import org.codehaus.groovy.grails.commons.GrailsApplication
 
 class JerseyRequestBuilder {
     /**
-     * Grails application bean.
-     */
-    GrailsApplication grailsApplication
-
-    /**
      * Jersey client factory bean.
      */
-    JerseyClientFactory jerseyClientFactory
+    protected JerseyClientFactory jerseyClientFactory
+
+    /**
+     * Grails application bean.
+     */
+    protected GrailsApplication grailsApplication
 
     /**
      * Performs a DELETE request to the given URI.
@@ -21,7 +21,7 @@ class JerseyRequestBuilder {
      * @return
      */
     public Object delete(String uri) {
-        return delete(RequestProperties.build { delegate.uri = uri })
+        return delete(new RequestProperties(grailsApplication).build { delegate.uri = uri })
     }
 
     /**
@@ -31,7 +31,7 @@ class JerseyRequestBuilder {
      * @return
      */
     public Object delete(Closure closure) {
-        return delete(RequestProperties.build(closure))
+        return delete(new RequestProperties(grailsApplication).build(closure))
     }
 
     /**
@@ -51,7 +51,7 @@ class JerseyRequestBuilder {
      * @return
      */
     public Object get(String uri) {
-        return get(RequestProperties.build { delegate.uri = uri })
+        return get(new RequestProperties(grailsApplication).build { delegate.uri = uri })
     }
 
     /**
@@ -61,7 +61,7 @@ class JerseyRequestBuilder {
      * @return
      */
     public Object get(Closure closure) {
-        return get(RequestProperties.build(closure))
+        return get(new RequestProperties(grailsApplication).build(closure))
     }
 
     /**
@@ -81,7 +81,7 @@ class JerseyRequestBuilder {
      * @return
      */
     public ClientResponse head(String uri) {
-        return head(RequestProperties.build { delegate.uri = uri })
+        return head(new RequestProperties(grailsApplication).build { delegate.uri = uri })
     }
 
     /**
@@ -91,7 +91,7 @@ class JerseyRequestBuilder {
      * @return
      */
     public ClientResponse head(Closure closure) {
-        return head(RequestProperties.build(closure))
+        return head(new RequestProperties(grailsApplication).build(closure))
     }
 
     /**
@@ -111,7 +111,7 @@ class JerseyRequestBuilder {
      * @return
      */
     public Object options(String uri) {
-        return options(RequestProperties.build { delegate.uri = uri })
+        return options(new RequestProperties(grailsApplication).build { delegate.uri = uri })
     }
 
     /**
@@ -121,7 +121,7 @@ class JerseyRequestBuilder {
      * @return
      */
     public Object options(Closure closure) {
-        return options(RequestProperties.build(closure))
+        return options(new RequestProperties(grailsApplication).build(closure))
     }
 
     /**
@@ -141,7 +141,7 @@ class JerseyRequestBuilder {
      * @return
      */
     public Object post(String uri) {
-        return post(RequestProperties.build { delegate.uri = uri })
+        return post(new RequestProperties(grailsApplication).build { delegate.uri = uri })
     }
 
     /**
@@ -152,7 +152,7 @@ class JerseyRequestBuilder {
      * @return
      */
     public Object post(String uri, Object body) {
-        return post(RequestProperties.build {
+        return post(new RequestProperties(grailsApplication).build {
             delegate.uri = uri
             delegate.body = body
         })
@@ -165,7 +165,7 @@ class JerseyRequestBuilder {
      * @return
      */
     public Object post(Closure closure) {
-        return post(RequestProperties.build(closure))
+        return post(new RequestProperties(grailsApplication).build(closure))
     }
 
     /**
@@ -185,7 +185,7 @@ class JerseyRequestBuilder {
      * @return
      */
     public Object put(String uri) {
-        return put(RequestProperties.build { delegate.uri = uri })
+        return put(new RequestProperties(grailsApplication).build { delegate.uri = uri })
     }
 
     /**
@@ -196,7 +196,7 @@ class JerseyRequestBuilder {
      * @return
      */
     public Object put(String uri, Object body) {
-        return put(RequestProperties.build {
+        return put(new RequestProperties(grailsApplication).build {
             delegate.uri = uri
             delegate.body = body
         })
@@ -209,7 +209,7 @@ class JerseyRequestBuilder {
      * @return
      */
     public Object put(Closure closure) {
-        return put(RequestProperties.build(closure))
+        return put(new RequestProperties(grailsApplication).build(closure))
     }
 
     /**
@@ -229,7 +229,7 @@ class JerseyRequestBuilder {
      * @return
      */
     public Object trace(String uri) {
-        return trace(RequestProperties.build { delegate.uri = uri })
+        return trace(new RequestProperties(grailsApplication).build { delegate.uri = uri })
     }
 
     /**
@@ -239,7 +239,7 @@ class JerseyRequestBuilder {
      * @return
      */
     public Object trace(Closure closure) {
-        return trace(RequestProperties.build(closure))
+        return trace(new RequestProperties(grailsApplication).build(closure))
     }
 
     /**
@@ -261,5 +261,25 @@ class JerseyRequestBuilder {
         JerseyRequestDelegate delegate = new JerseyRequestDelegate()
         delegate.setJerseyClientFactory(jerseyClientFactory)
         return delegate
+    }
+
+    /**
+     * Sets the jersey client factory bean.
+     *
+     * @param jerseyClientFactory
+     * @return
+     */
+    protected setJerseyClientFactory(JerseyClientFactory jerseyClientFactory) {
+        this.jerseyClientFactory = jerseyClientFactory
+    }
+
+    /**
+     * Sets the grails application bean.
+     *
+     * @param grailsApplication
+     * @return
+     */
+    protected setGrailsApplication(GrailsApplication grailsApplication) {
+        this.grailsApplication = grailsApplication
     }
 }
