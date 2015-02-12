@@ -15,11 +15,9 @@
  */
 package com.budjb.requestbuilder
 
-import com.budjb.requestbuilder.RequestBuilder
-import com.budjb.requestbuilder.RequestBuilderTest
 import com.budjb.requestbuilder.httpexception.*
 
-class PropertiesFunctionalTests extends RequestBuilderTest {
+class PropertiesFunctionalTests extends RequestBuilderFunctionalTest {
     /**
      * Tests that the accept header is received and respected by the server.
      */

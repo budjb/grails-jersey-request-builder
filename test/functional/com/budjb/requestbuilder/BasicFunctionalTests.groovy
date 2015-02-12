@@ -15,10 +15,7 @@
  */
 package com.budjb.requestbuilder
 
-import com.budjb.requestbuilder.RequestBuilder
-import com.budjb.requestbuilder.RequestBuilderTest
-
-class BasicFunctionalTests extends RequestBuilderTest {
+class BasicFunctionalTests extends RequestBuilderFunctionalTest {
     /**
      * Test simple usage of the GET method.
      */

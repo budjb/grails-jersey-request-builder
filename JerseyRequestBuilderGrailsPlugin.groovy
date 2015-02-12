@@ -1,12 +1,10 @@
-import groovy.util.ConfigObject
-import groovy.util.ConfigSlurper
-
+import com.budjb.requestbuilder.JerseyClientFactory
+import com.budjb.requestbuilder.JerseyRequestBuilder
 import grails.util.Environment
-
 import org.codehaus.groovy.grails.commons.GrailsApplication
 
 /*
- * Copyright 2013 Bud Byrd
+ * Copyright 2013-2015 Bud Byrd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,6 +43,14 @@ class JerseyRequestBuilderGrailsPlugin {
 
     def doWithSpring = {
         loadDefaultConfig(application)
+
+        'jerseyRequestBuilder'(JerseyRequestBuilder) { bean ->
+            bean.autowire = true
+        }
+
+        'jerseyClientFactory'(JerseyClientFactory) { bean ->
+            bean.autowire = true
+        }
     }
 
     def onConfigChange = {
