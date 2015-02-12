@@ -3,9 +3,6 @@ package com.budjb.requestbuilder
 import grails.util.Holders
 import org.codehaus.groovy.grails.commons.GrailsApplication
 
-import java.lang.invoke.MethodHandleImpl
-import java.security.InvalidParameterException
-
 class RequestProperties implements Cloneable {
     /**
      * Grails application bean.
@@ -178,17 +175,16 @@ class RequestProperties implements Cloneable {
     }
 
     /**
-     * Builds a request properties object.
+     * Configures the request properties object from a closure.
      */
-    public static RequestProperties build(Closure closure) {
-        RequestProperties properties = new RequestProperties()
-        closure.delegate = properties
+    public RequestProperties build(Closure closure) {
+        closure.delegate = this
         closure.resolveStrategy = Closure.OWNER_FIRST
-        closure.call()
+        closure()
 
-        properties.validate()
+        validate()
 
-        return properties
+        return this
     }
 
     /**
@@ -394,7 +390,7 @@ class RequestProperties implements Cloneable {
 
         accept = applyDefault(String, config.accept)
         basicAuthPassword = applyDefault(String, config.basicAuthPassword)
-        basicAuthUserName = applyDefault(String, config.basicAuthUsername)
+        basicAuthUserName = applyDefault(String, config.basicAuthUserName)
         binaryResponse = applyDefault(Boolean, config.binaryResponse, false)
         chunkSize = applyDefault(Integer, config.chunkSize)
         connectionTimeout = applyDefault(Integer, config.connectionTimeout)
@@ -402,7 +398,7 @@ class RequestProperties implements Cloneable {
         convertJson = applyDefault(Boolean, config.convertJson, true)
         convertXML = applyDefault(Boolean, config.convertXML, true)
         cookies = [:]
-        debug = applyDefault(Boolean, config.debug)
+        debug = applyDefault(Boolean, config.debug, false)
         encodeGzip = applyDefault(Boolean, config.encodeGzip, false)
         followRedirects = applyDefault(Boolean, config.followRedirects, true)
         form = [:]

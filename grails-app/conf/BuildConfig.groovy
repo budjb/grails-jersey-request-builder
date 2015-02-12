@@ -18,13 +18,24 @@ grails.project.dependency.resolution = {
         compile 'com.sun.jersey:jersey-client:1.8'
         compile 'com.sun.jersey:jersey-server:1.8'
         compile 'com.sun.jersey:jersey-core:1.8'
+        test(
+            'org.mockito:mockito-all:1.9.5',
+            'com.cyrusinnovation:mockito-groovy-support:1.3',
+        ) {
+            export = false
+        }
     }
 
     plugins {
         build ':release:2.2.1', {
             export = false
         }
-        test ":functional-test:2.0.RC1", ":tomcat:$grailsVersion", {
+        test(
+            ":functional-test:2.0.RC1",
+            ":tomcat:$grailsVersion",
+            ":spock:0.7",
+            ":code-coverage:1.2.7"
+        ) {
             export = false
         }
     }
