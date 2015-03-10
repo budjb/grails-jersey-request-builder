@@ -19,10 +19,8 @@ grails.project.dependency.resolution = {
         compile 'com.sun.jersey:jersey-client:1.8'
         compile 'com.sun.jersey:jersey-server:1.8'
         compile 'com.sun.jersey:jersey-core:1.8'
-        test(
-            'org.mockito:mockito-all:1.9.5',
-            'com.cyrusinnovation:mockito-groovy-support:1.3',
-        ) {
+
+        test('org.objenesis:objenesis:2.1') {
             export = false
         }
     }

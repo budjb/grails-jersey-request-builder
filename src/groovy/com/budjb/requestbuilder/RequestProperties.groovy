@@ -149,17 +149,17 @@ class RequestProperties implements Cloneable {
      */
     RequestProperties(GrailsApplication grailsApplication) {
         this.grailsApplication = grailsApplication
+        applyDefaults()
     }
 
     /**
      * Configures the request properties object from a closure.
      */
     RequestProperties build(Closure closure) {
+        closure = closure.clone()
         closure.delegate = this
-        closure.resolveStrategy = Closure.OWNER_FIRST
+        closure.resolveStrategy = Closure.DELEGATE_FIRST
         closure()
-
-        validate()
 
         return this
     }
@@ -211,19 +211,22 @@ class RequestProperties implements Cloneable {
      * @return
      */
     protected Object applyDefault(Class<?> type, Object... values) {
-        values = values.collect {
-            if (it instanceof ConfigObject && it.isEmpty()) {
-                return null
+        for (Object value : values) {
+            if (value instanceof ConfigObject && value.isEmpty()) {
+                continue
+            }
+            if (value == null) {
+                continue
             }
             try {
-                return it.asType(type)
+                return value.asType(type)
             }
             catch (Exception e) {
-                return null
+                continue
             }
         }
 
-        return values.find { it != null }
+        return null
     }
 
     /**
