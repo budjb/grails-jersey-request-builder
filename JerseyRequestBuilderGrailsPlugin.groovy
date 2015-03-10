@@ -1,8 +1,3 @@
-import com.budjb.requestbuilder.JerseyClientFactory
-import com.budjb.requestbuilder.JerseyRequestBuilder
-import grails.util.Environment
-import org.codehaus.groovy.grails.commons.GrailsApplication
-
 /*
  * Copyright 2013-2015 Bud Byrd
  *
@@ -18,6 +13,12 @@ import org.codehaus.groovy.grails.commons.GrailsApplication
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import com.budjb.requestbuilder.JerseyClientFactory
+import com.budjb.requestbuilder.JerseyRequestBuilderImpl
+import grails.util.Environment
+import org.codehaus.groovy.grails.commons.GrailsApplication
+
 class JerseyRequestBuilderGrailsPlugin {
     def version = "1.2.3"
     def grailsVersion = "2.0 > *"
@@ -44,7 +45,7 @@ class JerseyRequestBuilderGrailsPlugin {
     def doWithSpring = {
         loadDefaultConfig(application)
 
-        'jerseyRequestBuilder'(JerseyRequestBuilder) { bean ->
+        'jerseyRequestBuilder'(JerseyRequestBuilderImpl) { bean ->
             bean.autowire = true
         }
 

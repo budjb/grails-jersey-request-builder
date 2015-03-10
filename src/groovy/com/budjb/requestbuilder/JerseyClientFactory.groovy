@@ -22,4 +22,13 @@ class JerseyClientFactory {
     public Client createClient(ClientConfig config) {
         return Client.create(config)
     }
+
+    /**
+     * Creates a new request delegate.
+     *
+     * @return
+     */
+    public JerseyRequestDelegate createDelegate() {
+        return new JerseyRequestDelegate(this)
+    }
 }

@@ -28,54 +28,36 @@ class JerseyRequestDelegate {
     /**
      * Logger.
      */
-    protected Logger log = Logger.getLogger(JerseyRequestDelegate)
+    Logger log = Logger.getLogger(JerseyRequestDelegate)
 
     /**
      * Logging output stream
      */
-    protected ByteArrayOutputStream loggingBuffer
+    ByteArrayOutputStream loggingBuffer
 
     /**
      * Request properties.
      */
-    protected RequestProperties requestProperties
+    RequestProperties requestProperties
 
     /**
      * Jersey client factory.
      */
-    protected JerseyClientFactory jerseyClientFactory
+    JerseyClientFactory jerseyClientFactory
 
     /**
-     * Sets the jersey client factory bean.
+     * Constructor.
      *
-     * @param jerseyClientFactory
+     * @param factory
      */
-    public void setJerseyClientFactory(JerseyClientFactory jerseyClientFactory) {
-        this.jerseyClientFactory = jerseyClientFactory
-    }
-
-    /**
-     * Sets the logging output stream.
-     *
-     * @param loggingBuffer
-     */
-    public void setLoggingBuffer(ByteArrayOutputStream loggingBuffer) {
-        this.loggingBuffer = loggingBuffer
-    }
-
-    /**
-     * Sets the request properties.
-     *
-     * @param requestProperties
-     */
-    public void setRequestProperties(RequestProperties requestProperties) {
-        this.requestProperties = requestProperties.clone()
+    JerseyRequestDelegate(JerseyClientFactory factory) {
+        jerseyClientFactory = factory
     }
 
     /**
      * Does any cleanup after the request is done.
      */
-    protected void cleanUp() {
+    void cleanUp() {
         // Dump debug if requested
         if (requestProperties.debug) {
             String logString = "HTTP Conversation:\n" + "${formatLoggingOutput(new String(loggingBuffer.toByteArray()))}"
@@ -84,16 +66,12 @@ class JerseyRequestDelegate {
     }
 
     /**
-     * Formats the log output of the <code>LoggingFilter</code>
-     * slightly.
+     * Formats the log output of the LoggingFilter slightly.
      *
-     * @param logText The log text from the
-     *                      <code>OutputStream</code>
-     *
-     * @return A formatted string of the original output but with
-     *          more indentation.
+     * @param logText The log text from the OutputStream.
+     * @return A formatted string of the original output but with more indentation.
      */
-    protected final String formatLoggingOutput(String logText) {
+    protected String formatLoggingOutput(String logText) {
         logText = logText.readLines().collect { "    ${it}" }.join('\n')
     }
 
@@ -104,7 +82,7 @@ class JerseyRequestDelegate {
      * @return
      * @throws IllegalArgumentException
      */
-    public Object delete(RequestProperties requestProperties) throws IllegalArgumentException {
+    Object delete(RequestProperties requestProperties) throws IllegalArgumentException {
         performRequest(requestProperties) { WebResource.Builder request -> request.delete(ClientResponse) }
     }
 
@@ -115,7 +93,7 @@ class JerseyRequestDelegate {
      * @return
      * @throws IllegalArgumentException
      */
-    public Object get(RequestProperties requestProperties) throws IllegalArgumentException {
+    Object get(RequestProperties requestProperties) throws IllegalArgumentException {
         performRequest(requestProperties) { WebResource.Builder request -> request.get(ClientResponse) }
     }
 
@@ -126,9 +104,10 @@ class JerseyRequestDelegate {
      * @return
      * @throws IllegalArgumentException
      */
-    public ClientResponse head(RequestProperties requestProperties) throws IllegalArgumentException {
+    ClientResponse head(RequestProperties requestProperties) throws IllegalArgumentException {
         requestProperties = requestProperties.clone()
         requestProperties.rawClientResponse = true
+
         performRequest(requestProperties) { WebResource.Builder request -> request.head() }
     }
 
@@ -139,7 +118,7 @@ class JerseyRequestDelegate {
      * @return
      * @throws IllegalArgumentException
      */
-    public Object options(RequestProperties requestProperties) throws IllegalArgumentException {
+    Object options(RequestProperties requestProperties) throws IllegalArgumentException {
         performRequest(requestProperties) { WebResource.Builder request -> request.options(ClientResponse) }
     }
 
@@ -150,7 +129,7 @@ class JerseyRequestDelegate {
      * @return
      * @throws IllegalArgumentException
      */
-    public Object post(RequestProperties requestProperties) throws IllegalArgumentException {
+    Object post(RequestProperties requestProperties) throws IllegalArgumentException {
         performRequest(requestProperties) { WebResource.Builder request -> request.post(ClientResponse, getRequestBody()) }
     }
 
@@ -161,7 +140,7 @@ class JerseyRequestDelegate {
      * @return
      * @throws IllegalArgumentException
      */
-    public Object put(RequestProperties requestProperties) throws IllegalArgumentException {
+    Object put(RequestProperties requestProperties) throws IllegalArgumentException {
         performRequest(requestProperties) { WebResource.Builder request -> request.put(ClientResponse, getRequestBody()) }
     }
 
@@ -172,7 +151,7 @@ class JerseyRequestDelegate {
      * @return
      * @throws IllegalArgumentException
      */
-    public Object trace(RequestProperties requestProperties) throws IllegalArgumentException {
+    Object trace(RequestProperties requestProperties) throws IllegalArgumentException {
         performRequest(requestProperties) { WebResource.Builder request -> request.method('TRACE', ClientResponse) }
     }
 
@@ -415,20 +394,14 @@ class JerseyRequestDelegate {
      * @return
      */
     protected Object performRequest(RequestProperties properties, Closure closure) {
-        // Store the request properties
-        setRequestProperties(properties)
-
-        // Validate the request
-        requestProperties.validate()
+        properties.validate()
+        requestProperties = properties
 
         try {
-            // Build the request
             WebResource.Builder request = buildRequest()
 
-            // Do the request
             ClientResponse response = closure(request)
 
-            // Handle the response
             return handleResponse(response)
         }
         catch (ClientHandlerException e) {
@@ -454,8 +427,7 @@ class JerseyRequestDelegate {
      *
      * @return
      */
-    private getRequestBody() {
-        // If we have items in the form map, make a Form object and return it
+    protected getRequestBody() {
         if (requestProperties.form.size() > 0) {
             Form f = new Form()
             requestProperties.form.each { key, value ->
@@ -465,7 +437,6 @@ class JerseyRequestDelegate {
             return f
         }
 
-        // Use the basic provided body, even if it's empty
         return requestProperties.body
     }
 }

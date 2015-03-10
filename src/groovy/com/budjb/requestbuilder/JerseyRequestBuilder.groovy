@@ -1,28 +1,15 @@
 package com.budjb.requestbuilder
 
 import com.sun.jersey.api.client.ClientResponse
-import org.codehaus.groovy.grails.commons.GrailsApplication
 
-class JerseyRequestBuilder {
-    /**
-     * Jersey client factory bean.
-     */
-    protected JerseyClientFactory jerseyClientFactory
-
-    /**
-     * Grails application bean.
-     */
-    protected GrailsApplication grailsApplication
-
+interface JerseyRequestBuilder {
     /**
      * Performs a DELETE request to the given URI.
      *
      * @param uri
      * @return
      */
-    public Object delete(String uri) {
-        return delete(new RequestProperties(grailsApplication).build { delegate.uri = uri })
-    }
+    Object delete(String uri)
 
     /**
      * Performs a DELETE request with the request properties configured in the given closure.
@@ -30,9 +17,7 @@ class JerseyRequestBuilder {
      * @param closure
      * @return
      */
-    public Object delete(Closure closure) {
-        return delete(new RequestProperties(grailsApplication).build(closure))
-    }
+    Object delete(Closure closure)
 
     /**
      * Performs a DELETE request with the given request properties.
@@ -40,9 +25,7 @@ class JerseyRequestBuilder {
      * @param requestProperties
      * @return
      */
-    public Object delete(RequestProperties requestProperties) {
-        return createDelegate().delete(requestProperties)
-    }
+    Object delete(RequestProperties requestProperties)
 
     /**
      * Performs a GET request to the given URI.
@@ -50,9 +33,7 @@ class JerseyRequestBuilder {
      * @param uri
      * @return
      */
-    public Object get(String uri) {
-        return get(new RequestProperties(grailsApplication).build { delegate.uri = uri })
-    }
+    Object get(String uri)
 
     /**
      * Performs a GET request with the request properties configured in the given closure.
@@ -60,9 +41,7 @@ class JerseyRequestBuilder {
      * @param closure
      * @return
      */
-    public Object get(Closure closure) {
-        return get(new RequestProperties(grailsApplication).build(closure))
-    }
+    Object get(Closure closure)
 
     /**
      * Performs a GET request with the given request properties.
@@ -70,9 +49,7 @@ class JerseyRequestBuilder {
      * @param requestProperties
      * @return
      */
-    public Object get(RequestProperties requestProperties) {
-        return createDelegate().get(requestProperties)
-    }
+    Object get(RequestProperties requestProperties)
 
     /**
      * Performs a HEAD request to the given URI.
@@ -80,9 +57,7 @@ class JerseyRequestBuilder {
      * @param uri
      * @return
      */
-    public ClientResponse head(String uri) {
-        return head(new RequestProperties(grailsApplication).build { delegate.uri = uri })
-    }
+    ClientResponse head(String uri)
 
     /**
      * Performs a HEAD request with the request properties configured in the given closure.
@@ -90,9 +65,7 @@ class JerseyRequestBuilder {
      * @param closure
      * @return
      */
-    public ClientResponse head(Closure closure) {
-        return head(new RequestProperties(grailsApplication).build(closure))
-    }
+    ClientResponse head(Closure closure)
 
     /**
      * Performs a HEAD request with the given request properties.
@@ -100,9 +73,7 @@ class JerseyRequestBuilder {
      * @param requestProperties
      * @return
      */
-    public ClientResponse head(RequestProperties requestProperties) {
-        return createDelegate().head(requestProperties)
-    }
+    ClientResponse head(RequestProperties requestProperties)
 
     /**
      * Performs an OPTIONS request to the given URI.
@@ -110,9 +81,7 @@ class JerseyRequestBuilder {
      * @param uri
      * @return
      */
-    public Object options(String uri) {
-        return options(new RequestProperties(grailsApplication).build { delegate.uri = uri })
-    }
+    Object options(String uri)
 
     /**
      * Performs an OPTIONS request with the request properties configured in the given closure.
@@ -120,9 +89,7 @@ class JerseyRequestBuilder {
      * @param closure
      * @return
      */
-    public Object options(Closure closure) {
-        return options(new RequestProperties(grailsApplication).build(closure))
-    }
+    Object options(Closure closure)
 
     /**
      * Performs an OPTIONS request with the given request properties.
@@ -130,9 +97,7 @@ class JerseyRequestBuilder {
      * @param requestProperties
      * @return
      */
-    public Object options(RequestProperties requestProperties) {
-        return createDelegate().options(requestProperties)
-    }
+    Object options(RequestProperties requestProperties)
 
     /**
      * Performs a POST request to the given URI.
@@ -140,9 +105,7 @@ class JerseyRequestBuilder {
      * @param uri
      * @return
      */
-    public Object post(String uri) {
-        return post(new RequestProperties(grailsApplication).build { delegate.uri = uri })
-    }
+    Object post(String uri)
 
     /**
      * Performs a POST request to the given URI.
@@ -151,12 +114,7 @@ class JerseyRequestBuilder {
      * @param body
      * @return
      */
-    public Object post(String uri, Object body) {
-        return post(new RequestProperties(grailsApplication).build {
-            delegate.uri = uri
-            delegate.body = body
-        })
-    }
+    Object post(String uri, Object body)
 
     /**
      * Performs a POST request with the request properties configured in the given closure.
@@ -164,9 +122,7 @@ class JerseyRequestBuilder {
      * @param closure
      * @return
      */
-    public Object post(Closure closure) {
-        return post(new RequestProperties(grailsApplication).build(closure))
-    }
+    Object post(Closure closure)
 
     /**
      * Performs a POST request with the given request properties.
@@ -174,9 +130,7 @@ class JerseyRequestBuilder {
      * @param requestProperties
      * @return
      */
-    public Object post(RequestProperties requestProperties) {
-        return createDelegate().post(requestProperties)
-    }
+    Object post(RequestProperties requestProperties)
 
     /**
      * Performs a PUT request to the given URI.
@@ -184,9 +138,7 @@ class JerseyRequestBuilder {
      * @param uri
      * @return
      */
-    public Object put(String uri) {
-        return put(new RequestProperties(grailsApplication).build { delegate.uri = uri })
-    }
+    Object put(String uri)
 
     /**
      * Performs a PUT request to the given URI.
@@ -195,12 +147,7 @@ class JerseyRequestBuilder {
      * @param body
      * @return
      */
-    public Object put(String uri, Object body) {
-        return put(new RequestProperties(grailsApplication).build {
-            delegate.uri = uri
-            delegate.body = body
-        })
-    }
+    Object put(String uri, Object body)
 
     /**
      * Performs a PUT request with the request properties configured in the given closure.
@@ -208,9 +155,7 @@ class JerseyRequestBuilder {
      * @param closure
      * @return
      */
-    public Object put(Closure closure) {
-        return put(new RequestProperties(grailsApplication).build(closure))
-    }
+    Object put(Closure closure)
 
     /**
      * Performs a PUT request with the given request properties.
@@ -218,9 +163,7 @@ class JerseyRequestBuilder {
      * @param requestProperties
      * @return
      */
-    public Object put(RequestProperties requestProperties) {
-        return createDelegate().put(requestProperties)
-    }
+    Object put(RequestProperties requestProperties)
 
     /**
      * Performs a TRACE request to the given URI.
@@ -228,9 +171,7 @@ class JerseyRequestBuilder {
      * @param uri
      * @return
      */
-    public Object trace(String uri) {
-        return trace(new RequestProperties(grailsApplication).build { delegate.uri = uri })
-    }
+    Object trace(String uri)
 
     /**
      * Performs a TRACE request with the request properties configured in the given closure.
@@ -238,9 +179,7 @@ class JerseyRequestBuilder {
      * @param closure
      * @return
      */
-    public Object trace(Closure closure) {
-        return trace(new RequestProperties(grailsApplication).build(closure))
-    }
+    Object trace(Closure closure)
 
     /**
      * Performs a TRACE request with the given request properties.
@@ -248,38 +187,5 @@ class JerseyRequestBuilder {
      * @param requestProperties
      * @return
      */
-    public Object trace(RequestProperties requestProperties) {
-        return createDelegate().trace(requestProperties)
-    }
-
-    /**
-     * Creates a jersey client delegate.
-     *
-     * @return
-     */
-    protected JerseyRequestDelegate createDelegate() {
-        JerseyRequestDelegate delegate = new JerseyRequestDelegate()
-        delegate.setJerseyClientFactory(jerseyClientFactory)
-        return delegate
-    }
-
-    /**
-     * Sets the jersey client factory bean.
-     *
-     * @param jerseyClientFactory
-     * @return
-     */
-    protected setJerseyClientFactory(JerseyClientFactory jerseyClientFactory) {
-        this.jerseyClientFactory = jerseyClientFactory
-    }
-
-    /**
-     * Sets the grails application bean.
-     *
-     * @param grailsApplication
-     * @return
-     */
-    protected setGrailsApplication(GrailsApplication grailsApplication) {
-        this.grailsApplication = grailsApplication
-    }
+    Object trace(RequestProperties requestProperties)
 }
