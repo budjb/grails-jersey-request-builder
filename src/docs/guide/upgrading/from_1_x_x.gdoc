@@ -22,6 +22,6 @@ properties.uri = "http://example.com"
 def response = jerseyRequestBuilder.get(properties)
 {code}
 
-Since the @jerseyRequestBuilder@ bean is managed by Spring, it can be inject into any other Spring bean, such as controllers, domains, and services.  If
+Since the @jerseyRequestBuilder@ bean is managed by Spring, it can be inject into any other Spring bean, such as controllers and services.  If
 the request builder is needed outside of a managed Spring bean (such as files in @src/groovy@), it can be grabbed from the @applicationContext@ through
 the @Holders@ convenience class.

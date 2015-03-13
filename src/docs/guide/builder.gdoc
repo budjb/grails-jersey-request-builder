@@ -1,5 +1,5 @@
 To use the *Jersey Request Builder*, simply inject the @jerseyRequestBuilder@ bean into any other bean managed by Spring.  Examples of managed Spring beans
-include Grails domains, controllers, and services. An example follows.
+include Grails controllers and services. An example follows.
 
 {code}
 package com.budjb

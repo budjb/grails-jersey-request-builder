@@ -111,7 +111,7 @@ function addJsClass() {
 
 <h1 id="builder">3 Making Requests</h1>
 To use the <strong class="bold">Jersey Request Builder</strong>, simply inject the <code>jerseyRequestBuilder</code> bean into any other bean managed by Spring.  Examples of managed Spring beans
-include Grails domains, controllers, and services. An example follows.<p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">package</span> com.budjb<p class="paragraph"/><span class="java&#45;keyword">import</span> com.budjb.requestbuilder.JerseyRequestBuilder<p class="paragraph"/>class ExampleController &#123;
+include Grails controllers and services. An example follows.<p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">package</span> com.budjb<p class="paragraph"/><span class="java&#45;keyword">import</span> com.budjb.requestbuilder.JerseyRequestBuilder<p class="paragraph"/>class ExampleController &#123;
     JerseyRequestBuilder jerseyRequestBuilder<p class="paragraph"/>    def index = &#123;<p class="paragraph"/>    &#125;
 &#125;</pre></div><p class="paragraph"/>To use the <strong class="bold">Jersey Request Builder</strong> in a POGO (plain old groovy object), it can be retrieved from the <code>applicationContext</code> using the Holders class as follows.<p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">import</span> grails.util.Holders<p class="paragraph"/>class Example &#123;
     JerseyRequestBuilder jerseyRequestBuilder = Holders.applicationContext.getBean(<span class="java&#45;quote">"jerseyRequestBuilder"</span>)

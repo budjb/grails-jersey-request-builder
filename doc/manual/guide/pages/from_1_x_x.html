@@ -101,7 +101,7 @@ builder.uri = <span class="java&#45;quote">"http://example.com"</span>
 def response = builder.get()</pre></div><p class="paragraph"/>The new version of the plugin introduces the <code>RequestProperties</code> object that can be passed into the <strong class="bold">Jersey Request Builder</strong> for all of its HTTP methods.
 The equivalent to the code above would look like:<p class="paragraph"/><div class="code"><pre>def properties = <span class="java&#45;keyword">new</span> RequestProperties()
 properties.uri = <span class="java&#45;quote">"http://example.com"</span>
-def response = jerseyRequestBuilder.get(properties)</pre></div><p class="paragraph"/>Since the <code>jerseyRequestBuilder</code> bean is managed by Spring, it can be inject into any other Spring bean, such as controllers, domains, and services.  If
+def response = jerseyRequestBuilder.get(properties)</pre></div><p class="paragraph"/>Since the <code>jerseyRequestBuilder</code> bean is managed by Spring, it can be inject into any other Spring bean, such as controllers and services.  If
 the request builder is needed outside of a managed Spring bean (such as files in <code>src/groovy</code>), it can be grabbed from the <code>applicationContext</code> through
 the <code>Holders</code> convenience class.
 
