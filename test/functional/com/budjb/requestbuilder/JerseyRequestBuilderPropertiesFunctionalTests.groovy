@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Bud Byrd
+ * Copyright 2015 Bud Byrd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,23 @@
  */
 package com.budjb.requestbuilder
 
-import com.budjb.requestbuilder.httpexception.*
+import com.budjb.requestbuilder.httpexception.HttpInternalServerErrorException
+import com.budjb.requestbuilder.httpexception.HttpMovedPermanentlyException
+import com.budjb.requestbuilder.httpexception.HttpNotAcceptableException
+import com.budjb.requestbuilder.httpexception.HttpUnauthorizedException
+import grails.util.Holders
 
-class PropertiesFunctionalTests extends RequestBuilderFunctionalTest {
+class JerseyRequestBuilderPropertiesFunctionalTests extends RequestBuilderFunctionalTest {
+    /**
+     * Jersey request builder.
+     */
+    JerseyRequestBuilder jerseyRequestBuilder = Holders.applicationContext.getBean('jerseyRequestBuilder')
+
     /**
      * Tests that the accept header is received and respected by the server.
      */
     void testAcceptSuccess() {
-        def response = new RequestBuilder().get {
+        def response = jerseyRequestBuilder.get {
             uri = getUri('test/testAccept')
             accept = 'text/plain'
         }
@@ -34,7 +43,7 @@ class PropertiesFunctionalTests extends RequestBuilderFunctionalTest {
      */
     void testAcceptFail() {
         shouldFail(HttpNotAcceptableException) {
-            new RequestBuilder().get {
+            jerseyRequestBuilder.get {
                 uri = getUri('/test/testAccept')
                 accept = 'foo/bar'
             }
@@ -46,7 +55,7 @@ class PropertiesFunctionalTests extends RequestBuilderFunctionalTest {
      */
     void testReadTimeout() {
         shouldFail(SocketTimeoutException) {
-            new RequestBuilder().get {
+            jerseyRequestBuilder.get {
                 uri = getUri('/test/testReadTimeout')
                 readTimeout = 1000
             }
@@ -57,7 +66,7 @@ class PropertiesFunctionalTests extends RequestBuilderFunctionalTest {
      * Tests the binary response option.
      */
     void testBinaryResponse() {
-        def response = new RequestBuilder().get {
+        def response = jerseyRequestBuilder.get {
             uri = getUri('/test/testBasicGet')
             binaryResponse = true
         }
@@ -68,7 +77,7 @@ class PropertiesFunctionalTests extends RequestBuilderFunctionalTest {
      * Tests the output of a redirect.
      */
     void testFollowRedirect() {
-        def response = new RequestBuilder().get {
+        def response = jerseyRequestBuilder.get {
             uri = getUri('/test/testRedirect')
             followRedirects = true
         }
@@ -80,7 +89,7 @@ class PropertiesFunctionalTests extends RequestBuilderFunctionalTest {
      */
     void testDoNotFollowRedirect() {
         shouldFail(HttpMovedPermanentlyException) {
-            new RequestBuilder().get {
+            jerseyRequestBuilder.get {
                 uri = getUri('/test/testRedirect')
                 followRedirects = false
             }
@@ -91,7 +100,7 @@ class PropertiesFunctionalTests extends RequestBuilderFunctionalTest {
      * Tests the form parameter of the request builder.
      */
     void testForm() {
-        def response = new RequestBuilder().post {
+        def response = jerseyRequestBuilder.post {
             uri = getUri('/test/testParams')
             form = ['foo': 'bar', 'key': 'value']
         }
@@ -102,7 +111,7 @@ class PropertiesFunctionalTests extends RequestBuilderFunctionalTest {
      * Test the headers parameter.
      */
     void testHeaders() {
-        def response = new RequestBuilder().get {
+        def response = jerseyRequestBuilder.get {
             uri = getUri('/test/testHeaders')
             headers = ['foo': 'bar', 'key': 'value']
         }
@@ -113,7 +122,7 @@ class PropertiesFunctionalTests extends RequestBuilderFunctionalTest {
      * Test the query parameter.
      */
     void testQuery() {
-        def response = new RequestBuilder().get {
+        def response = jerseyRequestBuilder.get {
             uri = getUri('/test/testParams')
             query = ['foo': 'bar', 'key': 'value']
         }
@@ -125,11 +134,11 @@ class PropertiesFunctionalTests extends RequestBuilderFunctionalTest {
      */
     void testSkipStatusCheck() {
         shouldFail(HttpInternalServerErrorException) {
-            new RequestBuilder().get {
+            jerseyRequestBuilder.get {
                 uri = getUri('/test/test500')
             }
         }
-        new RequestBuilder().get {
+        jerseyRequestBuilder.get {
             uri = getUri('/test/test500')
             skipStatusCheck = true
         }
@@ -140,11 +149,11 @@ class PropertiesFunctionalTests extends RequestBuilderFunctionalTest {
      */
     void testBasicAuth() {
         shouldFail(HttpUnauthorizedException) {
-            new RequestBuilder().get {
+            jerseyRequestBuilder.get {
                 uri = getUri('/test/testAuth')
             }
         }
-        new RequestBuilder().get {
+        jerseyRequestBuilder.get {
             uri = getUri('/test/testAuth')
             useBasicAuth = true
             basicAuthUserName = 'foo'

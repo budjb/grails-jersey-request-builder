@@ -38,8 +38,9 @@ class JerseyRequestBuilderGrailsPlugin {
     def scm = [url: 'https://github.com/budjb/grails-jersey-request-builder']
     def pluginExcludes = [
         'grails-app/controllers/**',
-        'src/groovy/com/budjb/requestbuilder/RequestBuilderTest.groovy',
-        'src/docs/**'
+        'src/groovy/com/budjb/requestbuilder/RequestBuilderFunctionalTest.groovy',
+        'src/docs/**',
+        'test/**'
     ]
 
     def doWithSpring = {

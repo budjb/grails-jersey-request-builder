@@ -1,3 +1,18 @@
+/*
+ * Copyright 2015 Bud Byrd
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.budjb.requestbuilder
 
 import org.codehaus.groovy.grails.commons.GrailsApplication
@@ -45,23 +60,23 @@ class RequestPropertiesSpec extends Specification {
         setup:
         grailsApplication.getConfig() >> new ConfigObject([
             jerseyRequestBuilder: [
-                accept: 'application/json',
+                accept           : 'application/json',
                 basicAuthPassword: 'foo',
                 basicAuthUserName: 'bar',
-                binaryResponse: true,
-                chunkSize: 50,
+                binaryResponse   : true,
+                chunkSize        : 50,
                 connectionTimeout: 70,
-                contentType: 'text/plain',
-                convertJson: false,
-                convertXML: false,
-                debug: true,
-                encodeGzip: true,
-                followRedirects: false,
-                ignoreInvalidSSL: true,
+                contentType      : 'text/plain',
+                convertJson      : false,
+                convertXML       : false,
+                debug            : true,
+                encodeGzip       : true,
+                followRedirects  : false,
+                ignoreInvalidSSL : true,
                 rawClientResponse: true,
-                readTimeout: 60,
-                skipStatusCheck: true,
-                useBasicAuth: true
+                readTimeout      : 60,
+                skipStatusCheck  : true,
+                useBasicAuth     : true
             ]
         ])
 

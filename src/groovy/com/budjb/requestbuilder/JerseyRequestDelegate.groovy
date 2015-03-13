@@ -1,3 +1,18 @@
+/*
+ * Copyright 2015 Bud Byrd
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.budjb.requestbuilder
 
 import com.sun.jersey.api.client.Client
@@ -105,10 +120,11 @@ class JerseyRequestDelegate {
      * @throws IllegalArgumentException
      */
     ClientResponse head(RequestProperties requestProperties) throws IllegalArgumentException {
-        requestProperties = requestProperties.clone()
-        requestProperties.rawClientResponse = true
+        setRequestProperties(requestProperties)
 
-        performRequest(requestProperties) { WebResource.Builder request -> request.head() }
+        this.requestProperties.rawClientResponse = true
+
+        performRequest(this.requestProperties) { WebResource.Builder request -> request.head() }
     }
 
     /**
@@ -130,7 +146,7 @@ class JerseyRequestDelegate {
      * @throws IllegalArgumentException
      */
     Object post(RequestProperties requestProperties) throws IllegalArgumentException {
-        performRequest(requestProperties) { WebResource.Builder request -> request.post(ClientResponse, getRequestBody()) }
+        performRequest(requestProperties) { WebResource.Builder request -> request.post(ClientResponse, this.requestProperties.body) }
     }
 
     /**
@@ -141,7 +157,7 @@ class JerseyRequestDelegate {
      * @throws IllegalArgumentException
      */
     Object put(RequestProperties requestProperties) throws IllegalArgumentException {
-        performRequest(requestProperties) { WebResource.Builder request -> request.put(ClientResponse, getRequestBody()) }
+        performRequest(requestProperties) { WebResource.Builder request -> request.put(ClientResponse, this.requestProperties.body) }
     }
 
     /**
@@ -162,7 +178,7 @@ class JerseyRequestDelegate {
      */
     protected WebResource.Builder buildRequest() {
         // Do any body conversion here, so we can set other parameters as necessary
-        prepareRequestBody()
+        marshallRequestBody()
 
         // Get the client
         Client client = createClient()
@@ -206,7 +222,7 @@ class JerseyRequestDelegate {
         // If the uri is a string, run it through the UriBuilder
         URI uri
         if (requestProperties.uri instanceof URI) {
-            uri = requestProperties.uri
+            uri = (URI) requestProperties.uri
         }
         else {
             uri = requestProperties.uri = UriBuilder.build {
@@ -227,12 +243,12 @@ class JerseyRequestDelegate {
 
         // Set the accept type
         if (requestProperties.accept) {
-            builder = builder.accept(requestProperties.accept)
+            builder.accept(requestProperties.accept)
         }
 
         // Set the content-type
         if (requestProperties.contentType) {
-            builder = builder.type(requestProperties.contentType)
+            builder.type(requestProperties.contentType)
         }
 
         // Set cookies
@@ -259,31 +275,10 @@ class JerseyRequestDelegate {
 
         // Set any headers
         requestProperties.headers.each { param, value ->
-            builder = builder.header(param, value)
+            builder.header(param, value)
         }
 
         return builder
-    }
-
-    /**
-     * Does any conversion necessary on the body of the request.
-     */
-    protected void prepareRequestBody() {
-        // Don't do anything if the form is present
-        if (requestProperties.form.size() > 0) {
-            return
-        }
-
-        // Check if the body is a map or list
-        if (requestProperties.body instanceof Map || requestProperties.body instanceof List) {
-            // Convert the map/list
-            requestProperties.body = new JsonBuilder(requestProperties.body).toString()
-
-            // Set the content type of the request
-            if (!requestProperties.contentType) {
-                requestProperties.contentType = 'application/json'
-            }
-        }
     }
 
     /**
@@ -297,7 +292,6 @@ class JerseyRequestDelegate {
      * @return Configured jersey client
      */
     protected Client createClient() {
-        // If SSL requests should go through the trust chain, just create a default client
         if (!requestProperties.ignoreInvalidSSL) {
             return jerseyClientFactory.createClient()
         }
@@ -335,53 +329,25 @@ class JerseyRequestDelegate {
      * @param response Response object to handle.
      * @return The content of the response.
      */
-    protected handleResponse(ClientResponse response) throws IllegalArgumentException {
-        // Result holder
-        def result
+    protected Object handleResponse(ClientResponse response) throws IllegalArgumentException {
+        Object result
 
-        // Check what kind of return we want
         if (requestProperties.rawClientResponse) {
-            // Just return the raw ClientResponse object
             result = response
         }
         else if (!response.hasEntity()) {
             result = null
         }
         else if (requestProperties.binaryResponse) {
-            // Return the byte array response
             result = response.getEntity(byte[])
         }
         else {
-            // Get the content type
-            MediaType contentType = response.getType()
-
-            // Get the response entity as a string
-            result = (String)response.getEntity(String)
-
-            // Attempt to auto-conversions
-            if (requestProperties.convertJson && MediaType.APPLICATION_JSON_TYPE.isCompatible(contentType)) {
-                if (result.size() > 0) {
-                    result = new JsonSlurper().parseText(result)
-                }
-                else {
-                    result = null
-                }
-            }
-            if (requestProperties.convertXML && (MediaType.APPLICATION_XML_TYPE.isCompatible(contentType) || MediaType.TEXT_XML_TYPE.isCompatible(contentType))) {
-                if (result.size() > 0) {
-                    result = new XmlSlurper().parseText(result)
-                }
-                else {
-                    result = null
-                }
-            }
+            result = marshallResponseBody((String) response.getEntity(String), response.getType())
         }
 
-        // Check the status
         if (!requestProperties.skipStatusCheck && Math.floor(response.status / 100) != 2) {
             String logString = new String(loggingBuffer.toByteArray())
-            throw ResponseStatusException.build(
-                response.status, result, response, logString)
+            throw ResponseStatusException.build(response.status, result, response, logString)
         }
 
         return result
@@ -393,9 +359,8 @@ class JerseyRequestDelegate {
      * @param closure
      * @return
      */
-    protected Object performRequest(RequestProperties properties, Closure closure) {
-        properties.validate()
-        requestProperties = properties
+    protected Object performRequest(RequestProperties properties, Closure closure) throws IllegalArgumentException {
+        setRequestProperties(properties)
 
         try {
             WebResource.Builder request = buildRequest()
@@ -418,25 +383,78 @@ class JerseyRequestDelegate {
     }
 
     /**
-     * Returns the body entity to send with the request.
+     * Marshalls the body of the request into the correct form based on the
+     * properties of the request.
      *
      * This function will check if values were entered for a POST form,
      * and if present build the form object and return it, ignoring
      * any body that was added.  If no form values are found, body is
-     * returned.
+     * either marshalled or used unaltered.
      *
      * @return
      */
-    protected getRequestBody() {
+    protected void marshallRequestBody() {
         if (requestProperties.form.size() > 0) {
-            Form f = new Form()
+            Form form = new Form()
             requestProperties.form.each { key, value ->
-                f.add(key, value)
+                form.add(key, value)
+            }
+            requestProperties.body = form
+
+            if (!requestProperties.contentType) {
+                requestProperties.contentType = 'application/x-www-form-urlencoded'
             }
 
-            return f
+            return
         }
 
-        return requestProperties.body
+        if (requestProperties.body instanceof Map || requestProperties.body instanceof List) {
+            requestProperties.body = new JsonBuilder(requestProperties.body).toString()
+
+            if (!requestProperties.contentType) {
+                requestProperties.contentType = 'application/json'
+            }
+
+            return
+        }
+    }
+
+    /**
+     * Marshalls the response body from a string to a Map, List, or XML object.
+     * Empty responses are returned as null.
+     *
+     * @param body
+     * @param contentType
+     * @return
+     */
+    protected Object marshallResponseBody(String body, MediaType contentType) {
+        if (requestProperties.convertJson && MediaType.APPLICATION_JSON_TYPE.isCompatible(contentType)) {
+            if (body.size() > 0) {
+                return new JsonSlurper().parseText(body)
+            }
+
+            return null
+        }
+
+        if (requestProperties.convertXML && (MediaType.APPLICATION_XML_TYPE.isCompatible(contentType) || MediaType.TEXT_XML_TYPE.isCompatible(contentType))) {
+            if (body.size() > 0) {
+                return new XmlSlurper().parseText(body)
+            }
+
+            return null
+        }
+
+        return body
+    }
+
+    /**
+     * Sets the request properties (after validating them).
+     *
+     * @param requestProperties
+     * @throws IllegalArgumentException
+     */
+    void setRequestProperties(RequestProperties requestProperties) throws IllegalArgumentException {
+        requestProperties.validate()
+        this.requestProperties = requestProperties.clone()
     }
 }

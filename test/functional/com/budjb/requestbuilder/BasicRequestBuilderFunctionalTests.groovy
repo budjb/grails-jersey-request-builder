@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Bud Byrd
+ * Copyright 2013-2015 Bud Byrd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package com.budjb.requestbuilder
 
-class BasicFunctionalTests extends RequestBuilderFunctionalTest {
+class BasicRequestBuilderFunctionalTests extends RequestBuilderFunctionalTest {
     /**
      * Test simple usage of the GET method.
      */
