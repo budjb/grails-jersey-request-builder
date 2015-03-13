@@ -1,9 +1,0 @@
-The @RequestBuilder@ also allows the author to build a request gradually. All of the properties that can be set inside of the
-DSL-based methods can also be set directly on the object itself.
-
-{code}
-RequestBuilder builder = new RequestBuilder()
-builder.uri = "http://www.example.com"
-builder.accept = "text/html"
-def result = builder.get()
-{code}

@@ -1,12 +1,5 @@
-import groovy.util.ConfigObject
-import groovy.util.ConfigSlurper
-
-import grails.util.Environment
-
-import org.codehaus.groovy.grails.commons.GrailsApplication
-
 /*
- * Copyright 2013 Bud Byrd
+ * Copyright 2013-2015 Bud Byrd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +13,14 @@ import org.codehaus.groovy.grails.commons.GrailsApplication
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import com.budjb.requestbuilder.JerseyClientFactory
+import com.budjb.requestbuilder.JerseyRequestBuilderImpl
+import grails.util.Environment
+import org.codehaus.groovy.grails.commons.GrailsApplication
+
 class JerseyRequestBuilderGrailsPlugin {
-    def version = "1.2.3"
+    def version = "2.0.0"
     def grailsVersion = "2.0 > *"
     def title = "Jersey Request Builder Plugin"
     def author = "Bud Byrd"
@@ -39,12 +38,21 @@ class JerseyRequestBuilderGrailsPlugin {
     def scm = [url: 'https://github.com/budjb/grails-jersey-request-builder']
     def pluginExcludes = [
         'grails-app/controllers/**',
-        'src/groovy/com/budjb/requestbuilder/RequestBuilderTest.groovy',
-        'src/docs/**'
+        'src/groovy/com/budjb/requestbuilder/RequestBuilderFunctionalTest.groovy',
+        'src/docs/**',
+        'test/**'
     ]
 
     def doWithSpring = {
         loadDefaultConfig(application)
+
+        'jerseyRequestBuilder'(JerseyRequestBuilderImpl) { bean ->
+            bean.autowire = true
+        }
+
+        'jerseyClientFactory'(JerseyClientFactory) { bean ->
+            bean.autowire = true
+        }
     }
 
     def onConfigChange = {
@@ -53,6 +61,7 @@ class JerseyRequestBuilderGrailsPlugin {
 
     /**
      * Merges plugin config with host app config, but allowing customization
+     *
      * @param app
      */
     private void loadDefaultConfig(GrailsApplication app) {

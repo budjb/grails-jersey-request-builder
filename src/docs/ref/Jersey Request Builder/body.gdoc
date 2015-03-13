@@ -1,0 +1,26 @@
+h1. body
+
+h2. Purpose
+
+Sets the body of the request.
+
+h2. Examples
+
+{code}
+jerseyRequestBuilder.post {
+    uri = "http://example.com"
+    body = "Hello!"
+}
+{code}
+
+h2. Description
+
+Sets the body of the request. As a convenience, objects that are a @Map@ or a @List@ will be converted to a JSON string.
+
+{note}
+This property is only useful with certain HTTP methods, including PUT and POST.
+{note}
+
+{warning}
+This property is ignored if the [form|Jersey Request Builder] property is used.
+{warning}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Bud Byrd
+ * Copyright 2013-2015 Bud Byrd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,9 @@
  */
 package com.budjb.requestbuilder
 
-import javax.ws.rs.core.UriBuilder as JsrUriBuilder
 import org.apache.log4j.Logger
+
+import javax.ws.rs.core.UriBuilder as JsrUriBuilder
 
 /**
  * Convenience wrapper around JSR311's UriBuilder that provides
@@ -27,13 +28,11 @@ import org.apache.log4j.Logger
  * Builder-style
  * -------------
  * <code>
- * URI uri = UriBuilder.build {
- *     host = 'www.example.com'
+ * URI uri = UriBuilder.build {*     host = 'www.example.com'
  *     path = ['resource', someVariable, 'view']
  *     port = 80
  *     scheme = 'http'
- * }
- * </code>
+ *}* </code>
  *
  * Object-style
  * ------------
@@ -59,14 +58,12 @@ import org.apache.log4j.Logger
  * those values parsed from the uri, except for path which will add to it.  As an example:
  *
  * <code>
- * URI uri = UriBuilder.build {
- *     base = 'https://www.example.com:8080/old/path'
+ * URI uri = UriBuilder.build {*     base = 'https://www.example.com:8080/old/path'
  *     host = 'foo.bar'
  *     path = ['new', 'path']
  *     scheme = 'http'
  *     port = 8081
- * }
- * </code>
+ *}* </code>
  * This code will result in the URI: <code>http://foo.bar:8081/old/path/new/path</code>.
  */
 class UriBuilder {

@@ -1,0 +1,11 @@
+The *Jersey Request Builder* also allows the author to build a request gradually through a properties object. All of the properties that can be set inside of the
+DSL-based methods can also be set directly on the properties itself.
+
+{code}
+RequestProperties requestProperties = new RequestProperties()
+
+requestProperties.uri = "http://www.example.com"
+requestProperties.accept = "text/html"
+
+def result = jerseyRequestBuilder.get(requestProperties)
+{code}

@@ -1,14 +1,14 @@
-The simplest way to use the @RequestBuilder@ is to use the convenience methods that only require a URL, and optionally the body on methods that support it. They can be used as follows:
+The simplest way to use the *Jersey Request Builder* is to use the convenience methods that only require a URL, and optionally the body on methods that support it. They can be used as follows:
 {code}
 // GET example
-new RequestBuilder().get("http://www.example.com")
+jerseyRequestBuilder.get("http://www.example.com")
 
 // POST example
-new RequestBuilder().post("http://www.example.com", "payload")
+jerseyRequestBuilder.post("http://www.example.com", "payload")
 
 // PUT example
-new RequestBuilder().put("http://www.example.com", "payload")
+jerseyRequestBuilder.put("http://www.example.com", "payload")
 
 // DELETE example
-new RequestBuilder().delete("http://www.example.com")
+jerseyRequestBuilder.delete("http://www.example.com")
 {code}

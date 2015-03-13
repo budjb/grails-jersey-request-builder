@@ -1,0 +1,18 @@
+h1. rawClientResponse
+
+h2. Purpose
+
+Instructs the *Jersey Request Builder* to return the unmodified "@ClientResponse@":https://jersey.java.net/nonav/apidocs/1.8/jersey/com/sun/jersey/api/client/ClientResponse.html object.
+
+h2. Examples
+
+{code}
+jerseyRequestBuilder.post {
+    uri = "http://example.com"
+    rawClientResponse = true
+}
+{code}
+
+h2. Description
+
+If @true@, do not do any response handling, and return the @ClientResponse@ object.

@@ -1,1 +1,28 @@
-The @RequestBuilder@ can be built and used in several ways, depending on how the author intends to use it.
+To use the *Jersey Request Builder*, simply inject the @jerseyRequestBuilder@ bean into any other bean managed by Spring.  Examples of managed Spring beans
+include Grails controllers and services. An example follows.
+
+{code}
+package com.budjb
+
+import com.budjb.requestbuilder.JerseyRequestBuilder
+
+class ExampleController {
+    JerseyRequestBuilder jerseyRequestBuilder
+
+    def index = {
+
+    }
+}
+{code}
+
+To use the *Jersey Request Builder* in a POGO (plain old groovy object), it can be retrieved from the @applicationContext@ using the Holders class as follows.
+
+{code}
+import grails.util.Holders
+
+class Example {
+    JerseyRequestBuilder jerseyRequestBuilder = Holders.applicationContext.getBean("jerseyRequestBuilder")
+}
+{code}
+
+The *Jersey Request Builder* can be configured and used in several ways, depending on how the author intends to use it.

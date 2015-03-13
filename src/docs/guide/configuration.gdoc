@@ -1,12 +1,12 @@
 The *Jersey Request Builder* can be configured to apply default values, or set
-a specific behavior, to each @new RequestBuilder()@. These configurations can
+a specific behavior, to each new request. These configurations can
 be placed in the @grails-app/conf/Config.groovy@ file.
 
-These values can be overidden within specific @RequestBuilder@ instances.
+These values can be overidden within specific request.
 
 {warning}
 There are four configurations that declare the behavior of how the 
-*RequestBuilder* returns responses, and some override the others:
+*Jersey Request Builder* returns responses, and some override the others:
 
 * @convertJson@ will automatically convert response payloads using \
 @JsonSlurper@ if the response's *content-type* is JSON-compatible.
@@ -24,10 +24,10 @@ There are four configurations that declare the behavior of how the
 {warning}
 If @useBasicAuth@ is set, then the @basicAuthUserName@ and @basicAuthPassword@
 must be set for every request, either through configuration, or 
-per-*RequestBuilder*.
+per request.
 
-To override this behavior for a specific *RequestBuilder* instance, set
-@useBasicAuth@ to @false@ for that instance (it will not include the BasicAuth
+To override this behavior for a specific request, set
+@useBasicAuth@ to @false@ for that request (it will not include the BasicAuth
 information).
 {warning}
 
@@ -54,22 +54,22 @@ The configuration values are as follows:
 *binaryResponse* | @Boolean@ | Response payloads will be returned as \
 @byte\[\]@.
 
-*rawClientResponse* | @Boolean@ | The *RequestBuilder* will return \
+*rawClientResponse* | @Boolean@ | The *Jersey Request Builder* will return \
 @ClientResponse@.\
 
-*skipStatusCheck* | @Boolean@ | If set to @true@, then the *RequestBuilder* \
+*skipStatusCheck* | @Boolean@ | If set to @true@, then the *Jersey Request Builder* \
 will _not_ throw @ResponseStatusException@ on an HTTP/1.1 error code.
 
-*followRedirects* | @Boolean@ | If set to @true@, then the *RequestBuilder* \
+*followRedirects* | @Boolean@ | If set to @true@, then the *Jersey Request Builder* \
 will automatically follow redirects in 3xx responses.
 
 *debug* | @Boolean@ | If set to @true@, then the HTTP conversation will be \
 printed to *log4j* (*debug* level).
 
-*ignoreInvalidSSL* | @Boolean@ | If set to @true@, then the *RequestBuilder* \
+*ignoreInvalidSSL* | @Boolean@ | If set to @true@, then the *Jersey Request Builder* \
 will ignore invalid SSL identities.
 
-*useBasicAuth* | @Boolean@ | If set to @true@, then the *RequestBuilder* will \
+*useBasicAuth* | @Boolean@ | If set to @true@, then the *Jersey Request Builder* will \
 automatically include Basic Auth in the request, provided the \
 @basicAuthUserName@ and @basicAuthPassword@ are set.
 

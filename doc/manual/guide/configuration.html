@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>2 Configuration 1.2.3</title>
+    <title>2 Configuration 2.0.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -39,7 +39,10 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:0"><a href="../guide/uribuilder.html"><strong>5</strong><span>UriBuilder</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0"><a href="../guide/changelog.html"><strong>6</strong><span>Changelog</span></a>
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/upgrading.html"><strong>6</strong><span>Upgrading</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/changelog.html"><strong>7</strong><span>Changelog</span></a>
                     </div>
                     
                 </div>
@@ -80,7 +83,7 @@ function addJsClass() {
 
                     <p><strong>Authors:</strong> Bud Byrd</p>
 
-                    <p><strong>Version:</strong> 1.2.3</p>
+                    <p><strong>Version:</strong> 2.0.0</p>
 
                     
                 </div>
@@ -91,10 +94,10 @@ function addJsClass() {
 
 <h1 id="configuration">2 Configuration</h1>
 The <strong class="bold">Jersey Request Builder</strong> can be configured to apply default values, or set
-a specific behavior, to each <code>new RequestBuilder()</code>. These configurations can
-be placed in the <code>grails-app/conf/Config.groovy</code> file.<p class="paragraph"/>These values can be overidden within specific <code>RequestBuilder</code> instances.<p class="paragraph"/><blockquote class="warning">
+a specific behavior, to each new request. These configurations can
+be placed in the <code>grails-app/conf/Config.groovy</code> file.<p class="paragraph"/>These values can be overidden within specific request.<p class="paragraph"/><blockquote class="warning">
 There are four configurations that declare the behavior of how the 
-<strong class="bold">RequestBuilder</strong> returns responses, and some override the others:
+<strong class="bold">Jersey Request Builder</strong> returns responses, and some override the others:
 <ul class="star">
 <li><code>convertJson</code> will automatically convert response payloads using &#10;<code>JsonSlurper</code> if the response's <strong class="bold">content-type</strong> is JSON-compatible.</li>
 <li><code>convertXML</code> will automatically convert response payloads using &#10;<code>XmlSlurper</code> if the response's <strong class="bold">content-type</strong> is XML-compatible.</li>
@@ -103,10 +106,10 @@ There are four configurations that declare the behavior of how the
 </ul><p class="paragraph"/></blockquote><p class="paragraph"/><blockquote class="warning">
 If <code>useBasicAuth</code> is set, then the <code>basicAuthUserName</code> and <code>basicAuthPassword</code>
 must be set for every request, either through configuration, or 
-per-<strong class="bold">RequestBuilder</strong>.<p class="paragraph"/>To override this behavior for a specific <strong class="bold">RequestBuilder</strong> instance, set
-<code>useBasicAuth</code> to <code>false</code> for that instance (it will not include the BasicAuth
+per request.<p class="paragraph"/>To override this behavior for a specific request, set
+<code>useBasicAuth</code> to <code>false</code> for that request (it will not include the BasicAuth
 information).
-</blockquote><p class="paragraph"/>The configuration values are as follows:<p class="paragraph"/><table class="wiki-table" cellpadding="0" cellspacing="0" border="0"><tr><th><strong class="bold">Config Value</strong></th><th><strong class="bold">Datatype</strong></th><th><strong class="bold">Description</strong></th></tr><tr class="table-odd"><td><strong class="bold">connectionTimeout</strong></td><td><code>Integer</code></td><td>The default connection timeout &#10;(in milliseconds).</td></tr><tr class="table-even"></tr><tr class="table-odd"><td><strong class="bold">readTimeout</strong></td><td><code>Integer</code></td><td>The default read timeout (in milliseconds).</td></tr><tr class="table-even"></tr><tr class="table-odd"><td><strong class="bold">contentType</strong></td><td><code>String</code>, <code>MediaType</code></td><td>The default value of the &#10;<strong class="bold">content-type</strong> header.</td></tr><tr class="table-even"></tr><tr class="table-odd"><td><strong class="bold">accept</strong></td><td><code>String</code>, <code>MediaType</code></td><td>The default value of the <strong class="bold">accept</strong> header.</td></tr><tr class="table-even"></tr><tr class="table-odd"><td><strong class="bold">convertJson</strong></td><td><code>Boolean</code></td><td>Automatically converts JSON when the &#10;<strong class="bold">content-type</strong> in the Response header is a JSON-compatible type.</td></tr><tr class="table-even"></tr><tr class="table-odd"><td><strong class="bold">convertXML</strong></td><td><code>Boolean</code></td><td>Automatically converts XML when the &#10;<strong class="bold">content-type</strong> in the Response header is an XML-compatible type.</td></tr><tr class="table-even"></tr><tr class="table-odd"><td><strong class="bold">binaryResponse</strong></td><td><code>Boolean</code></td><td>Response payloads will be returned as &#10;<code>byte&#91;&#93;</code>.</td></tr><tr class="table-even"></tr><tr class="table-odd"><td><strong class="bold">rawClientResponse</strong></td><td><code>Boolean</code></td><td>The <strong class="bold">RequestBuilder</strong> will return &#10;<code>ClientResponse</code>.&#10;</td></tr><tr class="table-even"><td><strong class="bold">skipStatusCheck</strong></td><td><code>Boolean</code></td><td>If set to <code>true</code>, then the <strong class="bold">RequestBuilder</strong> &#10;will  <em class="italic">not</em>  throw <code>ResponseStatusException</code> on an HTTP/1.1 error code.</td></tr><tr class="table-odd"></tr><tr class="table-even"><td><strong class="bold">followRedirects</strong></td><td><code>Boolean</code></td><td>If set to <code>true</code>, then the <strong class="bold">RequestBuilder</strong> &#10;will automatically follow redirects in 3xx responses.</td></tr><tr class="table-odd"></tr><tr class="table-even"><td><strong class="bold">debug</strong></td><td><code>Boolean</code></td><td>If set to <code>true</code>, then the HTTP conversation will be &#10;printed to <strong class="bold">log4j</strong> (<strong class="bold">debug</strong> level).</td></tr><tr class="table-odd"></tr><tr class="table-even"><td><strong class="bold">ignoreInvalidSSL</strong></td><td><code>Boolean</code></td><td>If set to <code>true</code>, then the <strong class="bold">RequestBuilder</strong> &#10;will ignore invalid SSL identities.</td></tr><tr class="table-odd"></tr><tr class="table-even"><td><strong class="bold">useBasicAuth</strong></td><td><code>Boolean</code></td><td>If set to <code>true</code>, then the <strong class="bold">RequestBuilder</strong> will &#10;automatically include Basic Auth in the request, provided the &#10;<code>basicAuthUserName</code> and <code>basicAuthPassword</code> are set.</td></tr><tr class="table-odd"></tr><tr class="table-even"><td><strong class="bold">basicAuthUserName</strong></td><td><code>String</code></td><td>The BasicAuth Username.</td></tr><tr class="table-odd"></tr><tr class="table-even"><td><strong class="bold">basicAuthPassword</strong></td><td><code>String</code></td><td>The BasicAuth Password.</td></tr><tr class="table-odd"></tr><tr class="table-even"><td><strong class="bold">chunkSize</strong></td><td><code>Integer</code></td><td>Automatically set Chunked Encoding on the request.</td></tr><tr class="table-odd"></tr><tr class="table-even"><td><strong class="bold">encodeGzip</strong></td><td><code>Boolean</code></td><td>Automatically set GZIP Encoding on the request.</td></tr></table><p class="paragraph"/><h2>Default Configuration</h2><p class="paragraph"/><div class="code"><pre>jerseyRequestBuilder &#123;
+</blockquote><p class="paragraph"/>The configuration values are as follows:<p class="paragraph"/><table class="wiki-table" cellpadding="0" cellspacing="0" border="0"><tr><th><strong class="bold">Config Value</strong></th><th><strong class="bold">Datatype</strong></th><th><strong class="bold">Description</strong></th></tr><tr class="table-odd"><td><strong class="bold">connectionTimeout</strong></td><td><code>Integer</code></td><td>The default connection timeout &#10;(in milliseconds).</td></tr><tr class="table-even"></tr><tr class="table-odd"><td><strong class="bold">readTimeout</strong></td><td><code>Integer</code></td><td>The default read timeout (in milliseconds).</td></tr><tr class="table-even"></tr><tr class="table-odd"><td><strong class="bold">contentType</strong></td><td><code>String</code>, <code>MediaType</code></td><td>The default value of the &#10;<strong class="bold">content-type</strong> header.</td></tr><tr class="table-even"></tr><tr class="table-odd"><td><strong class="bold">accept</strong></td><td><code>String</code>, <code>MediaType</code></td><td>The default value of the <strong class="bold">accept</strong> header.</td></tr><tr class="table-even"></tr><tr class="table-odd"><td><strong class="bold">convertJson</strong></td><td><code>Boolean</code></td><td>Automatically converts JSON when the &#10;<strong class="bold">content-type</strong> in the Response header is a JSON-compatible type.</td></tr><tr class="table-even"></tr><tr class="table-odd"><td><strong class="bold">convertXML</strong></td><td><code>Boolean</code></td><td>Automatically converts XML when the &#10;<strong class="bold">content-type</strong> in the Response header is an XML-compatible type.</td></tr><tr class="table-even"></tr><tr class="table-odd"><td><strong class="bold">binaryResponse</strong></td><td><code>Boolean</code></td><td>Response payloads will be returned as &#10;<code>byte&#91;&#93;</code>.</td></tr><tr class="table-even"></tr><tr class="table-odd"><td><strong class="bold">rawClientResponse</strong></td><td><code>Boolean</code></td><td>The <strong class="bold">Jersey Request Builder</strong> will return &#10;<code>ClientResponse</code>.&#10;</td></tr><tr class="table-even"><td><strong class="bold">skipStatusCheck</strong></td><td><code>Boolean</code></td><td>If set to <code>true</code>, then the <strong class="bold">Jersey Request Builder</strong> &#10;will  <em class="italic">not</em>  throw <code>ResponseStatusException</code> on an HTTP/1.1 error code.</td></tr><tr class="table-odd"></tr><tr class="table-even"><td><strong class="bold">followRedirects</strong></td><td><code>Boolean</code></td><td>If set to <code>true</code>, then the <strong class="bold">Jersey Request Builder</strong> &#10;will automatically follow redirects in 3xx responses.</td></tr><tr class="table-odd"></tr><tr class="table-even"><td><strong class="bold">debug</strong></td><td><code>Boolean</code></td><td>If set to <code>true</code>, then the HTTP conversation will be &#10;printed to <strong class="bold">log4j</strong> (<strong class="bold">debug</strong> level).</td></tr><tr class="table-odd"></tr><tr class="table-even"><td><strong class="bold">ignoreInvalidSSL</strong></td><td><code>Boolean</code></td><td>If set to <code>true</code>, then the <strong class="bold">Jersey Request Builder</strong> &#10;will ignore invalid SSL identities.</td></tr><tr class="table-odd"></tr><tr class="table-even"><td><strong class="bold">useBasicAuth</strong></td><td><code>Boolean</code></td><td>If set to <code>true</code>, then the <strong class="bold">Jersey Request Builder</strong> will &#10;automatically include Basic Auth in the request, provided the &#10;<code>basicAuthUserName</code> and <code>basicAuthPassword</code> are set.</td></tr><tr class="table-odd"></tr><tr class="table-even"><td><strong class="bold">basicAuthUserName</strong></td><td><code>String</code></td><td>The BasicAuth Username.</td></tr><tr class="table-odd"></tr><tr class="table-even"><td><strong class="bold">basicAuthPassword</strong></td><td><code>String</code></td><td>The BasicAuth Password.</td></tr><tr class="table-odd"></tr><tr class="table-even"><td><strong class="bold">chunkSize</strong></td><td><code>Integer</code></td><td>Automatically set Chunked Encoding on the request.</td></tr><tr class="table-odd"></tr><tr class="table-even"><td><strong class="bold">encodeGzip</strong></td><td><code>Boolean</code></td><td>Automatically set GZIP Encoding on the request.</td></tr></table><p class="paragraph"/><h2>Default Configuration</h2><p class="paragraph"/><div class="code"><pre>jerseyRequestBuilder &#123;
     connectionTimeout = <span class="java&#45;keyword">null</span>
     readTimeout = <span class="java&#45;keyword">null</span><p class="paragraph"/>    contentType = <span class="java&#45;keyword">null</span>
     accept = <span class="java&#45;keyword">null</span><p class="paragraph"/>    convertJson = <span class="java&#45;keyword">true</span>
@@ -139,97 +142,97 @@ information).
                 </div>
                 <div class="menu">
                     
-                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">Request Builder</h1><div class="menu-sub">
+                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">Jersey Request Builder</h1><div class="menu-sub">
                         
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/accept.html">accept</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/accept.html">accept</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/basicAuthPassword.html">basicAuthPassword</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/basicAuthPassword.html">basicAuthPassword</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/basicAuthUserName.html">basicAuthUserName</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/basicAuthUserName.html">basicAuthUserName</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/binaryResponse.html">binaryResponse</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/binaryResponse.html">binaryResponse</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/body.html">body</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/body.html">body</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/chunkSize.html">chunkSize</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/chunkSize.html">chunkSize</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/connectionTimeout.html">connectionTimeout</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/connectionTimeout.html">connectionTimeout</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/contentType.html">contentType</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/contentType.html">contentType</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/convertJson.html">convertJson</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/convertJson.html">convertJson</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/convertXML.html">convertXML</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/convertXML.html">convertXML</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/cookies.html">cookies</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/cookies.html">cookies</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/debug.html">debug</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/debug.html">debug</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/delete.html">delete</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/delete.html">delete</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/followRedirects.html">followRedirects</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/followRedirects.html">followRedirects</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/form.html">form</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/form.html">form</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/get.html">get</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/get.html">get</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/gzip.html">gzip</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/gzip.html">gzip</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/head.html">head</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/head.html">head</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/headers.html">headers</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/headers.html">headers</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/ignoreInvalidSSL.html">ignoreInvalidSSL</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/ignoreInvalidSSL.html">ignoreInvalidSSL</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/options.html">options</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/options.html">options</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/post.html">post</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/post.html">post</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/put.html">put</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/put.html">put</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/query.html">query</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/query.html">query</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/rawClientResponse.html">rawClientResponse</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/rawClientResponse.html">rawClientResponse</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/readTimeout.html">readTimeout</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/readTimeout.html">readTimeout</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/skipStatusCheck.html">skipStatusCheck</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/skipStatusCheck.html">skipStatusCheck</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/trace.html">trace</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/trace.html">trace</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/uri.html">uri</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/uri.html">uri</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/useBasicAuth.html">useBasicAuth</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/useBasicAuth.html">useBasicAuth</a>
                             </div>
                             
                             </div>
