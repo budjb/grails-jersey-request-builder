@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/budjb/grails-jersey-request-builder.svg)](https://travis-ci.org/budjb/grails-jersey-request-builder)
+[![Build Status](https://travis-ci.org/budjb/grails-jersey-request-builder.svg?branch=master)](https://travis-ci.org/budjb/grails-jersey-request-builder)
 
 Jersey Request Builder Plugin
 =============================
