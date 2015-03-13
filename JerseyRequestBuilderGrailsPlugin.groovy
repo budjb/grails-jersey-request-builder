@@ -20,7 +20,7 @@ import grails.util.Environment
 import org.codehaus.groovy.grails.commons.GrailsApplication
 
 class JerseyRequestBuilderGrailsPlugin {
-    def version = "1.2.3"
+    def version = "2.0.0"
     def grailsVersion = "2.0 > *"
     def title = "Jersey Request Builder Plugin"
     def author = "Bud Byrd"

@@ -1,0 +1,27 @@
+The plugin has been refactored to make it more easily tested and to use a Spring bean instead of unmanaged instances.
+
+The @RequestBuilder@ class has been deprecated, but it still functions the same as it did before.  While it no longer handles requests itself, it
+hands requests off to the new @jerseyRequestBuilder@ bean.  This should allow projects to migrate gradually until the @RequestBuilder@ is removed
+at some point in the future.
+
+New projects should use the @jerseyRequestBuilder@ bean going forward.  Its usage is very similar to the @RequestBuilder@, with the exception
+of building a request gradually.  An example of this is:
+
+{code}
+def builder = new RequestBuilder()
+builder.uri = "http://example.com"
+def response = builder.get()
+{code}
+
+The new version of the plugin introduces the @RequestProperties@ object that can be passed into the *Jersey Request Builder* for all of its HTTP methods.
+The equivalent to the code above would look like:
+
+{code}
+def properties = new RequestProperties()
+properties.uri = "http://example.com"
+def response = jerseyRequestBuilder.get(properties)
+{code}
+
+Since the @jerseyRequestBuilder@ bean is managed by Spring, it can be inject into any other Spring bean, such as controllers, domains, and services.  If
+the request builder is needed outside of a managed Spring bean (such as files in @src/groovy@), it can be grabbed from the @applicationContext@ through
+the @Holders@ convenience class.

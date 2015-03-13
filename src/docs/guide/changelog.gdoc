@@ -1,4 +1,4 @@
-h3. Version 1.3.0
+h3. Version 2.0.0
 * Update the jersey libraries to 1.19.
 * Deprecated the @RequestBuilder@ class.
 * Introduced the @jerseyRequestBuilder@ bean.

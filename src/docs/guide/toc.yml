@@ -14,4 +14,7 @@ uribuilder:
     title: UriBuilder
     properties: Properties
     uribuilderexamples: Examples
+upgrading:
+    title: Upgrading
+    from_1_x_x: From 1.x.x
 changelog: Changelog
