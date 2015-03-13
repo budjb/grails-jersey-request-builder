@@ -186,10 +186,10 @@ class JerseyRequestDelegateSpec extends Specification {
         jerseyRequestDelegate.get(requestProperties)
 
         then:
-        1 * requestProperties.setBody({
+        1 * requestProperties.setProperty('body', {
             return it instanceof Form && (it as Form).get('foo') == ['bar'] && (it as Form).get('hi') == ['there']
         })
-        1 * requestProperties.setContentType('application/x-www-form-urlencoded')
+        1 * requestProperties.setProperty('contentType', 'application/x-www-form-urlencoded')
     }
 
     def 'If form is set and a content type is provided, ensure it is not overwritten'() {
@@ -219,8 +219,8 @@ class JerseyRequestDelegateSpec extends Specification {
         jerseyRequestDelegate.get(requestProperties)
 
         then:
-        1 * requestProperties.setBody({ it == '{"foo":"bar"}' })
-        1 * requestProperties.setContentType('application/json')
+        1 * requestProperties.setProperty('body', { it == '{"foo":"bar"}' })
+        1 * requestProperties.setProperty('contentType', 'application/json')
     }
 
     def 'If the body is a list, ensure it is marshalled to JSON correctly'() {
@@ -235,8 +235,8 @@ class JerseyRequestDelegateSpec extends Specification {
         jerseyRequestDelegate.get(requestProperties)
 
         then:
-        1 * requestProperties.setBody({ it == '["foo","bar"]' })
-        1 * requestProperties.setContentType('application/json')
+        1 * requestProperties.setProperty('body', { it == '["foo","bar"]' })
+        1 * requestProperties.setProperty('contentType', 'application/json')
     }
 
     def 'If the body is a map and a content type is provided, ensure it is not overwritten'() {

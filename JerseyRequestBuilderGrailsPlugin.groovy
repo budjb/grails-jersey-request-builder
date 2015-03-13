@@ -61,6 +61,7 @@ class JerseyRequestBuilderGrailsPlugin {
 
     /**
      * Merges plugin config with host app config, but allowing customization
+     *
      * @param app
      */
     private void loadDefaultConfig(GrailsApplication app) {
