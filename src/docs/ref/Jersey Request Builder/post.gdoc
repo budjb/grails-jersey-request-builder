@@ -1,0 +1,35 @@
+h1. post
+
+h2. Purpose
+
+Invokes the @POST@ method.
+
+h2. Examples
+
+*DSL Usage*
+{code}
+def response = jerseyRequestBuilder.post {
+    uri = "http://example.com/resource"
+    body = "payload"
+}
+{code}
+
+*Quick Usage*
+{code}
+def response = jerseyRequestBuilder.post("http://example.com/resource", "payload")
+{code}
+
+*Builder Usage*
+{code}
+RequestProperties requestProperties = new RequestProperties()
+requestProperties.uri = "http://example.com/resource"
+requestProperties.body = "payload"
+def response = jerseyRequestBuilder.post(requestProperties)
+{code}
+
+h2. Description
+
+Invokes the @POST@ method against the requested URI. The return from this method depends on the options set on the request
+and the response from the server.
+
+The @POST@ method can send, but does not require, a body. The @body@ and @form@ properties are used in this method.

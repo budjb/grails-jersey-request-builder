@@ -1,0 +1,18 @@
+h1. skipStatusCheck
+
+h2. Purpose
+
+Whether to prevent exceptions for non-successful HTTP status codes.
+
+h2. Examples
+
+{code}
+jerseyRequestBuilder.get {
+    uri = "http://example.com"
+    skipStatusCheck = true
+}
+{code}
+
+h2. Description
+
+If @true@, prevent the *Jersey Request Builder* from throwing an exception if a non-successful HTTP status code is encountered.

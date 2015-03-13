@@ -5,7 +5,7 @@ builder:
     methods: HTTP Methods
     simple: Simple Usage
     dsl: DSL Usage
-    build: Builder Usage
+    props: Request Properties
 responses:
     title: Handling Responses
     conversion: Automatic Conversion

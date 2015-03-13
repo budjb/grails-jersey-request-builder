@@ -14,5 +14,5 @@ Note that if the @base@ property is used, any of its URI parts will be overridde
 the path parts to the path of the @base@ URL that was specified.
 {note}
 {note}
-The UriBuilder returns a @URI@ object, which can be assigned to the @uri@ property of the @RequestBuilder@.
+The UriBuilder returns a @URI@ object, which can be assigned to the @uri@ property of the *Jersey Request Builder*.
 {note}

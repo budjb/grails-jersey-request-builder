@@ -1,0 +1,22 @@
+h1. cookies
+
+h2. Purpose
+
+Sets the cookies to send with the request.
+
+h2. Examples
+
+{code}
+jerseyRequestBuilder.post {
+    uri = "http://example.com"
+    cookies = [
+        "foo": "bar"
+    }
+}
+{code}
+
+h2. Description
+
+The cookies map is used to send cookies with the request. The key of the map is the name of the cookie, and the value can either be a @String@ or a
+[@Cookie@|https://jsr311.java.net/nonav/javadoc/javax/ws/rs/core/Cookie.html] instance. If a @Cookie@ is passed, it will be recreated with the name
+of the key.

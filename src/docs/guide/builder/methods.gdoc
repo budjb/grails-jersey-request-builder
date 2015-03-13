@@ -1,9 +1,9 @@
 The HTTP [specification|http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html] defines several request *methods*.
 Each method has a different intended use, and there are some behavior requirements around them.
 
-The @RequestBuilder@ supports many of these methods, as outlined below:
+The *Jersey Request Builder* supports many of these methods, as outlined below:
 {table}
-*Method* | *@RequestBuilder@ Method*
+*Method* | *Jersey Request Builder Method*
 GET | @get()@
 POST | @post()@
 PUT | @put()@

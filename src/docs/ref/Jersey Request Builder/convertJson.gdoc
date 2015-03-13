@@ -1,0 +1,18 @@
+h1. convertJson
+
+h2. Purpose
+
+Enables conversion of the response to JSON.
+
+h2. Examples
+
+{code}
+jerseyRequestBuilder.post {
+    uri = "http://example.com"
+    convertJson = true
+}
+{code}
+
+h2. Description
+
+If @true@ (default), and the response has a header that indicates JSON, convert the response to a @List@ or @Map@.

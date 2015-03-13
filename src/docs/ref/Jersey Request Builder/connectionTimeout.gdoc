@@ -1,0 +1,18 @@
+h1. connectionTimeout
+
+h2. Purpose
+
+Sets the connection timeout of the request, in milliseconds.
+
+h2. Examples
+
+{code}
+jerseyRequestBuilder.get {
+    uri = "http://example.com"
+    connectionTimeout = 5000 // 5 seconds
+}
+{code}
+
+h2. Description
+
+Sets the connection timeout of the request, in milliseconds.

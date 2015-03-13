@@ -1,0 +1,20 @@
+h1. useBasicAuth
+
+h2. Purpose
+
+Enables the use of HTTP Basic authentication.
+
+h2. Examples
+
+{code}
+jerseyRequestBuilder.get {
+    uri = "http://example.com/protected"
+    useBasicAuth = true
+    basicAuthUserName = "foo"
+    basicAuthPassword = "bar"
+}
+{code}
+
+h2. Description
+
+Enables the use of HTTP Basic authentication.  This property is used in conjunction with [useBasicAuth|Jersey Request Builder] and [basicAuthPassword|Jersey Request Builder].

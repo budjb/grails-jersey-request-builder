@@ -1,0 +1,35 @@
+h1. put
+
+h2. Purpose
+
+Invokes the @PUT@ method.
+
+h2. Examples
+
+*DSL Usage*
+{code}
+def response = jerseyRequestBuilder.put {
+    uri = "http://example.com/resource"
+    body = "payload"
+}
+{code}
+
+*Quick Usage*
+{code}
+def response = jerseyRequestBuilder.put("http://example.com/resource", "payload")
+{code}
+
+*Builder Usage*
+{code}
+RequestProperties requestProperties = new RequestProperties()
+requestProperties.uri = "http://example.com/resource"
+requestProperties.body = "payload"
+def response = jerseyRequestBuilder.put(requestProperties)
+{code}
+
+h2. Description
+
+Invokes the @PUT@ method against the requested URI. The return from this method depends on the options set on the request
+and the response from the server.
+
+The @PUT@ method can send, but does not require, a body. The @body@ and @form@ properties are used in this method.
