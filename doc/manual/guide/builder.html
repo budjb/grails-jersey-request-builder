@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>3 Making Requests 1.2.3</title>
+    <title>3 Making Requests 2.0.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -39,7 +39,10 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:0"><a href="../guide/uribuilder.html"><strong>5</strong><span>UriBuilder</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0"><a href="../guide/changelog.html"><strong>6</strong><span>Changelog</span></a>
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/upgrading.html"><strong>6</strong><span>Upgrading</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/changelog.html"><strong>7</strong><span>Changelog</span></a>
                     </div>
                     
                 </div>
@@ -80,7 +83,7 @@ function addJsClass() {
 
                     <p><strong>Authors:</strong> Bud Byrd</p>
 
-                    <p><strong>Version:</strong> 1.2.3</p>
+                    <p><strong>Version:</strong> 2.0.0</p>
 
                     
                 </div>
@@ -98,7 +101,7 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:0px"><a href="#dsl"><strong>3.3</strong><span>DSL Usage</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#build"><strong>3.4</strong><span>Builder Usage</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#props"><strong>3.4</strong><span>Request Properties</span></a>
                     </div>
                     
                 </div>
@@ -107,30 +110,35 @@ function addJsClass() {
                 
 
 <h1 id="builder">3 Making Requests</h1>
-The <code>RequestBuilder</code> can be built and used in several ways, depending on how the author intends to use it.
+To use the <strong class="bold">Jersey Request Builder</strong>, simply inject the <code>jerseyRequestBuilder</code> bean into any other bean managed by Spring.  Examples of managed Spring beans
+include Grails domains, controllers, and services. An example follows.<p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">package</span> com.budjb<p class="paragraph"/><span class="java&#45;keyword">import</span> com.budjb.requestbuilder.JerseyRequestBuilder<p class="paragraph"/>class ExampleController &#123;
+    JerseyRequestBuilder jerseyRequestBuilder<p class="paragraph"/>    def index = &#123;<p class="paragraph"/>    &#125;
+&#125;</pre></div><p class="paragraph"/>To use the <strong class="bold">Jersey Request Builder</strong> in a POGO (plain old groovy object), it can be retrieved from the <code>applicationContext</code> using the Holders class as follows.<p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">import</span> grails.util.Holders<p class="paragraph"/>class Example &#123;
+    JerseyRequestBuilder jerseyRequestBuilder = Holders.applicationContext.getBean(<span class="java&#45;quote">"jerseyRequestBuilder"</span>)
+&#125;</pre></div><p class="paragraph"/>The <strong class="bold">Jersey Request Builder</strong> can be configured and used in several ways, depending on how the author intends to use it.
 
 
 
 <h2 id="methods">3.1 HTTP Methods</h2>
 The HTTP <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html" target="blank">specification</a> defines several request <strong class="bold">methods</strong>.
-Each method has a different intended use, and there are some behavior requirements around them.<p class="paragraph"/>The <code>RequestBuilder</code> supports many of these methods, as outlined below:
-<table class="wiki-table" cellpadding="0" cellspacing="0" border="0"><tr><th><strong class="bold">Method</strong></th><th><strong class="bold"><code>RequestBuilder</code> Method</strong></th></tr><tr class="table-odd"><td>GET</td><td><code>get()</code></td></tr><tr class="table-even"><td>POST</td><td><code>post()</code></td></tr><tr class="table-odd"><td>PUT</td><td><code>put()</code></td></tr><tr class="table-even"><td>DELETE</td><td><code>delete()</code></td></tr><tr class="table-odd"><td>HEAD</td><td><code>head()</code></td></tr><tr class="table-even"><td>OPTIONS</td><td><code>options()</code></td></tr><tr class="table-odd"><td>TRACE</td><td><code>trace()</code></td></tr></table>
+Each method has a different intended use, and there are some behavior requirements around them.<p class="paragraph"/>The <strong class="bold">Jersey Request Builder</strong> supports many of these methods, as outlined below:
+<table class="wiki-table" cellpadding="0" cellspacing="0" border="0"><tr><th><strong class="bold">Method</strong></th><th><strong class="bold">Jersey Request Builder Method</strong></th></tr><tr class="table-odd"><td>GET</td><td><code>get()</code></td></tr><tr class="table-even"><td>POST</td><td><code>post()</code></td></tr><tr class="table-odd"><td>PUT</td><td><code>put()</code></td></tr><tr class="table-even"><td>DELETE</td><td><code>delete()</code></td></tr><tr class="table-odd"><td>HEAD</td><td><code>head()</code></td></tr><tr class="table-even"><td>OPTIONS</td><td><code>options()</code></td></tr><tr class="table-odd"><td>TRACE</td><td><code>trace()</code></td></tr></table>
 
 
 
 <h2 id="simple">3.2 Simple Usage</h2>
-The simplest way to use the <code>RequestBuilder</code> is to use the convenience methods that only require a URL, and optionally the body on methods that support it. They can be used as follows:
+The simplest way to use the <strong class="bold">Jersey Request Builder</strong> is to use the convenience methods that only require a URL, and optionally the body on methods that support it. They can be used as follows:
 <div class="code"><pre>// GET example
-<span class="java&#45;keyword">new</span> RequestBuilder().get(<span class="java&#45;quote">"http://www.example.com"</span>)<p class="paragraph"/>// POST example
-<span class="java&#45;keyword">new</span> RequestBuilder().post(<span class="java&#45;quote">"http://www.example.com"</span>, <span class="java&#45;quote">"payload"</span>)<p class="paragraph"/>// PUT example
-<span class="java&#45;keyword">new</span> RequestBuilder().put(<span class="java&#45;quote">"http://www.example.com"</span>, <span class="java&#45;quote">"payload"</span>)<p class="paragraph"/>// DELETE example
-<span class="java&#45;keyword">new</span> RequestBuilder().delete(<span class="java&#45;quote">"http://www.example.com"</span>)</pre></div>
+jerseyRequestBuilder.get(<span class="java&#45;quote">"http://www.example.com"</span>)<p class="paragraph"/>// POST example
+jerseyRequestBuilder.post(<span class="java&#45;quote">"http://www.example.com"</span>, <span class="java&#45;quote">"payload"</span>)<p class="paragraph"/>// PUT example
+jerseyRequestBuilder.put(<span class="java&#45;quote">"http://www.example.com"</span>, <span class="java&#45;quote">"payload"</span>)<p class="paragraph"/>// DELETE example
+jerseyRequestBuilder.delete(<span class="java&#45;quote">"http://www.example.com"</span>)</pre></div>
 
 
 
 <h2 id="dsl">3.3 DSL Usage</h2>
-Using the DSL-style functions is the most common use of the <code>RequestBuilder</code>. These methods provide an easy to use, centralized way to build a request with varying parameters.
-This documentation will not go into detail about all of the options available with the <code>RequestBuilder</code>, but all of these options are documented completed in the reference section.<p class="paragraph"/>All of the HTTP methods can use the DSL-based methods.<p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">new</span> RequestBuilder().post &#123;
+Using the DSL-style functions is the most common use of the <strong class="bold">Jersey Request Builder</strong>. These methods provide an easy to use, centralized way to build a request with varying parameters.
+This documentation will not go into detail about all of the options available with the <strong class="bold">Jersey Request Builder</strong>, but all of these options are documented completely in the reference section.<p class="paragraph"/>All of the HTTP methods can use the DSL-based methods.<p class="paragraph"/><div class="code"><pre>jerseyRequestBuilder.post &#123;
     uri = <span class="java&#45;quote">"http://www.example.com"</span>
     body = &#91;<span class="java&#45;quote">"foo"</span>: <span class="java&#45;quote">"bar"</span>&#93;
     headers = &#91;
@@ -140,12 +148,10 @@ This documentation will not go into detail about all of the options available wi
 
 
 
-<h2 id="build">3.4 Builder Usage</h2>
-The <code>RequestBuilder</code> also allows the author to build a request gradually. All of the properties that can be set inside of the
-DSL-based methods can also be set directly on the object itself.<p class="paragraph"/><div class="code"><pre>RequestBuilder builder = <span class="java&#45;keyword">new</span> RequestBuilder()
-builder.uri = <span class="java&#45;quote">"http://www.example.com"</span>
-builder.accept = <span class="java&#45;quote">"text/html"</span>
-def result = builder.get()</pre></div>
+<h2 id="props">3.4 Request Properties</h2>
+The <strong class="bold">Jersey Request Builder</strong> also allows the author to build a request gradually through a properties object. All of the properties that can be set inside of the
+DSL-based methods can also be set directly on the properties itself.<p class="paragraph"/><div class="code"><pre>RequestProperties requestProperties = <span class="java&#45;keyword">new</span> RequestProperties()<p class="paragraph"/>requestProperties.uri = <span class="java&#45;quote">"http://www.example.com"</span>
+requestProperties.accept = <span class="java&#45;quote">"text/html"</span><p class="paragraph"/>def result = jerseyRequestBuilder.get(requestProperties)</pre></div>
 
 
 
@@ -166,97 +172,97 @@ def result = builder.get()</pre></div>
                 </div>
                 <div class="menu">
                     
-                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">Request Builder</h1><div class="menu-sub">
+                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">Jersey Request Builder</h1><div class="menu-sub">
                         
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/accept.html">accept</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/accept.html">accept</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/basicAuthPassword.html">basicAuthPassword</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/basicAuthPassword.html">basicAuthPassword</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/basicAuthUserName.html">basicAuthUserName</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/basicAuthUserName.html">basicAuthUserName</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/binaryResponse.html">binaryResponse</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/binaryResponse.html">binaryResponse</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/body.html">body</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/body.html">body</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/chunkSize.html">chunkSize</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/chunkSize.html">chunkSize</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/connectionTimeout.html">connectionTimeout</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/connectionTimeout.html">connectionTimeout</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/contentType.html">contentType</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/contentType.html">contentType</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/convertJson.html">convertJson</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/convertJson.html">convertJson</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/convertXML.html">convertXML</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/convertXML.html">convertXML</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/cookies.html">cookies</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/cookies.html">cookies</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/debug.html">debug</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/debug.html">debug</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/delete.html">delete</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/delete.html">delete</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/followRedirects.html">followRedirects</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/followRedirects.html">followRedirects</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/form.html">form</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/form.html">form</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/get.html">get</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/get.html">get</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/gzip.html">gzip</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/gzip.html">gzip</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/head.html">head</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/head.html">head</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/headers.html">headers</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/headers.html">headers</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/ignoreInvalidSSL.html">ignoreInvalidSSL</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/ignoreInvalidSSL.html">ignoreInvalidSSL</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/options.html">options</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/options.html">options</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/post.html">post</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/post.html">post</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/put.html">put</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/put.html">put</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/query.html">query</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/query.html">query</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/rawClientResponse.html">rawClientResponse</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/rawClientResponse.html">rawClientResponse</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/readTimeout.html">readTimeout</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/readTimeout.html">readTimeout</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/skipStatusCheck.html">skipStatusCheck</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/skipStatusCheck.html">skipStatusCheck</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/trace.html">trace</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/trace.html">trace</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/uri.html">uri</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/uri.html">uri</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/Request%20Builder/useBasicAuth.html">useBasicAuth</a>
+                            <div class="menu-item"><a href="../ref/Jersey%20Request%20Builder/useBasicAuth.html">useBasicAuth</a>
                             </div>
                             
                             </div>
