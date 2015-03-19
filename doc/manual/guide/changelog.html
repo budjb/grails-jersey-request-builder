@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>7 Changelog 2.0.0</title>
+    <title>7 Changelog 2.0.1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -81,7 +81,7 @@ function addJsClass() {
 
                     <p><strong>Authors:</strong> Bud Byrd</p>
 
-                    <p><strong>Version:</strong> 2.0.0</p>
+                    <p><strong>Version:</strong> 2.0.1</p>
 
                     
                 </div>
@@ -91,7 +91,15 @@ function addJsClass() {
                 
 
 <h1 id="changelog">7 Changelog</h1>
-<h3>Version 2.0.0</h3>
+<h3>Version 2.0.1</h3>
+<ul class="star">
+<li>Remove <code>jersey-server</code> as a dependency.</li>
+<li>Added support for multivalued headers.</li>
+<li>Added support for multivalued query parameters.</li>
+<li>Added support for multivalued form fields.</li>
+<li>Add methods <code>addHeader</code>, <code>addQuery</code>, and <code>addFormField</code> to <code>RequestProperties</code> to properly handle adding values as&#10;  multivalued entries.</li>
+<li>Add methods <code>setHeader</code>, <code>setQuery</code>, and <code>setFormField</code> to <code>RequestProperties</code> to override existing values.</li>
+</ul><p class="paragraph"/><h3>Version 2.0.0</h3>
 <ul class="star">
 <li>Update the jersey libraries to 1.19.</li>
 <li>Deprecated the <code>RequestBuilder</code> class.</li>
