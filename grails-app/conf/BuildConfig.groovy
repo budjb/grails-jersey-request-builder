@@ -14,7 +14,6 @@ grails.project.dependency.resolution = {
 
     dependencies {
         compile 'com.sun.jersey:jersey-client:1.19'
-        compile 'com.sun.jersey:jersey-server:1.19'
         compile 'com.sun.jersey:jersey-core:1.19'
 
         test('org.objenesis:objenesis:2.1') {

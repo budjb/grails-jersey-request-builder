@@ -108,6 +108,19 @@ class JerseyRequestBuilderPropertiesFunctionalTests extends RequestBuilderFuncti
     }
 
     /**
+     * Tests the form parameter when it has multivalued entries.
+     */
+    void testMultivaluedForm() {
+        def response = jerseyRequestBuilder.post {
+            uri = getUri('/test/testParams')
+            addFormField 'foo', 'bar'
+            addFormField 'foo', 'baz'
+            addFormField 'hi', 'there'
+        }
+        assert response == ['foo': ['bar', 'baz'], 'hi': 'there']
+    }
+
+    /**
      * Test the headers parameter.
      */
     void testHeaders() {
@@ -115,7 +128,22 @@ class JerseyRequestBuilderPropertiesFunctionalTests extends RequestBuilderFuncti
             uri = getUri('/test/testHeaders')
             headers = ['foo': 'bar', 'key': 'value']
         }
-        assert response == ['foo': 'bar', 'key': 'value']
+        assert response['foo'] == 'bar'
+        assert response['key'] == 'value'
+    }
+
+    /**
+     * Test the headers parameter when multivalued entries are present.
+     */
+    void testMultivaluedHeaders() {
+        def response = jerseyRequestBuilder.get {
+            uri = getUri('/test/testHeaders')
+            addHeader 'foo', 'bar'
+            addHeader 'foo', 'baz'
+            addHeader 'hi', 'there'
+        }
+        assert response['foo'] == 'bar,baz'
+        assert response['hi'] == 'there'
     }
 
     /**
@@ -127,6 +155,19 @@ class JerseyRequestBuilderPropertiesFunctionalTests extends RequestBuilderFuncti
             query = ['foo': 'bar', 'key': 'value']
         }
         assert response == ['foo': 'bar', 'key': 'value']
+    }
+
+    /**
+     * Test the query parameters when multivalued entries are present.
+     */
+    void testMultivaluedQuery() {
+        def response = jerseyRequestBuilder.get {
+            uri = getUri('/test/testParams')
+            addQuery 'foo', 'bar'
+            addQuery 'foo', 'baz'
+            addQuery 'hi', 'there'
+        }
+        assert response == ['foo': ['bar', 'baz'], 'hi': 'there']
     }
 
     /**

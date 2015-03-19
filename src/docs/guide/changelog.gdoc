@@ -1,3 +1,12 @@
+h3. Version 2.0.1
+* Remove @jersey-server@ as a dependency.
+* Added support for multivalued headers.
+* Added support for multivalued query parameters.
+* Added support for multivalued form fields.
+* Add methods @addHeader@, @addQuery@, and @addFormField@ to @RequestProperties@ to properly handle adding values as\
+  multivalued entries.
+* Add methods @setHeader@, @setQuery@, and @setFormField@ to @RequestProperties@ to override existing values.
+
 h3. Version 2.0.0
 * Update the jersey libraries to 1.19.
 * Deprecated the @RequestBuilder@ class.

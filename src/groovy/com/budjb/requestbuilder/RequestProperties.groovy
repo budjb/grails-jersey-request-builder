@@ -18,6 +18,10 @@ package com.budjb.requestbuilder
 import grails.util.Holders
 import org.codehaus.groovy.grails.commons.GrailsApplication
 
+/**
+ * A data object containing configuration options for an HTTP request to be executed by
+ * the Jersey Request Builder facade.
+ */
 class RequestProperties implements Cloneable {
     /**
      * Grails application bean.
@@ -27,61 +31,61 @@ class RequestProperties implements Cloneable {
     /**
      * The Connection Timeout for the Client.
      */
-    Integer connectionTimeout
+    private Integer connectionTimeout
 
     /**
      * The Read Timeout for the Client.
      */
-    Integer readTimeout
+    private Integer readTimeout
 
     /**
      * The URI to hit.
      *
      * Can either be a String or an URI.
      */
-    Object uri
+    private Object uri
 
     /**
      * Query parameters.
      */
-    Map query
+    private Map<String, Object> query
 
     /**
      * Headers
      */
-    Map headers
+    private Map<String, Object> headers
 
     /**
      * Form parameters
      *
      * Note that if this is set, this is used and body is ignored.
      */
-    Map form
+    private Map<String, Object> form
 
     /**
      * Content-Type header.
      */
-    String contentType
+    private String contentType
 
     /**
      * Accept header.
      */
-    String accept
+    private String accept
 
     /**
      * Cookies to include with the request.
      */
-    Map cookies
+    private Map cookies
 
     /**
      * Whether to attempt to slurp JSON automatically.
      */
-    Boolean convertJson
+    private Boolean convertJson
 
     /**
      * Attempt to use XmlSlurper to parse xml.
      */
-    Boolean convertXML
+    private Boolean convertXML
 
     /**
      * Whether the caller expects a binary return.
@@ -91,63 +95,63 @@ class RequestProperties implements Cloneable {
      * Note that this is a workaround to jersey not providing
      * automatic content conversion based on mime type.
      */
-    Boolean binaryResponse
+    private Boolean binaryResponse
 
     /**
      * If true, do not check the response status code, and
      * thus don't throw an exception for codes > 2xx.
      */
-    Boolean skipStatusCheck
+    private Boolean skipStatusCheck
 
     /**
      * If true, do not response handling, and return the raw response object.
      */
-    Boolean rawClientResponse
+    private Boolean rawClientResponse
 
     /**
      * Whether to automatically follow redirects.
      */
-    Boolean followRedirects
+    private Boolean followRedirects
 
     /**
      * Body of the request - only useful on POST or PUT.
      */
-    Object body
+    private Object body
 
     /**
      * Whether to log the request and response.
      */
-    Boolean debug
+    private Boolean debug
 
     /**
      * Whether to ignore SSL cert validation.
      */
-    Boolean ignoreInvalidSSL
+    private Boolean ignoreInvalidSSL
 
     /**
      * If true uses BasicAuth
      */
-    Boolean useBasicAuth
+    private Boolean useBasicAuth
 
     /**
      * basic auth user name
      */
-    String basicAuthUserName
+    private String basicAuthUserName
 
     /**
      * basic auth password
      */
-    String basicAuthPassword
+    private String basicAuthPassword
 
     /**
      * Size (in bytes) to chunk the request.
      */
-    Integer chunkSize
+    private Integer chunkSize
 
     /**
      * Encode the request with gzip compression.
      */
-    Boolean encodeGzip
+    private Boolean encodeGzip
 
     /**
      * Constructor.
@@ -275,5 +279,270 @@ class RequestProperties implements Cloneable {
         clone.cookies = (Map) cookies.clone()
 
         return clone
+    }
+
+    /**
+     * Adds a header to the request.  Multiple values per header name are supported.
+     *
+     * @param key
+     * @param value
+     */
+    void addHeader(String key, String value) {
+        addMultivaluedMap(headers, key, value)
+    }
+
+    /**
+     * Sets a header with a single value.  Any existing headers with the same name will be lost.
+     *
+     * @param key
+     * @param value
+     */
+    void setHeader(String key, String value) {
+        headers[key] = value
+    }
+
+    /**
+     * Adds a query parameter to the request.  Multiple values per query parameter name are supported.
+     *
+     * @param key
+     * @param value
+     */
+    void addQuery(String key, String value) {
+        addMultivaluedMap(query, key, value)
+    }
+
+    /**
+     * Sets a query parameter with a single value.  Any existing query parameters with the same name will be lost.
+     *
+     * @param key
+     * @param value
+     */
+    void setQuery(String key, String value) {
+        query[key] = value
+    }
+
+    /**
+     * Adds a form field to the request.  Multiple values per form field name are supported.
+     *
+     * @param key
+     * @param value
+     */
+    void addFormField(String key, String value) {
+        addMultivaluedMap(form, key, value)
+    }
+
+    /**
+     * Sets a form field with a single value.  Any existing form fields with the same name will be lost.
+     *
+     * @param key
+     * @param value
+     */
+    void setFormField(String key, String value) {
+        form[key] = value
+    }
+
+    /**
+     * Adds a an entry to the given map, creating a multivalued entry if necessary.
+     *
+     * @param map
+     * @param key
+     * @param value
+     */
+    protected void addMultivaluedMap(Map<String, Object> map, String key, String value) {
+        if (map.containsKey(key)) {
+            if (map[key] instanceof List) {
+                map[key] << value
+            }
+            else {
+                map[key] = [map[key], value]
+            }
+        }
+        else {
+            map[key] = value
+        }
+    }
+
+    Integer getConnectionTimeout() {
+        return connectionTimeout
+    }
+
+    void setConnectionTimeout(Integer connectionTimeout) {
+        this.connectionTimeout = connectionTimeout
+    }
+
+    Integer getReadTimeout() {
+        return readTimeout
+    }
+
+    void setReadTimeout(Integer readTimeout) {
+        this.readTimeout = readTimeout
+    }
+
+    Object getUri() {
+        return uri
+    }
+
+    void setUri(Object uri) {
+        this.uri = uri
+    }
+
+    Map<String, Object> getQuery() {
+        return query
+    }
+
+    void setQuery(Map<String, Object> query) {
+        this.query = query
+    }
+
+    Map<String, Object> getHeaders() {
+        return headers
+    }
+
+    void setHeaders(Map<String, Object> headers) {
+        this.headers = headers
+    }
+
+    Map<String, Object> getForm() {
+        return form
+    }
+
+    void setForm(Map<String, Object> form) {
+        this.form = form
+    }
+
+    String getContentType() {
+        return contentType
+    }
+
+    void setContentType(String contentType) {
+        this.contentType = contentType
+    }
+
+    String getAccept() {
+        return accept
+    }
+
+    void setAccept(String accept) {
+        this.accept = accept
+    }
+
+    Map getCookies() {
+        return cookies
+    }
+
+    void setCookies(Map cookies) {
+        this.cookies = cookies
+    }
+
+    Boolean getConvertJson() {
+        return convertJson
+    }
+
+    void setConvertJson(Boolean convertJson) {
+        this.convertJson = convertJson
+    }
+
+    Boolean getConvertXML() {
+        return convertXML
+    }
+
+    void setConvertXML(Boolean convertXML) {
+        this.convertXML = convertXML
+    }
+
+    Boolean getBinaryResponse() {
+        return binaryResponse
+    }
+
+    void setBinaryResponse(Boolean binaryResponse) {
+        this.binaryResponse = binaryResponse
+    }
+
+    Boolean getSkipStatusCheck() {
+        return skipStatusCheck
+    }
+
+    void setSkipStatusCheck(Boolean skipStatusCheck) {
+        this.skipStatusCheck = skipStatusCheck
+    }
+
+    Boolean getRawClientResponse() {
+        return rawClientResponse
+    }
+
+    void setRawClientResponse(Boolean rawClientResponse) {
+        this.rawClientResponse = rawClientResponse
+    }
+
+    Boolean getFollowRedirects() {
+        return followRedirects
+    }
+
+    void setFollowRedirects(Boolean followRedirects) {
+        this.followRedirects = followRedirects
+    }
+
+    Object getBody() {
+        return body
+    }
+
+    void setBody(Object body) {
+        this.body = body
+    }
+
+    Boolean getDebug() {
+        return debug
+    }
+
+    void setDebug(Boolean debug) {
+        this.debug = debug
+    }
+
+    Boolean getIgnoreInvalidSSL() {
+        return ignoreInvalidSSL
+    }
+
+    void setIgnoreInvalidSSL(Boolean ignoreInvalidSSL) {
+        this.ignoreInvalidSSL = ignoreInvalidSSL
+    }
+
+    Boolean getUseBasicAuth() {
+        return useBasicAuth
+    }
+
+    void setUseBasicAuth(Boolean useBasicAuth) {
+        this.useBasicAuth = useBasicAuth
+    }
+
+    String getBasicAuthUserName() {
+        return basicAuthUserName
+    }
+
+    void setBasicAuthUserName(String basicAuthUserName) {
+        this.basicAuthUserName = basicAuthUserName
+    }
+
+    String getBasicAuthPassword() {
+        return basicAuthPassword
+    }
+
+    void setBasicAuthPassword(String basicAuthPassword) {
+        this.basicAuthPassword = basicAuthPassword
+    }
+
+    Integer getChunkSize() {
+        return chunkSize
+    }
+
+    void setChunkSize(Integer chunkSize) {
+        this.chunkSize = chunkSize
+    }
+
+    Boolean getEncodeGzip() {
+        return encodeGzip
+    }
+
+    void setEncodeGzip(Boolean encodeGzip) {
+        this.encodeGzip = encodeGzip
     }
 }

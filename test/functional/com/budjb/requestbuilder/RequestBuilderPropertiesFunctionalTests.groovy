@@ -109,7 +109,8 @@ class RequestBuilderPropertiesFunctionalTests extends RequestBuilderFunctionalTe
             uri = getUri('/test/testHeaders')
             headers = ['foo': 'bar', 'key': 'value']
         }
-        assert response == ['foo': 'bar', 'key': 'value']
+        assert response['foo'] == 'bar'
+        assert response['key'] == 'value'
     }
 
     /**

@@ -182,14 +182,22 @@ class JerseyRequestDelegateSpec extends Specification {
         requestProperties.getForm() >> ['foo': 'bar', 'hi': 'there']
         requestProperties.clone() >> { return requestProperties }
 
+        Form form
+
         when:
         jerseyRequestDelegate.get(requestProperties)
 
         then:
-        1 * requestProperties.setProperty('body', {
-            return it instanceof Form && (it as Form).get('foo') == ['bar'] && (it as Form).get('hi') == ['there']
+        1 * requestProperties.setBody({
+            if (it instanceof Form) {
+                form = it
+                return true
+            }
+            return false
         })
-        1 * requestProperties.setProperty('contentType', 'application/x-www-form-urlencoded')
+        1 * requestProperties.setContentType('application/x-www-form-urlencoded')
+
+        form == ['foo': ['bar'], 'hi': ['there']]
     }
 
     def 'If form is set and a content type is provided, ensure it is not overwritten'() {
@@ -219,8 +227,8 @@ class JerseyRequestDelegateSpec extends Specification {
         jerseyRequestDelegate.get(requestProperties)
 
         then:
-        1 * requestProperties.setProperty('body', { it == '{"foo":"bar"}' })
-        1 * requestProperties.setProperty('contentType', 'application/json')
+        1 * requestProperties.setBody({ it == '{"foo":"bar"}' })
+        1 * requestProperties.setContentType('application/json')
     }
 
     def 'If the body is a list, ensure it is marshalled to JSON correctly'() {
@@ -235,8 +243,8 @@ class JerseyRequestDelegateSpec extends Specification {
         jerseyRequestDelegate.get(requestProperties)
 
         then:
-        1 * requestProperties.setProperty('body', { it == '["foo","bar"]' })
-        1 * requestProperties.setProperty('contentType', 'application/json')
+        1 * requestProperties.setBody({ it == '["foo","bar"]' })
+        1 * requestProperties.setContentType('application/json')
     }
 
     def 'If the body is a map and a content type is provided, ensure it is not overwritten'() {
@@ -416,5 +424,59 @@ class JerseyRequestDelegateSpec extends Specification {
         clientResponse.getType() >> contentType
 
         return clientResponse
+    }
+
+    def 'Validate multivalued header interactions'() {
+        setup:
+        requestProperties.addHeader('foo', 'bar')
+        requestProperties.addHeader('foo', 'baz')
+        requestProperties.addHeader('hi', 'there')
+
+        when:
+        jerseyRequestDelegate.get(requestProperties)
+
+        then:
+        1 * builder.header('foo', 'bar')
+        1 * builder.header('foo', 'baz')
+        1 * builder.header('hi', 'there')
+    }
+
+    def 'Validate multivalued query parameter interactions'() {
+        setup:
+        requestProperties.addQuery('foo', 'bar')
+        requestProperties.addQuery('foo', 'baz')
+        requestProperties.addQuery('hi', 'there')
+
+        when:
+        jerseyRequestDelegate.get(requestProperties)
+
+        then:
+        1 * webResource.queryParam('foo', 'bar') >> webResource
+        1 * webResource.queryParam('foo', 'baz') >> webResource
+        1 * webResource.queryParam('hi', 'there') >> webResource
+
+    }
+
+    def 'Validate multivalued form field interactions'() {
+        setup:
+        requestProperties.addFormField('foo', 'bar')
+        requestProperties.addFormField('foo', 'baz')
+        requestProperties.addFormField('hi', 'there')
+
+        Form form
+
+        when:
+        jerseyRequestDelegate.post(requestProperties)
+
+        then:
+        1 * builder.post(ClientResponse, {
+            if (it instanceof Form) {
+                form = it
+                return true
+            }
+            return false
+        }) >> clientResponse
+
+        form == ['foo': ['bar', 'baz'], 'hi': ['there']]
     }
 }
