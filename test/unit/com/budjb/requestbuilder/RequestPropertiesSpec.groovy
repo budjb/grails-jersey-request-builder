@@ -158,4 +158,100 @@ class RequestPropertiesSpec extends Specification {
         properties.skipStatusCheck == true
         properties.useBasicAuth == true
     }
+
+    def 'If a header already has a value and a value is added to that header, it should be multivalued'() {
+        setup:
+        grailsApplication.getConfig() >> new ConfigObject()
+        RequestProperties requestProperties = new RequestProperties(grailsApplication)
+
+        when:
+        requestProperties.addHeader('foo', 'bar')
+
+        then:
+        requestProperties.headers == ['foo': 'bar']
+
+        when:
+        requestProperties.addHeader('foo', 'baz')
+
+        then:
+        requestProperties.headers == ['foo': ['bar', 'baz']]
+    }
+
+    def 'If a query parameter already has a value and a value is added to that query parameter, it should be multivalued'() {
+        setup:
+        grailsApplication.getConfig() >> new ConfigObject()
+        RequestProperties requestProperties = new RequestProperties(grailsApplication)
+
+        when:
+        requestProperties.addQuery('foo', 'bar')
+
+        then:
+        requestProperties.query == ['foo': 'bar']
+
+        when:
+        requestProperties.addQuery('foo', 'baz')
+
+        then:
+        requestProperties.query == ['foo': ['bar', 'baz']]
+    }
+
+    def 'If a form field already has a value and a value is added to that form field, it should be multivalued'() {
+        setup:
+        grailsApplication.getConfig() >> new ConfigObject()
+        RequestProperties requestProperties = new RequestProperties(grailsApplication)
+
+        when:
+        requestProperties.addFormField('foo', 'bar')
+
+        then:
+        requestProperties.form == ['foo': 'bar']
+
+        when:
+        requestProperties.addFormField('foo', 'baz')
+
+        then:
+        requestProperties.form == ['foo': ['bar', 'baz']]
+    }
+
+    def 'If a header is multivalued and the header is set, it is no longer multivalued'() {
+        setup:
+        grailsApplication.getConfig() >> new ConfigObject()
+        RequestProperties requestProperties = new RequestProperties(grailsApplication)
+
+        requestProperties.headers = ['foo': ['bar', 'baz']]
+
+        when:
+        requestProperties.setHeader('foo', 'meh')
+
+        then:
+        requestProperties.headers == ['foo': 'meh']
+    }
+
+    def 'If a query parameter is multivalued and the query parameter is set, it is no longer multivalued'() {
+        setup:
+        grailsApplication.getConfig() >> new ConfigObject()
+        RequestProperties requestProperties = new RequestProperties(grailsApplication)
+
+        requestProperties.query = ['foo': ['bar', 'baz']]
+
+        when:
+        requestProperties.setQuery('foo', 'meh')
+
+        then:
+        requestProperties.query == ['foo': 'meh']
+    }
+
+    def 'If a form field is multivalued and the form field is set, it is no longer multivalued'() {
+        setup:
+        grailsApplication.getConfig() >> new ConfigObject()
+        RequestProperties requestProperties = new RequestProperties(grailsApplication)
+
+        requestProperties.form = ['foo': ['bar', 'baz']]
+
+        when:
+        requestProperties.setFormField('foo', 'meh')
+
+        then:
+        requestProperties.form == ['foo': 'meh']
+    }
 }

@@ -75,7 +75,28 @@ class TestController {
     }
 
     def testHeaders = {
-        render text: new JsonBuilder(['foo': request.getHeader('foo'), 'key': request.getHeader('key')]), contentType: 'application/json'
+        Map<String, Object> headers = [:]
+
+        for (Enumeration<String> headerNames = request.headerNames; headerNames.hasMoreElements();) {
+            String headerName = headerNames.nextElement()
+
+            for (Enumeration<String> headerValues = request.getHeaders(headerName); headerValues.hasMoreElements();) {
+                String headerValue = headerValues.nextElement()
+
+                if (!headers.containsKey(headerName)) {
+                    headers[headerName] = headerValue
+                }
+                else if (headers[headerName] instanceof List) {
+                    headers[headerName] << headerValue
+                }
+                else {
+                    headers[headerName] = [headers[headerName], headerValue]
+                    throw new Exception(headers)
+                }
+            }
+        }
+
+        render text: new JsonBuilder(headers).toString(), contentType: 'application/json'
     }
 
     def test500 = {

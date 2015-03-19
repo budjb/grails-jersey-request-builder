@@ -235,7 +235,14 @@ class JerseyRequestDelegate {
 
         // Set any query params
         requestProperties.query.each { param, value ->
-            resource = resource.queryParam(param as String, value as String)
+            if (value instanceof List) {
+                (value as List).each {
+                    resource = resource.queryParam(param as String, it as String)
+                }
+            }
+            else {
+                resource = resource.queryParam(param as String, value as String)
+            }
         }
 
         // Get the builder
@@ -275,7 +282,14 @@ class JerseyRequestDelegate {
 
         // Set any headers
         requestProperties.headers.each { param, value ->
-            builder.header(param, value)
+            if (value instanceof List) {
+                (value as List).each {
+                    builder.header(param as String, it as String)
+                }
+            }
+            else {
+                builder.header(param as String, value as String)
+            }
         }
 
         return builder
@@ -396,10 +410,19 @@ class JerseyRequestDelegate {
     protected void marshallRequestBody() {
         if (requestProperties.form.size() > 0) {
             Form form = new Form()
+
             requestProperties.form.each { key, value ->
-                form.add(key, value)
+                if (value instanceof List) {
+                    (value as List).each {
+                        form.add(key as String, it as String)
+                    }
+                }
+                else {
+                    form.add(key as String, value as String)
+                }
             }
-            requestProperties.body = form
+
+            requestProperties.setBody(form)
 
             if (!requestProperties.contentType) {
                 requestProperties.contentType = 'application/x-www-form-urlencoded'
@@ -408,8 +431,8 @@ class JerseyRequestDelegate {
             return
         }
 
-        if (requestProperties.body instanceof Map || requestProperties.body instanceof List) {
-            requestProperties.body = new JsonBuilder(requestProperties.body).toString()
+        if (requestProperties.getBody() instanceof Map || requestProperties.getBody() instanceof List) {
+            requestProperties.setBody(new JsonBuilder(requestProperties.getBody()).toString())
 
             if (!requestProperties.contentType) {
                 requestProperties.contentType = 'application/json'
