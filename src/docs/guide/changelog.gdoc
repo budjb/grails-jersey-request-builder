@@ -1,4 +1,5 @@
 h3. Version 2.0.1
+* Remove @jersey-server@ as a dependency.
 * Added support for multivalued headers.
 * Added support for multivalued query parameters.
 * Added support for multivalued form fields.

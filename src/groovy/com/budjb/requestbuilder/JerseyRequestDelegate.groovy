@@ -425,7 +425,7 @@ class JerseyRequestDelegate {
             requestProperties.setBody(form)
 
             if (!requestProperties.contentType) {
-                requestProperties.contentType = 'application/x-www-form-urlencoded'
+                requestProperties.setContentType('application/x-www-form-urlencoded')
             }
 
             return
@@ -435,7 +435,7 @@ class JerseyRequestDelegate {
             requestProperties.setBody(new JsonBuilder(requestProperties.getBody()).toString())
 
             if (!requestProperties.contentType) {
-                requestProperties.contentType = 'application/json'
+                requestProperties.setContentType('application/json')
             }
 
             return
