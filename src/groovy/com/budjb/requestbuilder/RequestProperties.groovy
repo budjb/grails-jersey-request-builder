@@ -200,6 +200,10 @@ class RequestProperties implements Cloneable {
     protected void applyDefaults() {
         ConfigObject config = getGrailsApplication().config.jerseyRequestBuilder
 
+        if (!config) {
+            config = new ConfigObject()
+        }
+
         accept = applyDefault(String, config.accept)
         basicAuthPassword = applyDefault(String, config.basicAuthPassword)
         basicAuthUserName = applyDefault(String, config.basicAuthUserName)

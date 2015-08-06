@@ -1,3 +1,6 @@
+h3. Version 2.0.2
+* Fix issue causing the RequestProperties constructor to fail if @grailsApplication@ is not defined in @Holders@.
+
 h3. Version 2.0.1
 * Remove @jersey-server@ as a dependency.
 * Added support for multivalued headers.
